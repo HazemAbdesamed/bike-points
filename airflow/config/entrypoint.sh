@@ -249,7 +249,10 @@ readonly CONNECTION_CHECK_SLEEP_TIME
 create_system_user_if_missing
 set_pythonpath_for_root_user
 
-airflow db init
+# Initialize the db if it hasn't already been initialized
+if [ ! -f "/opt/airflow/airflow.db" ]; then
+  airflow db init
+fi
 
 if [[ "${CONNECTION_CHECK_MAX_COUNT}" -gt "0" ]]; then
     wait_for_airflow_db
@@ -264,8 +267,8 @@ if [[ -n "${_AIRFLOW_WWW_USER_CREATE=}" ]] ; then
 elif [[ -z "${_AIRFLOW_WWW_USER_CREATE=}" ]] ; then
     airflow users create \
        --username "${_AIRFLOW_WWW_USER_USERNAME="admin"}" \
-       --firstname "${_AIRFLOW_WWW_USER_FIRSTNAME="Airflow"}" \
-       --lastname "${_AIRFLOW_WWW_USER_LASTNAME="Admin"}" \
+       --firstname "${_AIRFLOW_WWW_USER_FIRSTNAME="Hazem"}" \
+       --lastname "${_AIRFLOW_WWW_USER_LASTNAME="Damdoum"}" \
        --email "${_AIRFLOW_WWW_USER_EMAIL="airflowadmin@example.com"}" \
        --role "${_AIRFLOW_WWW_USER_ROLE="Admin"}" \
        --password "${_AIRFLOW_WWW_USER_PASSWORD="admin"}" || true   
