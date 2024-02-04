@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:9.6
+    container_name: postgres
+    hostname: postgres
+    ports:
+          - 5432:5432
+    environment:
+        - POSTGRES_USER=airflow
+        - POSTGRES_PASSWORD=airflow
+        - POSTGRES_DB=airflow
+    networks:
+      - data-network
+
+  airflow:
+    build: ./config
+    container_name: airflow
+    hostname: airflow
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./config/airflow.cfg:/opt/airflow/airflow.cfg
+      - ./requirements.txt:/opt/airflow/requirements.txt
+    networks:
+      - data-network
+
+
+networks:
+  data-network:
+         
+
