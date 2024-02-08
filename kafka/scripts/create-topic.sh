@@ -1,0 +1,1 @@
+kafka-topics.sh --bootstrap-server kafka1:9092 --create --topic bike-points --replication-factor 1 --partitions 1

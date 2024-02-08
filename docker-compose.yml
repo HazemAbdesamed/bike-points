@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+
+  kafka1:
+      image: bitnami/kafka:3.5.0
+      container_name: kafka1
+      hostname: kafka1
+      environment:
+        # KRaft settings
+        - KAFKA_CFG_NODE_ID=1
+        - KAFKA_CFG_PROCESS_ROLES=controller,broker
+        - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka1:9093
+        - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
+        # Listeners
+        - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+        - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka1:9092
+        - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+        - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+        - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+        - ALLOW_PLAINTEXT_LISTENER=yes
+      volumes:
+        - ./kafka/config/entrypoint.sh:/entrypoint.sh
+        - ./kafka/scripts/:/scripts
+        - kafka-data:/var/lib/kafka/data
+      networks:
+        - airflow_data-network
+        - spark_data-network
+
+
+volumes:
+  kafka-data:
+
+networks:
+  
+  spark_data-network:
+
+  airflow_data-network:
+    external: true  

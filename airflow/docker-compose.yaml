@@ -11,7 +11,7 @@ services:
         - POSTGRES_PASSWORD=airflow
         - POSTGRES_DB=airflow
     networks:
-      - data-network
+      - airflow_data-network
 
   airflow:
     build: ./config
@@ -26,10 +26,11 @@ services:
       - ./config/airflow.cfg:/opt/airflow/airflow.cfg
       - ./requirements.txt:/opt/airflow/requirements.txt
     networks:
-      - data-network
+      - airflow_data-network
 
 
 networks:
-  data-network:
+  airflow_data-network:
+    external: true
          
 
