@@ -1,13 +1,3 @@
-import requests
-import datetime
-import json 
-
-def get_bikepoints_from_api():
-    url = 'https://api.tfl.gov.uk/BikePoint/'
-    return requests.get(url).json()
-
-
-
 def select_properties(bikepoints_data):
     
     bikepoints = []
@@ -20,20 +10,16 @@ def select_properties(bikepoints_data):
             "lon": str(bikepointInfo["lon"])
         }
 
-        recent_datetime = None
+        
         for detail in bikepointInfo['additionalProperties']:
             if detail['key'] in ("NbDocks", "NbBikes", "NbEBikes", 
                                 "NbEmptyDocks", "Installed", "Locked"):
                 
                 item[detail["key"]] = detail['value']
             
-            # Get the most recent modified datetime of the objects
-            modified_datetime = str(detail['modified'])
-            if recent_datetime == None or \
-            recent_datetime < modified_datetime:
-                recent_datetime = modified_datetime    
-            item['extracted_datetime'] = recent_datetime
-
+        # Get the most recent modified datetime of the objects
+        recent_datetime = max(detail['modified'] for detail in bikepointInfo['additionalProperties'])
+        item['extracted_datetime'] = str(recent_datetime) 
         bikepoints.append(item)
 
     return bikepoints
