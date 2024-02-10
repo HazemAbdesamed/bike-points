@@ -304,5 +304,10 @@ if [[ ${AIRFLOW_COMMAND} =~ ^(scheduler|celery)$ ]] \
     wait_for_celery_broker
 fi
 
+# install pip packages
+if [ -e "/opt/airflow/requirements.txt" ]; then
+  $(command -v pip) install --user -r requirements.txt
+fi
+
 airflow scheduler &
 airflow webserver

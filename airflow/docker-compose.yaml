@@ -14,7 +14,7 @@ services:
       - airflow_data-network
 
   airflow:
-    build: ./config
+    image: apache/airflow:2.6.0-python3.9
     container_name: airflow
     hostname: airflow
     depends_on:
@@ -24,6 +24,7 @@ services:
     volumes:
       - ./dags:/opt/airflow/dags
       - ./config/airflow.cfg:/opt/airflow/airflow.cfg
+      - ./config/entrypoint.sh:/entrypoint
       - ./requirements.txt:/opt/airflow/requirements.txt
     networks:
       - airflow_data-network
