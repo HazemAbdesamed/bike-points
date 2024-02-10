@@ -1,6 +1,6 @@
-from src.extract_data import get_bikepoints_from_api
+from src.extraction import get_bikepoints_from_api
 from src.preprocessing import select_properties
-from src.producer import produce
+from src.producing import produce
 
 def main():
     bootstrap_servers = ['kafka1:9092']
