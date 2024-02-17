@@ -1,10 +1,15 @@
 import json
+from utils import logger
 from kafka import KafkaProducer
 
-bootstrap_servers = ['kafka1:9092']
-
 def produce(bootstrap_servers, topic, bikepoints):
-    producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
+    """Produce data to kafka"""
+    try:
+        producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
 
-    for bikepoint_data in bikepoints:
-        producer.send(topic=topic, value=json.dumps(bikepoint_data).encode("utf-8"))
+        for bikepoint_data in bikepoints:
+                producer.send(topic=topic, value=json.dumps(bikepoint_data).encode("utf-8"))
+                logger.info("Entry produced to kafka: %s", json.dumps(bikepoint_data))
+            
+    except Exception as e:
+        logger.error("Error in producing entry to kafka: %s", e)  

@@ -1,13 +1,15 @@
-def select_properties(bikepoints_data):
-    
+from src.utils import logger
+
+def select_fields(bikepoints_data):
+    """Preprocess data, Select the fields of the fetched data"""
     bikepoints = []
 
     for bikepointInfo in bikepoints_data :
         item = {
-            "id": bikepointInfo["id"],
-            "commonName": bikepointInfo["commonName"],
-            "lat": str(bikepointInfo["lat"]),
-            "lon": str(bikepointInfo["lon"])
+            "Id": bikepointInfo["id"],
+            "CommonName": bikepointInfo["commonName"],
+            "Lat": str(bikepointInfo["lat"]),
+            "Lon": str(bikepointInfo["lon"])
         }
 
         
@@ -19,7 +21,8 @@ def select_properties(bikepoints_data):
             
         # Get the most recent modified datetime of the objects
         recent_datetime = max(detail['modified'] for detail in bikepointInfo['additionalProperties'])
-        item['extracted_datetime'] = str(recent_datetime) 
+        item['ExtractedDatetime'] = str(recent_datetime) 
         bikepoints.append(item)
-
+    
+    logger.info("Preprocessing completed successfully")
     return bikepoints

@@ -1,5 +1,11 @@
+from src.utils import logger
 import requests
 
 def get_bikepoints_from_api():
-    url = 'https://api.tfl.gov.uk/BikePoint/'
-    return requests.get(url).json()
+    """Fetch bikepoints data from the API"""
+    try :
+        url = 'https://api.tfl.gov.uk/BikePoint/'
+        logger.info("bikepoints data have been fetched from the API successfully")
+        return requests.get(url).json()
+    except :
+        logger.error("Error in fetching data from the API")

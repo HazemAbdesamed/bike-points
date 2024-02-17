@@ -28,6 +28,11 @@ fi
 
 "$@" &
 
-. /scripts/create-topic.sh
+echo "checking if topic exists ..." 
+# If no topic has been created, create one
+if [ -z "$(kafka-topics.sh --bootstrap-server kafka1:9092 --list)" ]; then
+  echo "Creating topic..."
+  /scripts/create-topic.sh
+fi
 
 tail -f /dev/null

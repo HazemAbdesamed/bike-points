@@ -20,7 +20,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "8080:8080"
+      - "9090:8080"
     volumes:
       - ./dags:/opt/airflow/dags
       - ./config/airflow.cfg:/opt/airflow/airflow.cfg
