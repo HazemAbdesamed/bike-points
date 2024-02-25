@@ -1,3 +1,7 @@
+# .env files
+./airflow/.env
+./kafka/.env
+./spark/.env
 # Python
 venv
 __pycache__

@@ -5,11 +5,11 @@ services:
     container_name: postgres
     hostname: postgres
     ports:
-          - 5432:5432
+          - $POSTGRES_HOST_PORT:$POSTGRES_PORT
     environment:
-        - POSTGRES_USER=airflow
-        - POSTGRES_PASSWORD=airflow
-        - POSTGRES_DB=airflow
+        - POSTGRES_DB=$POSTGRES_DB
+        - POSTGRES_USER=$POSTGRES_USER
+        - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
     networks:
       - airflow_data-network
 
@@ -20,7 +20,9 @@ services:
     depends_on:
       - postgres
     ports:
-      - "9090:8080"
+      - $AIRFLOW_HOST_PORT:$AIRFLOW_PORT
+    env_file:
+      -  ./.env
     volumes:
       - ./dags:/opt/airflow/dags
       - ./config/airflow.cfg:/opt/airflow/airflow.cfg
@@ -28,10 +30,5 @@ services:
       - ./requirements.txt:/opt/airflow/requirements.txt
     networks:
       - airflow_data-network
-
-
-networks:
-  airflow_data-network:
-    external: true
          
 

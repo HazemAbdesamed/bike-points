@@ -1,10 +1,14 @@
+from dotenv 
+
 from src.extraction import get_bikepoints_from_api
 from src.preprocessing import select_fields
 from src.producing import produce
 
+
+bootstrap_servers = ['kafka1:9092']
+kafka_topic = 'bike-points'
+
 def main():
-    bootstrap_servers = ['kafka1:9092']
-    kafka_topic = 'bike-points'
 
     # Retrieve data from API
     bikepoints_data = get_bikepoints_from_api()

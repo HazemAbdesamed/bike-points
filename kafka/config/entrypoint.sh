@@ -18,6 +18,10 @@ set -o pipefail
 # Load Kafka environment variables
 . /opt/bitnami/scripts/kafka-env.sh
 
+echo $KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
+echo $TOPIC_NAME
+echo 'hello there'
+
 print_welcome_page
 
 if [[ "$*" = *"/opt/bitnami/scripts/kafka/run.sh"* || "$*" = *"/run.sh"* ]]; then
@@ -26,11 +30,12 @@ if [[ "$*" = *"/opt/bitnami/scripts/kafka/run.sh"* || "$*" = *"/run.sh"* ]]; the
     info "** Kafka setup finished! **"
 fi
 
+
 "$@" &
 
 echo "checking if topic exists ..." 
 # If no topic has been created, create one
-if [ -z "$(kafka-topics.sh --bootstrap-server kafka1:9092 --list)" ]; then
+if [ -z "$(kafka-topics.sh --bootstrap-server $BROKER1:$PORT1 --list)" ]; then
   echo "Creating topic..."
   /scripts/create-topic.sh
 fi
