@@ -13,14 +13,15 @@ logger = logging.getLogger("kafka_spark")
 def create_spark_session():
     """Creates the Spark Session with suitable configs"""
 
-    # packages  = ['org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0', 
-    #              'org.apache.kafka:kafka-clients:3.5.0']
+    packages  = ['org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0', 
+                 'org.apache.kafka:kafka-clients:3.5.0']
 
     try:
-        # Spark session is established with cassandra and kafka jars. Suitable versions can be found in Maven repository.
         spark = SparkSession \
                 .builder \
                 .master('local') \
+                .config('spark.jars.packages', 'org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0') \
+                .config('spark.jars.packages', 'org.apache.kafka:kafka-clients:3.5.0') \
                 .appName("spark_bikepoints") \
                 .getOrCreate()
         

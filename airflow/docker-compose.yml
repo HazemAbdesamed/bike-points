@@ -25,6 +25,7 @@ services:
       -  ./.env
     volumes:
       - ./dags:/opt/airflow/dags
+      - ./produce-to-kafka:/opt/airflow/produce-to-kafka
       - ./config/airflow.cfg:/opt/airflow/airflow.cfg
       - ./config/entrypoint.sh:/entrypoint
       - ./requirements.txt:/opt/airflow/requirements.txt

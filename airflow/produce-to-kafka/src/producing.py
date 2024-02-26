@@ -1,5 +1,5 @@
 import json
-from utils import logger
+from .utils import logger
 from kafka import KafkaProducer
 
 def produce(bootstrap_servers, topic, bikepoints):

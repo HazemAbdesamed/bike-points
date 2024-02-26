@@ -1,4 +1,4 @@
-from src.utils import logger
+from .utils import logger
 import requests
 
 def get_bikepoints_from_api():

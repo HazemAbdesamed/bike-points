@@ -1,4 +1,4 @@
-from src.utils import logger
+from .utils import logger
 
 def select_fields(bikepoints_data):
     """Preprocess data, Select the fields of the fetched data"""

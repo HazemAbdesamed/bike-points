@@ -18,10 +18,6 @@ set -o pipefail
 # Load Kafka environment variables
 . /opt/bitnami/scripts/kafka-env.sh
 
-echo $KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
-echo $TOPIC_NAME
-echo 'hello there'
-
 print_welcome_page
 
 if [[ "$*" = *"/opt/bitnami/scripts/kafka/run.sh"* || "$*" = *"/run.sh"* ]]; then
