@@ -3,7 +3,7 @@ version: '3.8'
     
 include:
   - ./airflow/docker-compose.yml
-  # - ./kafka/docker-compose.yml
+  - ./kafka/docker-compose.yml
   # - ./spark/docker-compose.yml
 
 

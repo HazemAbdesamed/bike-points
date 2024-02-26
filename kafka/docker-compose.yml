@@ -6,12 +6,11 @@ services:
       image: bitnami/kafka:3.5.0
       container_name: kafka1
       hostname: kafka1
-      ports:
-        - "9092:9092"
-        - "9093:9093"
+      env_file:
+        - ./.env
       volumes:
-        - ./kafka/config/entrypoint.sh:/entrypoint.sh
-        - ./kafka/scripts/:/scripts
+        - ./config/entrypoint.sh:/entrypoint.sh
+        - ./scripts:/scripts
         - kafka-data:/var/lib/kafka/data
       networks:
         - airflow_data-network
