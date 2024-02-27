@@ -23,6 +23,7 @@ services:
       - $AIRFLOW_HOST_PORT:$AIRFLOW_PORT
     env_file:
       -  ./.env
+      - ../kafka/.env
     volumes:
       - ./dags:/opt/airflow/dags
       - ./produce-to-kafka:/opt/airflow/produce-to-kafka

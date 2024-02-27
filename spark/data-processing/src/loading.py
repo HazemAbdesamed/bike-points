@@ -1,4 +1,4 @@
-from src.utils import logger
+from .utils import logger
 
 def streaming(df):
     """"Write the stream from spark to console"""

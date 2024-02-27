@@ -9,7 +9,7 @@ def main():
 
     # Consume data from kafka
     bikepoints = consume(spark_session)
-
+    
     # Process data using pyspark
     bikepoints_processed = process(bikepoints)
     

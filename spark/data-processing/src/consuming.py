@@ -1,5 +1,5 @@
 import os
-from utils import logger
+from .utils import logger
 
 TOPIC_NAME = os.environ.get("TOPIC_NAME")
 BROKER1=os.environ.get("BROKER1")

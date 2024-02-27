@@ -12,4 +12,4 @@ def produce(bootstrap_servers, topic, bikepoints):
                 logger.info("Entry produced to kafka: %s", json.dumps(bikepoint_data))
             
     except Exception as e:
-        logger.error("Error in producing entry to kafka: %s", e)  
+        logger.error("Error in producing entry to kafka: %s", e)
