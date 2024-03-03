@@ -8,7 +8,7 @@ PORT1=os.environ.get("PORT1")
 def consume(spark_session):
     """Reads data from kafka and create a datafarame"""
     try:
-        df = spark_session.readStream\
+        df = spark_session.read\
                 .format("kafka")\
                 .option("kafka.bootstrap.servers", f"{BROKER1}:{PORT1}")\
                 .option("subscribe", TOPIC_NAME)\

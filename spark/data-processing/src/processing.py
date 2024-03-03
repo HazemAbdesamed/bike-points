@@ -16,25 +16,28 @@ def process(df):
                 StructField("NbDocks", IntegerType()),
                 StructField("NbBrokenDocks", IntegerType()),
                 StructField("NbEBikes", IntegerType()),
-                StructField("ExtractedDatetime", TimestampType())
+                StructField("ExtractionDatetime", TimestampType())
     ])
+
+    
     
     df = df.selectExpr("CAST(value AS STRING)")\
-        .select( from_json( col("value"), schema ).alias("data") )\
+        .select( from_json( col("value"), schema ).alias("bp") )\
         .select(
-        col("data.Id"),
-        col("data.CommonName"),
-        col("data.Lat"),
-        col("data.Lon"),
-        col("data.Installed"),
-        col("data.Locked"),
-        col("data.NbBikes").cast(IntegerType()).alias("NbBikes"),
-        col("data.NbEmptyDocks").cast(IntegerType()).alias("NbEmptyDocks"),
-        col("data.NbDocks").cast(IntegerType()).alias("NbDocks"),
-        (col("data.NbDocks") - col("data.NbBikes") + col("data.NbEmptyDocks")).cast(IntegerType()).alias("NbBrokenDocks"),
-        col("data.NbEBikes").cast(IntegerType()).alias("NbEBikes"),
-        col("data.ExtractedDatetime")
+        col("bp.Id"),
+        col("bp.CommonName"),
+        col("bp.Lat"),
+        col("bp.Lon"),
+        col("bp.Installed"),
+        col("bp.Locked"),
+        col("bp.NbBikes").alias("NbBikes"),
+        col("bp.NbEmptyDocks").alias("NbEmptyDocks"),
+        col("bp.NbDocks").alias("NbDocks"),
+        col("bp.NbEBikes").alias("NbEBikes"),
+        (col("bp.NbDocks") - (col("bp.NbBikes") + col("bp.NbEmptyDocks")) ).alias("NbBrokenDocks"),
+        col("bp.ExtractionDatetime")
     ) 
+        # .select("bp.*")\
     
     logger.info("Data processed in spark successfully")
     return df
