@@ -1,1 +1,0 @@
-kafka-topics.sh --bootstrap-server $BROKER1:$PORT1 --create --topic $TOPIC_NAME --replication-factor 1 --partitions 1

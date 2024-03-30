@@ -1,6 +1,7 @@
-from .utils import logger
+from ..utils import logger
 from pyspark.sql.types import StructType,StructField,IntegerType,StringType, TimestampType
 from pyspark.sql.functions import from_json,col
+from .realtime_metrics import *
 
 def process(df):
     """Process data received from kafka"""     
@@ -36,8 +37,6 @@ def process(df):
         col("bp.NbEBikes").alias("NbEBikes"),
         (col("bp.NbDocks") - (col("bp.NbBikes") + col("bp.NbEmptyDocks")) ).alias("NbBrokenDocks"),
         col("bp.ExtractionDatetime")
-    ) 
-        # .select("bp.*")\
-    
-    logger.info("Data processed in spark successfully")
+    )
+
     return df

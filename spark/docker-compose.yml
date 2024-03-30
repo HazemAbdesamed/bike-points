@@ -14,6 +14,6 @@ services:
       volumes:
         - ./data-processing:/opt/bitnami/spark/data-processing
         - ./requirements.txt:/opt/bitnami/spark/requirements.txt
-        - spark-data:/opt/bitnami/spark/data
+        - spark-data:$SPARK_VOLUME_PATH
       networks:
         - spark_data-network

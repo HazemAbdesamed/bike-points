@@ -11,7 +11,7 @@ services:
       volumes:
         - ./config/entrypoint.sh:/entrypoint.sh
         - ./scripts:/scripts
-        - kafka-data:/var/lib/kafka/data
+        - kafka-data:$KAFKA_VOLUME_PATH
       networks:
         - airflow_data-network
         - spark_data-network

@@ -4,12 +4,12 @@ from src.extraction import get_bikepoints_from_api
 from src.preprocessing import select_fields
 from src.producing import produce
 
-TOPIC_NAME = os.environ.get("TOPIC_NAME")
+TOPIC_DATA = os.environ.get("TOPIC_DATA")
 BROKER1 = os.environ.get("BROKER1")
 PORT1 = os.environ.get("PORT1")
 
 bootstrap_servers = [f'{BROKER1}:{PORT1}']
-kafka_topic = f'{TOPIC_NAME}'
+kafka_topic = f'{TOPIC_DATA}'
 
 def main():
 

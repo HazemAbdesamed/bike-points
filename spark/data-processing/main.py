@@ -1,7 +1,7 @@
 from src.utils import create_spark_session
-from src.consuming import consume
-from src.processing import process
-from src.loading import streaming
+from src.speed_layer.consuming import consume
+from src.speed_layer.processing import process
+from src.speed_layer.loading import streaming
 
 def main():
     # Create a spark session
@@ -14,13 +14,7 @@ def main():
     bikepoints_processed = process(bikepoints)
 
     # Launch the streaming process and load the data
-    streaming(bikepoints_processed)
+    streaming(bikepoints_processed, spark_session)
 
 if __name__ == "__main__":
-    main()    
-
-
-
-      
-    
-    
+    main()

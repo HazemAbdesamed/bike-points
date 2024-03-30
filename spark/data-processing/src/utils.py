@@ -4,7 +4,7 @@ from pyspark.sql import SparkSession
 
 # Create the logger for spark part
 logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s:%(funcName)s:%(levelname)s:%(message)s')
+                    format='%(asctime)s:%(filename)s:%(funcName)s:%(levelname)s:%(message)s')
 
 logger = logging.getLogger("kafka_spark")
 
