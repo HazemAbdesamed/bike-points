@@ -11,8 +11,10 @@ services:
       env_file:
         - ./.env
         - ../kafka/.env
+        - ../cassandra/.env
       volumes:
         - ./data-processing:/opt/bitnami/spark/data-processing
+        - ./config/entrypoint.sh:/opt/bitnami/scripts/spark/entrypoint.sh
         - ./requirements.txt:/opt/bitnami/spark/requirements.txt
         - spark-data:$SPARK_VOLUME_PATH
       networks:

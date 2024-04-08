@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  cassandra:
+      image: bitnami/cassandra:4.1
+      container_name: cassandra
+      hostname: cassandra
+      env_file:
+        -  ./.env
+      environment:
+        - MAX_HEAP_SIZE=512M
+        - HEAP_NEWSIZE=100M
+        - CASSANDRA_USER=$CASSANDRA_USER
+        - CASSANDRA_PASSWORD=$CASSANDRA_PASSWORD
+      volumes:
+        - ./config/entrypoint.sh:/opt/bitnami/scripts/cassandra/entrypoint.sh
+        - ./scripts:/scripts
+        - cassandra-data:$CASSANDRA_VOLUME_PATH
+      networks:
+          - spark_data-network
