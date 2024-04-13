@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+	<info organisation="com.datastax.oss"
+		module="java-driver-mapper-runtime"
+		revision="4.13.0"
+		status="release"
+		publication="20210730150251"
+	>
+		<license name="Apache 2" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
+		<description homepage="" />
+		<m:properties__reactive-streams.version>1.0.3</m:properties__reactive-streams.version>
+		<m:properties__netty.version>4.1.60.Final</m:properties__netty.version>
+		<m:properties__felix.version>6.0.3</m:properties__felix.version>
+		<m:properties__jersey.version>2.28</m:properties__jersey.version>
+		<m:properties__jax-rs.version>2.1.1</m:properties__jax-rs.version>
+		<m:properties__legacy-jackson.version>1.9.12</m:properties__legacy-jackson.version>
+		<m:properties__rxjava.version>2.2.2</m:properties__rxjava.version>
+		<m:properties__skipUnitTests>${skipTests}</m:properties__skipUnitTests>
+		<m:properties__jackson.version>2.12.2</m:properties__jackson.version>
+		<m:properties__esri.version>1.2.1</m:properties__esri.version>
+		<m:properties__snappy.version>1.1.7.3</m:properties__snappy.version>
+		<m:properties__surefire.version>2.22.2</m:properties__surefire.version>
+		<m:properties__jsr353-ri.version>1.1.4</m:properties__jsr353-ri.version>
+		<m:properties__slf4j.version>1.7.26</m:properties__slf4j.version>
+		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
+		<m:properties__assertj.version>3.19.0</m:properties__assertj.version>
+		<m:properties__junit.version>4.13.2</m:properties__junit.version>
+		<m:properties__hk2.version>2.5.0</m:properties__hk2.version>
+		<m:properties__skipTests>false</m:properties__skipTests>
+		<m:properties__lz4.version>1.7.1</m:properties__lz4.version>
+		<m:properties__logback.version>1.2.3</m:properties__logback.version>
+		<m:properties__json.version>20210307</m:properties__json.version>
+		<m:properties__simulacron.version>0.11.0</m:properties__simulacron.version>
+		<m:properties__metrics.version>4.1.18</m:properties__metrics.version>
+		<m:properties__tinkerpop.version>3.4.10</m:properties__tinkerpop.version>
+		<m:properties__project.reporting.outputEncoding>UTF-8</m:properties__project.reporting.outputEncoding>
+		<m:properties__graalapi.version>21.0.0.2</m:properties__graalapi.version>
+		<m:properties__config.version>1.4.1</m:properties__config.version>
+		<m:properties__jackson-databind.version>2.12.2</m:properties__jackson-databind.version>
+		<m:properties__pax-exam.version>4.13.4</m:properties__pax-exam.version>
+		<m:properties__apacheds.version>2.0.0-M19</m:properties__apacheds.version>
+		<m:properties__hdrhistogram.version>2.1.12</m:properties__hdrhistogram.version>
+		<m:properties__awaitility.version>4.0.3</m:properties__awaitility.version>
+		<m:properties__jsr353-api.version>1.1.4</m:properties__jsr353-api.version>
+		<m:properties__osgi.version>6.0.0</m:properties__osgi.version>
+		<m:properties__commons-exec.version>1.3</m:properties__commons-exec.version>
+		<m:dependency.management__com.datastax.oss__java-driver-core__version>4.13.0</m:dependency.management__com.datastax.oss__java-driver-core__version>
+		<m:dependency.management__io.netty__netty-handler__version>4.1.60.Final</m:dependency.management__io.netty__netty-handler__version>
+		<m:dependency.management__com.google.guava__guava__version>25.1-jre</m:dependency.management__com.google.guava__guava__version>
+		<m:dependency.management__com.typesafe__config__version>1.4.1</m:dependency.management__com.typesafe__config__version>
+		<m:dependency.management__org.slf4j__slf4j-api__version>1.7.26</m:dependency.management__org.slf4j__slf4j-api__version>
+		<m:dependency.management__ch.qos.logback__logback-classic__version>1.2.3</m:dependency.management__ch.qos.logback__logback-classic__version>
+		<m:dependency.management__org.xerial.snappy__snappy-java__version>1.1.7.3</m:dependency.management__org.xerial.snappy__snappy-java__version>
+		<m:dependency.management__org.lz4__lz4-java__version>1.7.1</m:dependency.management__org.lz4__lz4-java__version>
+		<m:dependency.management__com.github.jnr__jnr-posix__version>3.1.5</m:dependency.management__com.github.jnr__jnr-posix__version>
+		<m:dependency.management__io.dropwizard.metrics__metrics-core__version>4.1.18</m:dependency.management__io.dropwizard.metrics__metrics-core__version>
+		<m:dependency.management__org.hdrhistogram__HdrHistogram__version>2.1.12</m:dependency.management__org.hdrhistogram__HdrHistogram__version>
+		<m:dependency.management__com.esri.geometry__esri-geometry-api__version>1.2.1</m:dependency.management__com.esri.geometry__esri-geometry-api__version>
+		<m:dependency.management__org.json__json__version>20210307</m:dependency.management__org.json__json__version>
+		<m:dependency.management__org.apache.tinkerpop__gremlin-core__version>3.4.10</m:dependency.management__org.apache.tinkerpop__gremlin-core__version>
+		<m:dependency.management__org.apache.tinkerpop__gremlin-core__exclusion_0>org.yaml__snakeyaml</m:dependency.management__org.apache.tinkerpop__gremlin-core__exclusion_0>
+		<m:dependency.management__org.apache.tinkerpop__gremlin-core__exclusion_1>com.carrotsearch__hppc</m:dependency.management__org.apache.tinkerpop__gremlin-core__exclusion_1>
+		<m:dependency.management__org.apache.tinkerpop__gremlin-core__exclusion_2>com.jcabi__*</m:dependency.management__org.apache.tinkerpop__gremlin-core__exclusion_2>
+		<m:dependency.management__org.apache.tinkerpop__gremlin-core__exclusion_3>net.objecthunter__exp4j</m:dependency.management__org.apache.tinkerpop__gremlin-core__exclusion_3>
+		<m:dependency.management__org.apache.tinkerpop__tinkergraph-gremlin__version>3.4.10</m:dependency.management__org.apache.tinkerpop__tinkergraph-gremlin__version>
+		<m:dependency.management__org.reactivestreams__reactive-streams__version>1.0.3</m:dependency.management__org.reactivestreams__reactive-streams__version>
+		<m:dependency.management__org.reactivestreams__reactive-streams-tck__version>1.0.3</m:dependency.management__org.reactivestreams__reactive-streams-tck__version>
+		<m:dependency.management__com.github.stephenc.jcip__jcip-annotations__version>1.0-1</m:dependency.management__com.github.stephenc.jcip__jcip-annotations__version>
+		<m:dependency.management__com.github.spotbugs__spotbugs-annotations__version>3.1.12</m:dependency.management__com.github.spotbugs__spotbugs-annotations__version>
+		<m:dependency.management__com.squareup__javapoet__version>1.13.0</m:dependency.management__com.squareup__javapoet__version>
+		<m:dependency.management__junit__junit__version>4.13.2</m:dependency.management__junit__junit__version>
+		<m:dependency.management__com.tngtech.java__junit-dataprovider__version>1.13.1</m:dependency.management__com.tngtech.java__junit-dataprovider__version>
+		<m:dependency.management__org.assertj__assertj-core__version>3.19.0</m:dependency.management__org.assertj__assertj-core__version>
+		<m:dependency.management__org.mockito__mockito-core__version>2.28.2</m:dependency.management__org.mockito__mockito-core__version>
+		<m:dependency.management__io.reactivex.rxjava2__rxjava__version>2.2.2</m:dependency.management__io.reactivex.rxjava2__rxjava__version>
+		<m:dependency.management__com.datastax.oss.simulacron__simulacron-native-server__version>0.11.0</m:dependency.management__com.datastax.oss.simulacron__simulacron-native-server__version>
+		<m:dependency.management__org.apache.commons__commons-exec__version>1.3</m:dependency.management__org.apache.commons__commons-exec__version>
+		<m:dependency.management__org.osgi__org.osgi.core__version>6.0.0</m:dependency.management__org.osgi__org.osgi.core__version>
+		<m:dependency.management__org.apache.felix__org.apache.felix.framework__version>6.0.3</m:dependency.management__org.apache.felix__org.apache.felix.framework__version>
+		<m:dependency.management__org.ops4j.pax.exam__pax-exam-junit4__version>4.13.4</m:dependency.management__org.ops4j.pax.exam__pax-exam-junit4__version>
+		<m:dependency.management__org.ops4j.pax.exam__pax-exam-container-forked__version>4.13.4</m:dependency.management__org.ops4j.pax.exam__pax-exam-container-forked__version>
+		<m:dependency.management__org.ops4j.pax.exam__pax-exam-link-mvn__version>4.13.4</m:dependency.management__org.ops4j.pax.exam__pax-exam-link-mvn__version>
+		<m:dependency.management__org.ops4j.pax.url__pax-url-wrap__version>2.6.3</m:dependency.management__org.ops4j.pax.url__pax-url-wrap__version>
+		<m:dependency.management__org.ops4j.pax.url__pax-url-reference__version>2.6.2</m:dependency.management__org.ops4j.pax.url__pax-url-reference__version>
+		<m:dependency.management__org.glassfish__javax.json__version>1.1.4</m:dependency.management__org.glassfish__javax.json__version>
+		<m:dependency.management__javax.json__javax.json-api__version>1.1.4</m:dependency.management__javax.json__javax.json-api__version>
+		<m:dependency.management__javax.ws.rs__javax.ws.rs-api__version>2.1.1</m:dependency.management__javax.ws.rs__javax.ws.rs-api__version>
+		<m:dependency.management__org.glassfish.jersey.core__jersey-server__version>2.28</m:dependency.management__org.glassfish.jersey.core__jersey-server__version>
+		<m:dependency.management__org.glassfish.jersey.media__jersey-media-json-jackson__version>2.28</m:dependency.management__org.glassfish.jersey.media__jersey-media-json-jackson__version>
+		<m:dependency.management__org.glassfish.jersey.containers__jersey-container-jdk-http__version>2.28</m:dependency.management__org.glassfish.jersey.containers__jersey-container-jdk-http__version>
+		<m:dependency.management__org.glassfish.jersey.inject__jersey-hk2__version>2.28</m:dependency.management__org.glassfish.jersey.inject__jersey-hk2__version>
+		<m:dependency.management__org.glassfish.hk2__hk2-api__version>2.5.0</m:dependency.management__org.glassfish.hk2__hk2-api__version>
+		<m:dependency.management__javax.inject__javax.inject__version>1</m:dependency.management__javax.inject__javax.inject__version>
+		<m:dependency.management__javax.annotation__javax.annotation-api__version>1.3.2</m:dependency.management__javax.annotation__javax.annotation-api__version>
+		<m:dependency.management__com.fasterxml.jackson.core__jackson-core__version>2.12.2</m:dependency.management__com.fasterxml.jackson.core__jackson-core__version>
+		<m:dependency.management__com.fasterxml.jackson.core__jackson-databind__version>2.12.2</m:dependency.management__com.fasterxml.jackson.core__jackson-databind__version>
+		<m:dependency.management__com.google.testing.compile__compile-testing__version>0.19</m:dependency.management__com.google.testing.compile__compile-testing__version>
+		<m:dependency.management__org.awaitility__awaitility__version>4.0.3</m:dependency.management__org.awaitility__awaitility__version>
+		<m:dependency.management__org.testng__testng__version>7.3.0</m:dependency.management__org.testng__testng__version>
+		<m:dependency.management__org.apache.directory.server__apacheds-core__version>2.0.0-M19</m:dependency.management__org.apache.directory.server__apacheds-core__version>
+		<m:dependency.management__org.apache.directory.server__apacheds-core__exclusion_0>org.slf4j__slf4j-log4j12</m:dependency.management__org.apache.directory.server__apacheds-core__exclusion_0>
+		<m:dependency.management__org.apache.directory.server__apacheds-protocol-kerberos__version>2.0.0-M19</m:dependency.management__org.apache.directory.server__apacheds-protocol-kerberos__version>
+		<m:dependency.management__org.apache.directory.server__apacheds-interceptor-kerberos__version>2.0.0-M19</m:dependency.management__org.apache.directory.server__apacheds-interceptor-kerberos__version>
+		<m:dependency.management__org.apache.directory.server__apacheds-protocol-ldap__version>2.0.0-M19</m:dependency.management__org.apache.directory.server__apacheds-protocol-ldap__version>
+		<m:dependency.management__org.apache.directory.server__apacheds-ldif-partition__version>2.0.0-M19</m:dependency.management__org.apache.directory.server__apacheds-ldif-partition__version>
+		<m:dependency.management__org.apache.directory.server__apacheds-jdbm-partition__version>2.0.0-M19</m:dependency.management__org.apache.directory.server__apacheds-jdbm-partition__version>
+		<m:dependency.management__org.apache.directory.api__api-ldap-codec-standalone__version>1.0.0-M26</m:dependency.management__org.apache.directory.api__api-ldap-codec-standalone__version>
+		<m:dependency.management__com.github.tomakehurst__wiremock__version>2.25.0</m:dependency.management__com.github.tomakehurst__wiremock__version>
+		<m:dependency.management__org.graalvm.sdk__graal-sdk__version>21.0.0.2</m:dependency.management__org.graalvm.sdk__graal-sdk__version>
+		<m:dependency.management__org.graalvm.nativeimage__svm__version>21.0.0.2</m:dependency.management__org.graalvm.nativeimage__svm__version>
+		<m:dependency.management__io.micrometer__micrometer-core__version>1.6.5</m:dependency.management__io.micrometer__micrometer-core__version>
+		<m:dependency.management__org.eclipse.microprofile.metrics__microprofile-metrics-api__version>3.0</m:dependency.management__org.eclipse.microprofile.metrics__microprofile-metrics-api__version>
+		<m:dependency.management__io.smallrye__smallrye-metrics__version>3.0.3</m:dependency.management__io.smallrye__smallrye-metrics__version>
+		<m:dependency.management__io.projectreactor__reactor-core__version>3.4.4</m:dependency.management__io.projectreactor__reactor-core__version>
+		<m:dependency.management__io.projectreactor__reactor-test__version>3.4.4</m:dependency.management__io.projectreactor__reactor-test__version>
+		<m:dependency.management__io.projectreactor__reactor-tools__version>3.4.4</m:dependency.management__io.projectreactor__reactor-tools__version>
+		<m:dependency.management__io.projectreactor.addons__reactor-extra__version>3.4.2</m:dependency.management__io.projectreactor.addons__reactor-extra__version>
+		<m:dependency.management__io.projectreactor.addons__reactor-adapter__version>3.4.2</m:dependency.management__io.projectreactor.addons__reactor-adapter__version>
+		<m:dependency.management__io.projectreactor.netty__reactor-netty__version>1.0.5</m:dependency.management__io.projectreactor.netty__reactor-netty__version>
+		<m:dependency.management__io.projectreactor.netty__reactor-netty-core__version>1.0.5</m:dependency.management__io.projectreactor.netty__reactor-netty-core__version>
+		<m:dependency.management__io.projectreactor.netty__reactor-netty-http__version>1.0.5</m:dependency.management__io.projectreactor.netty__reactor-netty-http__version>
+		<m:dependency.management__io.projectreactor.netty__reactor-netty-http-brave__version>1.0.5</m:dependency.management__io.projectreactor.netty__reactor-netty-http-brave__version>
+		<m:dependency.management__io.projectreactor.addons__reactor-pool__version>0.2.3</m:dependency.management__io.projectreactor.addons__reactor-pool__version>
+		<m:dependency.management__io.projectreactor.kafka__reactor-kafka__version>1.3.3</m:dependency.management__io.projectreactor.kafka__reactor-kafka__version>
+		<m:dependency.management__io.projectreactor.rabbitmq__reactor-rabbitmq__version>1.5.2</m:dependency.management__io.projectreactor.rabbitmq__reactor-rabbitmq__version>
+		<m:dependency.management__io.projectreactor.kotlin__reactor-kotlin-extensions__version>1.1.3</m:dependency.management__io.projectreactor.kotlin__reactor-kotlin-extensions__version>
+		<m:dependency.management__io.projectreactor.tools__blockhound__version>1.0.4.RELEASE</m:dependency.management__io.projectreactor.tools__blockhound__version>
+		<m:dependency.management__io.projectreactor.tools__blockhound-junit-platform__version>1.0.4.RELEASE</m:dependency.management__io.projectreactor.tools__blockhound-junit-platform__version>
+		<m:maven.plugins>null__maven-compiler-plugin__null|com.coveo__fmt-maven-plugin__null|au.com.acegi__xml-format-maven-plugin__null|com.mycila__license-maven-plugin__null|org.jacoco__jacoco-maven-plugin__null|null__maven-surefire-plugin__null|null__maven-failsafe-plugin__null|org.sonatype.plugins__nexus-staging-maven-plugin__null|null__maven-source-plugin__null|null__maven-javadoc-plugin__null|null__maven-release-plugin__null|org.apache.felix__maven-bundle-plugin__null|org.revapi__revapi-maven-plugin__null|null__maven-compiler-plugin__null|com.coveo__fmt-maven-plugin__null|au.com.acegi__xml-format-maven-plugin__null|com.mycila__license-maven-plugin__null|org.jacoco__jacoco-maven-plugin__null|null__maven-surefire-plugin__null|null__maven-failsafe-plugin__null|org.sonatype.plugins__nexus-staging-maven-plugin__null|null__maven-source-plugin__null|null__maven-javadoc-plugin__null|null__maven-release-plugin__null|org.apache.felix__maven-bundle-plugin__null|org.revapi__revapi-maven-plugin__null|null__maven-jar-plugin__null|null__maven-surefire-plugin__null|org.apache.felix__maven-bundle-plugin__null|null__maven-dependency-plugin__null</m:maven.plugins>
+		<m:dependency.management__com.datastax.oss__java-driver-core-shaded__version>4.13.0</m:dependency.management__com.datastax.oss__java-driver-core-shaded__version>
+		<m:dependency.management__com.datastax.oss__java-driver-mapper-processor__version>4.13.0</m:dependency.management__com.datastax.oss__java-driver-mapper-processor__version>
+		<m:dependency.management__com.datastax.oss__java-driver-mapper-runtime__version>4.13.0</m:dependency.management__com.datastax.oss__java-driver-mapper-runtime__version>
+		<m:dependency.management__com.datastax.oss__java-driver-query-builder__version>4.13.0</m:dependency.management__com.datastax.oss__java-driver-query-builder__version>
+		<m:dependency.management__com.datastax.oss__java-driver-test-infra__version>4.13.0</m:dependency.management__com.datastax.oss__java-driver-test-infra__version>
+		<m:dependency.management__com.datastax.oss__java-driver-metrics-micrometer__version>4.13.0</m:dependency.management__com.datastax.oss__java-driver-metrics-micrometer__version>
+		<m:dependency.management__com.datastax.oss__java-driver-metrics-microprofile__version>4.13.0</m:dependency.management__com.datastax.oss__java-driver-metrics-microprofile__version>
+		<m:dependency.management__com.datastax.oss__native-protocol__version>1.5.0</m:dependency.management__com.datastax.oss__native-protocol__version>
+		<m:dependency.management__com.datastax.oss__java-driver-shaded-guava__version>25.1-jre-graal-sub-1</m:dependency.management__com.datastax.oss__java-driver-shaded-guava__version>
+	</info>
+	<configurations>
+		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
+		<conf name="master" visibility="public" description="contains only the artifact published by this module itself, with no transitive dependencies"/>
+		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths."/>
+		<conf name="provided" visibility="public" description="this is much like compile, but indicates you expect the JDK or a container to provide it. It is only available on the compilation classpath, and is not transitive."/>
+		<conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile"/>
+		<conf name="test" visibility="public" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime"/>
+		<conf name="system" visibility="public" description="this scope is similar to provided except that you have to provide the JAR which contains it explicitly. The artifact is always available and is not looked up in a repository."/>
+		<conf name="sources" visibility="public" description="this configuration contains the source artifact of this module, if any."/>
+		<conf name="javadoc" visibility="public" description="this configuration contains the javadoc artifact of this module, if any."/>
+		<conf name="optional" visibility="public" description="contains all optional dependencies"/>
+	</configurations>
+	<publications>
+		<artifact name="java-driver-mapper-runtime" type="bundle" ext="jar" conf="master"/>
+	</publications>
+	<dependencies>
+		<dependency org="com.datastax.oss" name="java-driver-core" rev="4.13.0" force="true" conf="compile->compile(*),master(*);runtime->runtime(*);test->runtime(*),master(*)">
+			<artifact name="java-driver-core" type="test-jar" ext="jar" conf="test" m:classifier="tests"/>
+		</dependency>
+		<dependency org="com.datastax.oss" name="java-driver-query-builder" rev="4.13.0" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
+		<dependency org="com.github.stephenc.jcip" name="jcip-annotations" rev="1.0-1" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
+		<dependency org="com.github.spotbugs" name="spotbugs-annotations" rev="3.1.12" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
+		<dependency org="junit" name="junit" rev="4.13.2" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.testng" name="testng" rev="7.3.0" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.reactivestreams" name="reactive-streams-tck" rev="1.0.3" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="io.reactivex.rxjava2" name="rxjava" rev="2.2.2" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.mockito" name="mockito-core" rev="2.28.2" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.assertj" name="assertj-core" rev="3.19.0" force="true" conf="test->runtime(*),master(*)"/>
+		<override org="com.datastax.oss" module="java-driver-core" matcher="exact" rev="4.13.0"/>
+		<override org="io.netty" module="netty-handler" matcher="exact" rev="4.1.60.Final"/>
+		<override org="com.google.guava" module="guava" matcher="exact" rev="25.1-jre"/>
+		<override org="com.typesafe" module="config" matcher="exact" rev="1.4.1"/>
+		<override org="org.slf4j" module="slf4j-api" matcher="exact" rev="1.7.26"/>
+		<override org="ch.qos.logback" module="logback-classic" matcher="exact" rev="1.2.3"/>
+		<override org="org.xerial.snappy" module="snappy-java" matcher="exact" rev="1.1.7.3"/>
+		<override org="org.lz4" module="lz4-java" matcher="exact" rev="1.7.1"/>
+		<override org="com.github.jnr" module="jnr-posix" matcher="exact" rev="3.1.5"/>
+		<override org="io.dropwizard.metrics" module="metrics-core" matcher="exact" rev="4.1.18"/>
+		<override org="org.hdrhistogram" module="HdrHistogram" matcher="exact" rev="2.1.12"/>
+		<override org="com.esri.geometry" module="esri-geometry-api" matcher="exact" rev="1.2.1"/>
+		<override org="org.json" module="json" matcher="exact" rev="20210307"/>
+		<override org="org.apache.tinkerpop" module="gremlin-core" matcher="exact" rev="3.4.10"/>
+		<override org="org.apache.tinkerpop" module="gremlin-core" matcher="exact" rev="3.4.10"/>
+		<override org="org.apache.tinkerpop" module="gremlin-core" matcher="exact" rev="3.4.10"/>
+		<override org="org.apache.tinkerpop" module="gremlin-core" matcher="exact" rev="3.4.10"/>
+		<override org="org.apache.tinkerpop" module="gremlin-core" matcher="exact" rev="3.4.10"/>
+		<override org="org.apache.tinkerpop" module="tinkergraph-gremlin" matcher="exact" rev="3.4.10"/>
+		<override org="org.reactivestreams" module="reactive-streams" matcher="exact" rev="1.0.3"/>
+		<override org="org.reactivestreams" module="reactive-streams-tck" matcher="exact" rev="1.0.3"/>
+		<override org="com.github.stephenc.jcip" module="jcip-annotations" matcher="exact" rev="1.0-1"/>
+		<override org="com.github.spotbugs" module="spotbugs-annotations" matcher="exact" rev="3.1.12"/>
+		<override org="com.squareup" module="javapoet" matcher="exact" rev="1.13.0"/>
+		<override org="junit" module="junit" matcher="exact" rev="4.13.2"/>
+		<override org="com.tngtech.java" module="junit-dataprovider" matcher="exact" rev="1.13.1"/>
+		<override org="org.assertj" module="assertj-core" matcher="exact" rev="3.19.0"/>
+		<override org="org.mockito" module="mockito-core" matcher="exact" rev="2.28.2"/>
+		<override org="io.reactivex.rxjava2" module="rxjava" matcher="exact" rev="2.2.2"/>
+		<override org="com.datastax.oss.simulacron" module="simulacron-native-server" matcher="exact" rev="0.11.0"/>
+		<override org="org.apache.commons" module="commons-exec" matcher="exact" rev="1.3"/>
+		<override org="org.osgi" module="org.osgi.core" matcher="exact" rev="6.0.0"/>
+		<override org="org.apache.felix" module="org.apache.felix.framework" matcher="exact" rev="6.0.3"/>
+		<override org="org.ops4j.pax.exam" module="pax-exam-junit4" matcher="exact" rev="4.13.4"/>
+		<override org="org.ops4j.pax.exam" module="pax-exam-container-forked" matcher="exact" rev="4.13.4"/>
+		<override org="org.ops4j.pax.exam" module="pax-exam-link-mvn" matcher="exact" rev="4.13.4"/>
+		<override org="org.ops4j.pax.url" module="pax-url-wrap" matcher="exact" rev="2.6.3"/>
+		<override org="org.ops4j.pax.url" module="pax-url-reference" matcher="exact" rev="2.6.2"/>
+		<override org="org.glassfish" module="javax.json" matcher="exact" rev="1.1.4"/>
+		<override org="javax.json" module="javax.json-api" matcher="exact" rev="1.1.4"/>
+		<override org="javax.ws.rs" module="javax.ws.rs-api" matcher="exact" rev="2.1.1"/>
+		<override org="org.glassfish.jersey.core" module="jersey-server" matcher="exact" rev="2.28"/>
+		<override org="org.glassfish.jersey.media" module="jersey-media-json-jackson" matcher="exact" rev="2.28"/>
+		<override org="org.glassfish.jersey.containers" module="jersey-container-jdk-http" matcher="exact" rev="2.28"/>
+		<override org="org.glassfish.jersey.inject" module="jersey-hk2" matcher="exact" rev="2.28"/>
+		<override org="org.glassfish.hk2" module="hk2-api" matcher="exact" rev="2.5.0"/>
+		<override org="javax.inject" module="javax.inject" matcher="exact" rev="1"/>
+		<override org="javax.annotation" module="javax.annotation-api" matcher="exact" rev="1.3.2"/>
+		<override org="com.fasterxml.jackson.core" module="jackson-core" matcher="exact" rev="2.12.2"/>
+		<override org="com.fasterxml.jackson.core" module="jackson-databind" matcher="exact" rev="2.12.2"/>
+		<override org="com.google.testing.compile" module="compile-testing" matcher="exact" rev="0.19"/>
+		<override org="org.awaitility" module="awaitility" matcher="exact" rev="4.0.3"/>
+		<override org="org.testng" module="testng" matcher="exact" rev="7.3.0"/>
+		<override org="org.apache.directory.server" module="apacheds-core" matcher="exact" rev="2.0.0-M19"/>
+		<override org="org.apache.directory.server" module="apacheds-core" matcher="exact" rev="2.0.0-M19"/>
+		<override org="org.apache.directory.server" module="apacheds-protocol-kerberos" matcher="exact" rev="2.0.0-M19"/>
+		<override org="org.apache.directory.server" module="apacheds-interceptor-kerberos" matcher="exact" rev="2.0.0-M19"/>
+		<override org="org.apache.directory.server" module="apacheds-protocol-ldap" matcher="exact" rev="2.0.0-M19"/>
+		<override org="org.apache.directory.server" module="apacheds-ldif-partition" matcher="exact" rev="2.0.0-M19"/>
+		<override org="org.apache.directory.server" module="apacheds-jdbm-partition" matcher="exact" rev="2.0.0-M19"/>
+		<override org="org.apache.directory.api" module="api-ldap-codec-standalone" matcher="exact" rev="1.0.0-M26"/>
+		<override org="com.github.tomakehurst" module="wiremock" matcher="exact" rev="2.25.0"/>
+		<override org="org.graalvm.sdk" module="graal-sdk" matcher="exact" rev="21.0.0.2"/>
+		<override org="org.graalvm.nativeimage" module="svm" matcher="exact" rev="21.0.0.2"/>
+		<override org="io.micrometer" module="micrometer-core" matcher="exact" rev="1.6.5"/>
+		<override org="org.eclipse.microprofile.metrics" module="microprofile-metrics-api" matcher="exact" rev="3.0"/>
+		<override org="io.smallrye" module="smallrye-metrics" matcher="exact" rev="3.0.3"/>
+		<override org="io.projectreactor" module="reactor-core" matcher="exact" rev="3.4.4"/>
+		<override org="io.projectreactor" module="reactor-test" matcher="exact" rev="3.4.4"/>
+		<override org="io.projectreactor" module="reactor-tools" matcher="exact" rev="3.4.4"/>
+		<override org="io.projectreactor.addons" module="reactor-extra" matcher="exact" rev="3.4.2"/>
+		<override org="io.projectreactor.addons" module="reactor-adapter" matcher="exact" rev="3.4.2"/>
+		<override org="io.projectreactor.netty" module="reactor-netty" matcher="exact" rev="1.0.5"/>
+		<override org="io.projectreactor.netty" module="reactor-netty-core" matcher="exact" rev="1.0.5"/>
+		<override org="io.projectreactor.netty" module="reactor-netty-http" matcher="exact" rev="1.0.5"/>
+		<override org="io.projectreactor.netty" module="reactor-netty-http-brave" matcher="exact" rev="1.0.5"/>
+		<override org="io.projectreactor.addons" module="reactor-pool" matcher="exact" rev="0.2.3"/>
+		<override org="io.projectreactor.kafka" module="reactor-kafka" matcher="exact" rev="1.3.3"/>
+		<override org="io.projectreactor.rabbitmq" module="reactor-rabbitmq" matcher="exact" rev="1.5.2"/>
+		<override org="io.projectreactor.kotlin" module="reactor-kotlin-extensions" matcher="exact" rev="1.1.3"/>
+		<override org="io.projectreactor.tools" module="blockhound" matcher="exact" rev="1.0.4.RELEASE"/>
+		<override org="io.projectreactor.tools" module="blockhound-junit-platform" matcher="exact" rev="1.0.4.RELEASE"/>
+		<override org="com.datastax.oss" module="java-driver-core" matcher="exact" rev="4.13.0"/>
+		<override org="com.datastax.oss" module="java-driver-core-shaded" matcher="exact" rev="4.13.0"/>
+		<override org="com.datastax.oss" module="java-driver-mapper-processor" matcher="exact" rev="4.13.0"/>
+		<override org="com.datastax.oss" module="java-driver-mapper-runtime" matcher="exact" rev="4.13.0"/>
+		<override org="com.datastax.oss" module="java-driver-query-builder" matcher="exact" rev="4.13.0"/>
+		<override org="com.datastax.oss" module="java-driver-test-infra" matcher="exact" rev="4.13.0"/>
+		<override org="com.datastax.oss" module="java-driver-metrics-micrometer" matcher="exact" rev="4.13.0"/>
+		<override org="com.datastax.oss" module="java-driver-metrics-microprofile" matcher="exact" rev="4.13.0"/>
+		<override org="com.datastax.oss" module="native-protocol" matcher="exact" rev="1.5.0"/>
+		<override org="com.datastax.oss" module="java-driver-shaded-guava" matcher="exact" rev="25.1-jre-graal-sub-1"/>
+	</dependencies>
+</ivy-module>

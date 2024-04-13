@@ -3,7 +3,9 @@ version: '3.8'
 services:
 
   spark:
-      image: bitnami/spark:3.5.0
+      build:
+        context: .
+        dockerfile: Dockerfile
       container_name: spark
       hostname: spark
       ports:
@@ -14,7 +16,6 @@ services:
         - ../cassandra/.env
       volumes:
         - ./data-processing:/opt/bitnami/spark/data-processing
-        - ./config/entrypoint.sh:/opt/bitnami/scripts/spark/entrypoint.sh
         - ./requirements.txt:/opt/bitnami/spark/requirements.txt
         - spark-data:$SPARK_VOLUME_PATH
       networks:

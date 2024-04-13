@@ -3,10 +3,10 @@ from kafka import KafkaProducer
 from src.utils import logger
 
 
-TOPIC_METRICS = os.environ.get("TOPIC_METRICS")
+SPARK_VOLUME_PATH = os.environ.get("SPARK_VOLUME_PATH")
 BROKER1 = os.environ.get("BROKER1")
 PORT1 = os.environ.get("PORT1")
-SPARK_VOLUME_PATH = os.environ.get("SPARK_VOLUME_PATH")
+TOPIC_METRICS = os.environ.get("TOPIC_METRICS")
 
 
 producer = KafkaProducer(bootstrap_servers= [f'{BROKER1}:{PORT1}'])
@@ -22,7 +22,7 @@ def streaming(df):
             .option("kafka.bootstrap.servers", f"{BROKER1}:{PORT1}") \
             .option("topic", TOPIC_METRICS) \
             .option('checkpointLocation', SPARK_VOLUME_PATH) \
-            .outputMode('update') \
+            .outputMode('append') \
             .start() \
             .awaitTermination()
         

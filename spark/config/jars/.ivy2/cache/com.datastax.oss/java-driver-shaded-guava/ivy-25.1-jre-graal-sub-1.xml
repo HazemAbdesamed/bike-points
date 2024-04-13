@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+	<info organisation="com.datastax.oss"
+		module="java-driver-shaded-guava"
+		revision="25.1-jre-graal-sub-1"
+		status="release"
+		publication="20200605085756"
+	>
+		<license name="Apache 2" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
+		<description homepage="https://github.com/datastax/java-driver-shaded-guava">
+		Shaded Guava artifact for use in the DataStax Java driver for Apache Cassandra®
+		</description>
+		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
+		<m:maven.plugins>null__maven-compiler-plugin__3.6.1|null__maven-shade-plugin__3.0.0|null__maven-clean-plugin__3.1.0|null__maven-dependency-plugin__null|org.apache.felix__maven-bundle-plugin__3.5.0|null__maven-assembly-plugin__null|null__maven-jar-plugin__3.0.2|null__maven-release-plugin__2.5.3|org.sonatype.plugins__nexus-staging-maven-plugin__1.6.8</m:maven.plugins>
+	</info>
+	<configurations>
+		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
+		<conf name="master" visibility="public" description="contains only the artifact published by this module itself, with no transitive dependencies"/>
+		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths."/>
+		<conf name="provided" visibility="public" description="this is much like compile, but indicates you expect the JDK or a container to provide it. It is only available on the compilation classpath, and is not transitive."/>
+		<conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile"/>
+		<conf name="test" visibility="public" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime"/>
+		<conf name="system" visibility="public" description="this scope is similar to provided except that you have to provide the JAR which contains it explicitly. The artifact is always available and is not looked up in a repository."/>
+		<conf name="sources" visibility="public" description="this configuration contains the source artifact of this module, if any."/>
+		<conf name="javadoc" visibility="public" description="this configuration contains the javadoc artifact of this module, if any."/>
+		<conf name="optional" visibility="public" description="contains all optional dependencies"/>
+	</configurations>
+	<publications>
+		<artifact name="java-driver-shaded-guava" type="jar" ext="jar" conf="master"/>
+	</publications>
+	<dependencies>
+		<dependency org="org.graalvm.nativeimage" name="svm" rev="20.0.0" force="true" conf="provided->compile(*),provided(*),runtime(*),master(*)">
+			<exclude org="org.graalvm.nativeimage" module="svm-hosted-native-linux-amd64" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.graalvm.nativeimage" module="svm-hosted-native-darwin-amd64" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.graalvm.nativeimage" module="svm-hosted-native-windows-amd64" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.graalvm.sdk" module="graal-sdk" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.graalvm.nativeimage" module="objectfile" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.graalvm.nativeimage" module="pointsto" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.graalvm.truffle" module="truffle-nfi" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.graalvm.compiler" module="compiler" name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
+	</dependencies>
+</ivy-module>
