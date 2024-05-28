@@ -1,6 +1,7 @@
-from src.utils import logger
+import utils
 import os
 
+logger = utils.logger
 SPARK_VOLUME_PATH = os.getenv("SPARK_VOLUME_PATH")
 
 def load(df):

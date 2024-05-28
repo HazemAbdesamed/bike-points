@@ -30,10 +30,4 @@ if [[ "$*" = *"/opt/bitnami/scripts/cassandra/run.sh"* || "$*" = *"/run.sh"* ]];
 fi
 
 echo ""
-exec "$@"  &
-
-# Execute CQL script to create the keyspace and the table if they don't exist 
-echo "setting up the db and the table if they don't exist"
-cqlsh -u $CASSANDRA_USER -p $CASSANDRA_PASSWORD  -f /scripts/init.cql
-
-tail -f /dev/null
+exec "$@"

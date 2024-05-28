@@ -1,5 +1,7 @@
 import os
-from src.utils import logger
+import utils
+
+logger = utils.logger
 
 TOPIC_DATA = os.environ.get("TOPIC_DATA")
 BROKER1=os.environ.get("BROKER1")

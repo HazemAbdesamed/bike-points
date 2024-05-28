@@ -16,6 +16,9 @@ set -o pipefail
 # Load Spark environment settings
 . /opt/bitnami/scripts/spark-env.sh
 
+# copy all env variables to /tmp/set_env_vars.sh so that they can be accessible through ssh
+env | grep -v '^#' | awk -F= '{print "export " $1 "=" $2}' > /tmp/set_env_vars.sh
+
 print_welcome_page
 
 if [ ! $EUID -eq 0 ] && [ -e "$LIBNSS_WRAPPER_PATH" ]; then
@@ -30,14 +33,8 @@ if [[ "$1" = "/opt/bitnami/scripts/spark/run.sh" ]]; then
     info "** Spark setup finished! **"
 fi
 
-# install pip packages
-if [ -e "/opt/bitnami/spark/requirements.txt" ]; then
-  info "Installing packages from requirements.txt"
-  $(command -v pip) install --user -r /opt/bitnami/spark/requirements.txt
-  info "Packages from requirements.txt have been installed"
-fi
-
-
+# start ssh service
+sudo service ssh start
 
 # ref: https://spark.apache.org/docs/latest/running-on-kubernetes.html
 # inspired by https://github.com/apache/spark/blob/master/resource-managers/kubernetes/docker/src/main/dockerfiles/spark/entrypoint.sh
@@ -85,6 +82,8 @@ case "$1" in
     CMD=("$@")
     ;;
 esac
+
+
 
 echo ""
 exec "${CMD[@]}"

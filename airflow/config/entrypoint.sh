@@ -265,13 +265,19 @@ fi
 if [[ -n "${_AIRFLOW_WWW_USER_CREATE=}" ]] ; then 
     create_www_user
 elif [[ -z "${_AIRFLOW_WWW_USER_CREATE=}" ]] ; then
-    airflow users create \
-       --username "${_AIRFLOW_WWW_USER_USERNAME="admin"}" \
-       --firstname "${_AIRFLOW_WWW_USER_FIRSTNAME="Hazem"}" \
-       --lastname "${_AIRFLOW_WWW_USER_LASTNAME="Damdoum"}" \
-       --email "${_AIRFLOW_WWW_USER_EMAIL="airflowadmin@example.com"}" \
-       --role "${_AIRFLOW_WWW_USER_ROLE="Admin"}" \
-       --password "${_AIRFLOW_WWW_USER_PASSWORD="admin"}" || true   
+
+    if airflow users list | grep 'admin' > /dev/null 2>&1; then
+      echo "User 'admin' already exists."
+    else
+      echo "User 'admin' does not exist. Creating it.."
+      airflow users create \
+      --username "${_AIRFLOW_WWW_USER_USERNAME="admin"}" \
+      --firstname "${_AIRFLOW_WWW_USER_FIRSTNAME="Hazem"}" \
+      --lastname "${_AIRFLOW_WWW_USER_LASTNAME="Damdoum"}" \
+      --email "${_AIRFLOW_WWW_USER_EMAIL="airflowadmin@example.com"}" \
+      --role "${_AIRFLOW_WWW_USER_ROLE="Admin"}" \
+      --password "${_AIRFLOW_WWW_USER_PASSWORD="admin"}" || true   
+   fi
 
 fi
 
@@ -304,10 +310,27 @@ if [[ ${AIRFLOW_COMMAND} =~ ^(scheduler|celery)$ ]] \
     wait_for_celery_broker
 fi
 
-# install pip packages
-if [ -e "/opt/airflow/requirements.txt" ]; then
-  $(command -v pip) install --user -r requirements.txt
+
+# create the ssh connection to spark if it does not exists
+if airflow connections get 'ssh_spark_conn' > /dev/null 2>&1; then
+  echo "Connection 'ssh_spark_conn' already exists."
+else
+  echo "Connection 'ssh_spark_conn' does not exist. Creating it.."
+  airflow connections add 'ssh_spark_conn' \
+    --conn-type 'ssh' \
+    --conn-host 'spark' \
+    --conn-login 'spark' \
+    --conn-extra '{"key_file":"/home/airflow/.ssh/id_rsa"}'
 fi
+
+# create and send ssh key to spark
+sudo rm ~/.ssh/id_rsa && sudo rm ~/.ssh/id_rsa.pub
+# change ownership of airflow .ssh to airflow user 
+sudo chown airflow ~/.ssh
+
+ssh-keygen -t rsa -b 4096 -N "" -f /home/airflow/.ssh/id_rsa
+echo $SPARK_SYSTEM_PASSWORD
+sshpass -p $SPARK_SYSTEM_PASSWORD ssh-copy-id -o StrictHostKeyChecking=no spark@spark
 
 airflow scheduler &
 airflow webserver

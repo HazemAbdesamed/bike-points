@@ -21,7 +21,7 @@ def create_spark_session():
     # packages  = ['org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0', 
     #              'org.apache.kafka:kafka-clients:3.5.0',
     #              'com.datastax.spark:spark-cassandra-connector_2.12:3.5.0']
-    #org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.kafka:kafka-clients:3.5.0,com.datastax.spark:spark-cassandra-connector_2.12:3.5.0
+#org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.kafka:kafka-clients:3.5.0,com.datastax.spark:spark-cassandra-connector_2.12:3.5.0
 
     try:
         spark = SparkSession \

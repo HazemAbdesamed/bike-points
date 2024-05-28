@@ -1,0 +1,6 @@
+Host spark
+    Hostname spark
+    Port 22
+    User $SPARK_USER
+    IdentityFile /home/airflow/.ssh/id_rsa
+    StrictHostKeyChecking no

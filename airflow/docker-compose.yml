@@ -14,7 +14,11 @@ services:
       - airflow_data-network
 
   airflow:
-    image: apache/airflow:2.6.0-python3.9
+    build:
+        context: .
+        dockerfile: Dockerfile
+        args:
+          - SPARK_SYSTEM_PASSWORD=$SPARK_SYSTEM_PASSWORD
     container_name: airflow
     hostname: airflow
     depends_on:
@@ -24,13 +28,12 @@ services:
     env_file:
       -  ./.env
       - ../kafka/.env
+      - ../spark/.env
     volumes:
       - ./dags:/opt/airflow/dags
       - ./produce-to-kafka:/opt/airflow/produce-to-kafka
       - ./config/airflow.cfg:/opt/airflow/airflow.cfg
       - ./config/entrypoint.sh:/entrypoint
-      - ./requirements.txt:/opt/airflow/requirements.txt
     networks:
       - airflow_data-network
-         
 

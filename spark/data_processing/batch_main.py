@@ -1,11 +1,11 @@
-from utils import create_spark_session
+import utils
 from batch_layer.consuming import consume
 from batch_layer.processing import process
 from batch_layer.loading import load
 
 def main():
     # Create a spark session
-    spark_session = create_spark_session()
+    spark_session = utils.create_spark_session()
 
     # Consume data from kafka
     bikepoints = consume(spark_session)
