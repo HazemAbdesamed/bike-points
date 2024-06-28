@@ -1,5 +1,5 @@
 import os
-from src.utils import logger
+from utils import logger
 
 TOPIC_DATA = os.environ.get("TOPIC_DATA")
 BROKER1=os.environ.get("BROKER1")
@@ -12,7 +12,6 @@ def consume(spark_session):
                 .format("kafka")\
                 .option("kafka.bootstrap.servers", f"{BROKER1}:{PORT1}")\
                 .option("subscribe", TOPIC_DATA)\
-                .option("startingOffsets", "earliest") \
                 .load()
         logger.info("Data consumed from kafka successfully")
         return df

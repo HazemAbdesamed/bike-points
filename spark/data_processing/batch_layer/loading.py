@@ -11,7 +11,6 @@ def load(df):
         df.write \
         .format("org.apache.spark.sql.cassandra") \
         .options( keyspace="transportation", table="bike_points") \
-        .option("checkpointLocation", SPARK_VOLUME_PATH) \
         .mode("append") \
         .save()
         

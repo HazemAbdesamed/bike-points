@@ -12,6 +12,7 @@ services:
       hostname: spark
       ports:
         - $SPARK_HOST_UI_PORT:$SPARK_UI_PORT
+        - 7077:7077
       env_file:
         - ./.env
         - ../kafka/.env
@@ -19,7 +20,6 @@ services:
       volumes:
         - ./data_processing:/opt/bitnami/spark/data_processing
         - ./config/entrypoint.sh:/opt/bitnami/scripts/spark/entrypoint.sh
-        - ./requirements.txt:/opt/bitnami/spark/requirements.txt
         - spark-data:$SPARK_VOLUME_PATH
       networks:
         - spark_data-network

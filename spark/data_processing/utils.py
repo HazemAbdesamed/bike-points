@@ -32,8 +32,9 @@ def create_spark_session():
                 .config("spark.cassandra.connection.port",CASSANDRA_PORT)\
                 .config("spark.cassandra.auth.username", CASSANDRA_USER) \
                 .config("spark.cassandra.auth.password", CASSANDRA_PASSWORD) \
+                .config("spark.sql.streaming.statefulOperator.checkCorrectness.enabled", False) \
                 .appName("spark_bikepoints") \
-                .getOrCreate()
+                .getOrCreate()  
         
         spark.sparkContext.setLogLevel("ERROR")
      

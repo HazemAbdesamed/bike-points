@@ -31,7 +31,7 @@ services:
       - ../spark/.env
     volumes:
       - ./dags:/opt/airflow/dags
-      - ./produce-to-kafka:/opt/airflow/produce-to-kafka
+      - ./produce_to_kafka:/opt/airflow/produce_to_kafka
       - ./config/airflow.cfg:/opt/airflow/airflow.cfg
       - ./config/entrypoint.sh:/entrypoint
     networks:

@@ -8,7 +8,7 @@ source /tmp/set_env_vars.sh &&
 
 cd /opt/bitnami/spark/data_processing &&
 
-/opt/bitnami/spark/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.kafka:kafka-clients:3.5.0,com.datastax.spark:spark-cassandra-connector_2.12:3.5.0 batch_main.py
+/opt/bitnami/spark/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.kafka:kafka-clients:3.5.0 speed_main.py
 
 """
 
@@ -18,18 +18,18 @@ default_args = {
 }
 
 dag = DAG(
-'load_batch',
+'stream',
 default_args=default_args,
-schedule='@daily',
+schedule=None,
 catchup=False,
 )
 
-load_batch_task = SSHOperator(
+stream_task = SSHOperator(
 dag=dag,
-task_id='load_batch_task',
+task_id='stream_task',
 ssh_conn_id='ssh_spark_conn',
 command=command,
 cmd_timeout=None,
 )
 
-load_batch_task
+stream_task

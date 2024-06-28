@@ -1,6 +1,7 @@
 import os
 from kafka import KafkaProducer
-from src.utils import logger
+from utils import logger
+from speed_layer.processing import process
 
 
 SPARK_VOLUME_PATH = os.environ.get("SPARK_VOLUME_PATH")
@@ -11,18 +12,21 @@ TOPIC_METRICS = os.environ.get("TOPIC_METRICS")
 
 producer = KafkaProducer(bootstrap_servers= [f'{BROKER1}:{PORT1}'])
 
+def write_to_kafka(df, batch_id):
+    df.show(truncate=False)
+
+
 def streaming(df):
     """Streams data using Spark Structured Streaming."""
     try:
 
         logger.info("Streaming has started...")
+
+
         # Write metrics to Kafka
         df.writeStream \
-            .format('kafka') \
-            .option("kafka.bootstrap.servers", f"{BROKER1}:{PORT1}") \
-            .option("topic", TOPIC_METRICS) \
-            .option('checkpointLocation', SPARK_VOLUME_PATH) \
-            .outputMode('append') \
+            .outputMode('complete') \
+            .foreachBatch(write_to_kafka) \
             .start() \
             .awaitTermination()
         

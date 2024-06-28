@@ -1,8 +1,8 @@
 import os
 
-from src.extraction import get_bikepoints_from_api
-from src.preprocessing import select_fields
-from src.producing import produce
+from extraction import get_bikepoints_from_api
+from preprocessing import select_fields
+from producing import produce
 
 TOPIC_DATA = os.environ.get("TOPIC_DATA")
 BROKER1 = os.environ.get("BROKER1")

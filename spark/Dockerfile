@@ -16,3 +16,5 @@ COPY ./config/spark_ssh.conf /etc/ssh/sshd_config.d/spark_ssh.conf
 RUN echo 'spark ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/spark
 
 USER spark
+
+COPY requirements.txt /opt/bitnami/spark/requirements.txt

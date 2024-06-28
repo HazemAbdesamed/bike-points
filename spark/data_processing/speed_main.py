@@ -11,7 +11,7 @@ def main():
     bikepoints = consume(spark_session)
 
     # Process data using pyspark
-    bikepoints_processed = process(bikepoints, spark_session)
+    bikepoints_processed = process(bikepoints)
 
     # Launch the streaming process and load the data
     streaming(bikepoints_processed)
