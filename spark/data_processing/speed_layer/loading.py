@@ -9,24 +9,20 @@ BROKER1 = os.environ.get("BROKER1")
 PORT1 = os.environ.get("PORT1")
 TOPIC_METRICS = os.environ.get("TOPIC_METRICS")
 
-
 producer = KafkaProducer(bootstrap_servers= [f'{BROKER1}:{PORT1}'])
-
-def write_to_kafka(df, batch_id):
-    df.show(truncate=False)
-
 
 def streaming(df):
     """Streams data using Spark Structured Streaming."""
     try:
 
+        # df = df.withWatermark('ExtractionDatetime', '4 minutes')
+        
         logger.info("Streaming has started...")
-
-
         # Write metrics to Kafka
         df.writeStream \
-            .outputMode('complete') \
-            .foreachBatch(write_to_kafka) \
+            .trigger(processingTime='2 seconds') \
+            .outputMode('update') \
+            .foreachBatch(process) \
             .start() \
             .awaitTermination()
         
