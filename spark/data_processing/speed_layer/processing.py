@@ -31,6 +31,7 @@ def calculate_metrics_sql(df):
             GROUP BY ID
         )
         SELECT 
+            MIN(ExtractionDatetime) AS min_extraction_datetime,
             MAX(ExtractionDatetime) AS max_extraction_datetime,
             SUM(latest_NbBikes) AS nb_available_bikes,
             CAST(ROUND(100 * SUM(latest_NbBikes) / SUM(latest_NbDocks), 2) AS STRING) AS percentage_available_bikes,
