@@ -8,7 +8,7 @@ source /tmp/set_env_vars.sh &&
 
 cd /opt/bitnami/spark/data_processing &&
 
-/opt/bitnami/spark/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.kafka:kafka-clients:3.5.0 speed_main.py
+/opt/bitnami/spark/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.kafka:kafka-clients:3.5.0 /opt/bitnami/spark/data_processing/speed_main.py
 
 """
 
