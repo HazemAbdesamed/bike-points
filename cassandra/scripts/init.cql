@@ -18,11 +18,15 @@ CREATE TABLE IF NOT EXISTS transportation.bike_points (
     NbBrokenDocks INT,
     ExtractionDatetime TIMESTAMP,
     ExtractionDate DATE,
+    DayOfMonth TEXT,
     WeekOfYear INT,
     DayOfWeek TEXT,
+    Hour TEXT,
+    HourInterval TEXT,
+
 
     PRIMARY KEY(
-        (WeekOfYear, DayOfWeek),
+        (DayOfWeek),
         ExtractionDatetime, BikePointId
     )
 );

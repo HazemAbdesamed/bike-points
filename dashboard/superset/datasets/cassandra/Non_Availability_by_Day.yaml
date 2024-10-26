@@ -1,0 +1,69 @@
+table_name: Non Availability by Day
+main_dttm_col: null
+description: null
+default_endpoint: null
+offset: 0
+cache_timeout: null
+schema: transportation
+sql: "WITH Ordered AS (\nSELECT dayofweek, bikepointid, COUNT(dayofweek) AS non_availability_count,\n\
+  \       row_number() OVER (PARTITION BY dayofweek ORDER BY COUNT(dayofweek) DESC)\
+  \ AS r\nFROM bike_points\nWHERE nbbikes = 0\nGROUP BY dayofweek, bikepointid\n)\n\
+  SELECT dayofweek, bikepointid, non_availability_count\nFROM Ordered\nWHERE r <=\
+  \ 5"
+params: null
+template_params: null
+filter_select_enabled: true
+fetch_values_predicate: null
+extra: null
+normalize_columns: false
+always_filter_main_dttm: false
+uuid: 91a27b70-abcd-4530-bb08-57e9b8caefe4
+metrics:
+- metric_name: count
+  verbose_name: COUNT(*)
+  metric_type: count
+  expression: COUNT(*)
+  description: null
+  d3format: null
+  currency: null
+  extra: null
+  warning_text: null
+columns:
+- column_name: dayofweek
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: VARCHAR
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: bikepointid
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: VARCHAR
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: non_availability_count
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: BIGINT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+version: 1.0.0
+database_uuid: 743556e9-4f83-4811-861f-e70c2db30460

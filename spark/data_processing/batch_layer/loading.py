@@ -10,7 +10,7 @@ def load(df):
 
         df.write \
         .format("org.apache.spark.sql.cassandra") \
-        .options( keyspace="transportation", table="bike_points") \
+        .options(keyspace="transportation", table="bike_points") \
         .mode("append") \
         .save()
         

@@ -6,6 +6,7 @@ include:
   - ./cassandra/docker-compose.yml
   - ./airflow/docker-compose.yml
   - ./spark/docker-compose.yml
+  - ./dashboard/docker-compose.yml
 
 volumes:
   kafka-data:
@@ -17,6 +18,7 @@ networks:
     driver: bridge
   airflow_data-network:
     driver: bridge  
-
+  dashboard-network:
+    driver: bridge
 
 

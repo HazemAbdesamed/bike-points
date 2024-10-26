@@ -1,0 +1,34 @@
+slice_name: '%Available EBikes'
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 1__table
+  viz_type: big_number_total
+  slice_id: 3
+  metric:
+    expressionType: SQL
+    sqlExpression: (percentage_available_ebikes)
+    column: null
+    aggregate: null
+    datasourceWarning: false
+    hasCustomLabel: false
+    label: (percentage_available_ebikes)
+    optionName: metric_5cz8wpk30oy_v7l57nxiugd
+  adhoc_filters: []
+  subheader: '%Available Ebikes'
+  header_font_size: 0.5
+  subheader_font_size: 0.3
+  y_axis_format: ~g
+  time_format: smart_date
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards:
+  - 1
+query_context: '{"datasource":{"id":1,"type":"table"},"force":false,"queries":[{"filters":[],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[],"metrics":[{"expressionType":"SQL","sqlExpression":"(percentage_available_ebikes)","column":null,"aggregate":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"(percentage_available_ebikes)","optionName":"metric_5cz8wpk30oy_v7l57nxiugd"}],"annotation_layers":[],"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"1__table","viz_type":"big_number_total","slice_id":3,"metric":{"expressionType":"SQL","sqlExpression":"(percentage_available_ebikes)","column":null,"aggregate":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"(percentage_available_ebikes)","optionName":"metric_5cz8wpk30oy_v7l57nxiugd"},"adhoc_filters":[],"subheader":"%Available
+  Ebikes","header_font_size":0.5,"subheader_font_size":0.3,"y_axis_format":"~g","time_format":"smart_date","conditional_formatting":[],"extra_form_data":{},"dashboards":[1],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 4e2c56dd-3a7c-487e-99bc-c0421a58f4a7
+version: 1.0.0
+dataset_uuid: 911dffe8-a12a-4209-8d1f-a6f1d8eaf15e

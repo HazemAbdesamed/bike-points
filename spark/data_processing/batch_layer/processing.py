@@ -1,6 +1,6 @@
 import utils
 from pyspark.sql.types import StructType,StructField,IntegerType,StringType, DecimalType, TimestampType
-from pyspark.sql.functions import from_json,col, to_date, date_format, weekofyear, expr
+from pyspark.sql.functions import from_json,col, to_date, date_format, weekofyear, dayofmonth, expr, floor, hour
 
 
 def process(df):
@@ -37,13 +37,18 @@ def process(df):
         col("bp.NbEBikes").alias("nbebikes"),
         (col("bp.NbDocks") - (col("bp.NbBikes") + col("bp.NbEmptyDocks")) ).alias("nbbrokendocks"),
         col("bp.extractiondatetime"),
-        (to_date(col("ExtractionDatetime"))).alias("extractiondate"), 
-        (date_format(col("ExtractionDatetime"), "EEEE")).alias("dayofweek") ,
-        (weekofyear(col("ExtractionDatetime"))).alias("weekofyear")
+        (to_date(col("ExtractionDatetime"))).alias("extractiondate"),
+        (date_format(col("ExtractionDatetime"), "dd")).alias("dayofmonth"), 
+        (date_format(col("ExtractionDatetime"), "EEEE")).alias("dayofweek"),
+        (weekofyear(col("ExtractionDatetime"))).alias("weekofyear"),
+        (date_format(col("ExtractionDatetime"), "H")).alias("hour")
     )
 
     # Convert Installed and Locked columns to Boolean
     df = df.withColumn("installed", expr("Installed == 'true'")) \
-           .withColumn("locked", expr("Locked == 'true'"))
+           .withColumn("locked", expr("Locked == 'true'")) \
+           .withColumn("hourinterval",
+                       expr("concat('[', floor(hour(ExtractionDatetime) / 2) * 2, ', ', (floor(hour(ExtractionDatetime) / 2) * 2 + 2) % 24, '[')"))
+    
   
-    return df
+    return df 

@@ -1,7 +1,7 @@
 import os
 from utils import logger
 from pyspark.sql.types import StructType,StructField,IntegerType,StringType, TimestampType
-from pyspark.sql.functions import from_json, col, sum, max, max_by, concat, lit, round
+from pyspark.sql.functions import from_json, col
 
 BROKER1 = os.environ.get("BROKER1")
 PORT1 = os.environ.get("PORT1")
@@ -12,8 +12,6 @@ def calculate_metrics_sql(df):
     Calculates metrics using Spark SQL
     Returns a df contining the metrics in each column
     """
-
-    # df = df.filter((col("Id") == "BikePoints_1") | (col("Id") == "BikePoints_2"))
     
     df.createOrReplaceTempView("bike_points")
 
@@ -23,6 +21,7 @@ def calculate_metrics_sql(df):
             SELECT 
                 ID,
                 MAX_BY(NbBikes, ExtractionDatetime) AS latest_NbBikes,
+                MAX_BY(NbEBikes, ExtractionDatetime) AS latest_NbEBikes,
                 MAX_BY(NbDocks, ExtractionDatetime) AS latest_NbDocks,
                 MAX_BY(NbEmptyDocks, ExtractionDatetime) AS latest_NbEmptyDocks,
                 MAX_BY(NbBrokenDocks, ExtractionDatetime) AS latest_NbBrokenDocks,
@@ -35,6 +34,8 @@ def calculate_metrics_sql(df):
             MAX(ExtractionDatetime) AS max_extraction_datetime,
             SUM(latest_NbBikes) AS nb_available_bikes,
             CAST(ROUND(100 * SUM(latest_NbBikes) / SUM(latest_NbDocks), 2) AS STRING) AS percentage_available_bikes,
+            SUM(latest_NbEBikes) AS nb_available_Ebikes,
+            CAST(ROUND(100 * SUM(latest_NbEBikes) / SUM(latest_NbDocks), 2) AS STRING) AS percentage_available_Ebikes,
             SUM(latest_NbEmptyDocks) AS nb_in_use_bikes,
             CAST(ROUND(100 * SUM(latest_NbEmptyDocks) / SUM(latest_NbDocks), 2) AS STRING) AS percentage_in_use_bikes,
             SUM(latest_NbBrokenDocks) AS nb_broken_docks,
@@ -43,7 +44,7 @@ def calculate_metrics_sql(df):
     """
     
     metrics_df = df.sparkSession.sql(sql_query)
-
+    print(metrics_df.head(2))
 
     return metrics_df
 
@@ -93,7 +94,7 @@ def process(df, batch_id):
     # Serialize the df to write into kafka topic
     metrics_df = metrics_df.selectExpr("to_json(struct(*)) AS value")
     
-    # metrics_df.show(truncate=False)
+    metrics_df.show(truncate=False)
 
     metrics_df.write \
         .format("kafka") \

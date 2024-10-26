@@ -20,7 +20,7 @@ def streaming(df):
         logger.info("Streaming has started...")
         # Write metrics to Kafka
         df.writeStream \
-            .trigger(processingTime='2 seconds') \
+            .trigger(processingTime='5 seconds') \
             .outputMode('update') \
             .foreachBatch(process) \
             .start() \

@@ -1,0 +1,32 @@
+slice_name: Broken Docks
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 1__table
+  viz_type: big_number_total
+  metric:
+    expressionType: SQL
+    sqlExpression: (nb_broken_docks)
+    column: null
+    aggregate: null
+    datasourceWarning: false
+    hasCustomLabel: false
+    label: (nb_broken_docks)
+    optionName: metric_6536viusiyh_coj68n0z3nv
+  adhoc_filters: []
+  subheader: Broken Docks
+  header_font_size: 0.5
+  subheader_font_size: 0.3
+  y_axis_format: ~g
+  time_format: smart_date
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards: []
+query_context: '{"datasource":{"id":1,"type":"table"},"force":false,"queries":[{"filters":[],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[],"metrics":[{"expressionType":"SQL","sqlExpression":"(nb_broken_docks)","column":null,"aggregate":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"(nb_broken_docks)","optionName":"metric_6536viusiyh_coj68n0z3nv"}],"annotation_layers":[],"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"1__table","viz_type":"big_number_total","metric":{"expressionType":"SQL","sqlExpression":"(nb_broken_docks)","column":null,"aggregate":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"(nb_broken_docks)","optionName":"metric_6536viusiyh_coj68n0z3nv"},"adhoc_filters":[],"subheader":"Broken
+  Docks","header_font_size":0.5,"subheader_font_size":0.3,"y_axis_format":"~g","time_format":"smart_date","conditional_formatting":[],"extra_form_data":{},"dashboards":[],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 3f4c6c76-26a8-42ca-843c-7a427fe62f94
+version: 1.0.0
+dataset_uuid: 911dffe8-a12a-4209-8d1f-a6f1d8eaf15e
