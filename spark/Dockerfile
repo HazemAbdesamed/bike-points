@@ -19,5 +19,4 @@ USER spark
 ENV HOME /home/spark
 
 COPY requirements.txt /opt/bitnami/spark/requirements.txt
-
 RUN pip install --user -r /opt/bitnami/spark/requirements.txt

@@ -7,13 +7,16 @@ services:
     container_name: trino
     hostname: trino
     ports:
-      - '8090:8080'
+      - $TRINO_HOST_PORT:$TRINO_INTERNAL_PORT
+    env_file:
+        - ./.env
+        - ../kafka/.env
+        - ../cassandra/.env
     volumes:
       - ./config/cassandra.properties:/etc/trino/catalog/cassandra.properties
       - ./config/kafka.properties:/etc/trino/catalog/kafka.properties
-      # - ./config/create-metrics-view.sql:/etc/trino/create-metrics-view.sql
-      # - ./config/trino-entrypoint.sh:/etc/trino/trino-entrypoint.sh
-      # - ./config/config.properties:/etc/trino/config.properties
+      # - ./config/run-trino:/usr/lib/trino/bin/run-trino
+      
     networks:
         - dashboard-network
         - spark_data-network
@@ -26,8 +29,14 @@ services:
         dockerfile: Dockerfile
       depends_on:
         - trino
+      env_file:
+        - ./.env
+        - ../kafka/.env
+        - ../cassandra/.env  
       ports:
-        - '8088:8088'
+        - $SUPERSET_HOST_PORT:$SUPERSET_INTERNAL_PORT
+      volumes:
+        - ./superset-dashboard-data.zip:/app/superset-dashboard-data.zip
       networks:
         - dashboard-network
         - spark_data-network

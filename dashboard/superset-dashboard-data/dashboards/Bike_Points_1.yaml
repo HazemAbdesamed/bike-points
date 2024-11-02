@@ -25,7 +25,7 @@ position:
     children: []
     id: CHART-QXaFW6k84S
     meta:
-      chartId: 4
+      chartId: 6
       height: 11
       sliceName: '% Bikes in Use'
       uuid: a36df2bf-4549-4914-bec7-292e9fae5987
@@ -39,7 +39,7 @@ position:
     children: []
     id: CHART-_6bsaBfu2m
     meta:
-      chartId: 6
+      chartId: 9
       height: 11
       sliceName: '% Broken Docks'
       uuid: 17ce5361-d58b-4314-917e-b8e693fab55a
@@ -53,7 +53,7 @@ position:
     children: []
     id: CHART-explore-10-1
     meta:
-      chartId: 10
+      chartId: 7
       height: 36
       sliceName: Bike Points Non Availability by Day
       uuid: cb9fadf4-2b08-4343-9a5e-515ff98f1dcf
@@ -67,7 +67,7 @@ position:
     children: []
     id: CHART-explore-11-1
     meta:
-      chartId: 11
+      chartId: 10
       height: 36
       sliceName: Broken Docks Last Week
       uuid: 6af70ebf-2b04-41ff-a544-24e7d965d66e
@@ -81,7 +81,7 @@ position:
     children: []
     id: CHART-explore-12-1
     meta:
-      chartId: 12
+      chartId: 11
       height: 34
       sliceName: In Use Bikes by Day
       uuid: e076db48-365e-448b-9fdd-77e110eb9e08
@@ -95,7 +95,7 @@ position:
     children: []
     id: CHART-explore-9-1
     meta:
-      chartId: 9
+      chartId: 12
       height: 34
       sliceName: Peak Hours by Day
       uuid: 60f43e4f-00e0-4e18-bf51-b94cbb385fe1
@@ -109,7 +109,7 @@ position:
     children: []
     id: CHART-h5J8LvUiEz
     meta:
-      chartId: 8
+      chartId: 2
       height: 11
       sliceName: Available Bikes
       uuid: 4d2fc0c9-2edf-412f-ab33-ba6732cc3281
@@ -123,7 +123,7 @@ position:
     children: []
     id: CHART-illNt85Yas
     meta:
-      chartId: 2
+      chartId: 5
       height: 11
       sliceName: Bikes in Use
       uuid: 87c74cc9-48c6-426f-81c9-6f32ae3ac223
@@ -137,7 +137,7 @@ position:
     children: []
     id: CHART-isVnkahE9z
     meta:
-      chartId: 5
+      chartId: 8
       height: 11
       sliceName: Broken Docks
       uuid: 3f4c6c76-26a8-42ca-843c-7a427fe62f94
@@ -151,7 +151,7 @@ position:
     children: []
     id: CHART-qzY74qzuJx
     meta:
-      chartId: 7
+      chartId: 4
       height: 11
       sliceName: Available EBikes
       uuid: 4e33acbc-9000-4508-85b5-b628857e4fdd
@@ -308,5 +308,5 @@ metadata:
   label_colors: {}
   timed_refresh_immune_slices: []
   cross_filters_enabled: true
-  default_filters: '{}'
+  native_filter_configuration: []
 version: 1.0.0

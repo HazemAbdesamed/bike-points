@@ -9,14 +9,14 @@ sql: "SELECT \r\n  json_extract_scalar(_message, '$.min_extraction_datetime') mi
   \n  json_extract_scalar(_message, '$.max_extraction_datetime') max_extraction_datetime,\r\
   \n  CAST(json_extract_scalar(_message, '$.nb_available_bikes') AS INT) nb_available_bikes,\r\
   \n  CAST(json_extract_scalar(_message, '$.percentage_available_bikes') AS DECIMAL(4,2))\
-  \ percentage_available_bikes,\r\n  CAST(json_extract_scalar(_message, '$.nb_available_ebikes')\
-  \ AS INT) nb_available_ebikes,\r\n  CAST(json_extract_scalar(_message, '$.percentage_available_ebikes')\
+  \ percentage_available_bikes,\r\n  CAST(json_extract_scalar(_message, '$.nb_available_Ebikes')\
+  \ AS INT) nb_available_ebikes,\r\n  CAST(json_extract_scalar(_message, '$.percentage_available_Ebikes')\
   \ AS DECIMAL(4,2)) percentage_available_ebikes,\r\n  CAST(json_extract_scalar(_message,\
   \ '$.nb_in_use_bikes') AS INT) nb_in_use_bikes,\r\n  CAST(json_extract_scalar(_message,\
   \ '$.percentage_in_use_bikes') AS DECIMAL(4,2)) percentage_in_use_bikes,\r\n  CAST(json_extract_scalar(_message,\
   \ '$.nb_broken_docks') AS INT) nb_broken_docks,\r\n  CAST(json_extract_scalar(_message,\
   \ '$.percentage_broken_docks') AS DECIMAL(4,2)) percentage_broken_docks\r\nFROM\
-  \ kafka.default.metrics\r\nWHERE _message <> '{}'\r\nLIMIT 1\r\n"
+  \ kafka.default.{{ env('TOPIC_METRICS') }}\r\nWHERE _message <> '{}'\r\n ORDER BY json_extract_scalar(_message, '$.max_extraction_datetime'\r\nLIMIT 1\r\n"
 params: null
 template_params: null
 filter_select_enabled: true
@@ -33,7 +33,8 @@ metrics:
   description: null
   d3format: null
   currency: null
-  extra: null
+  extra:
+    warning_markdown: ''
   warning_text: null
 columns:
 - column_name: percentage_in_use_bikes
@@ -47,7 +48,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: percentage_available_ebikes
   verbose_name: null
   is_dttm: false
@@ -59,7 +60,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: percentage_available_bikes
   verbose_name: null
   is_dttm: false
@@ -71,7 +72,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: percentage_broken_docks
   verbose_name: null
   is_dttm: false
@@ -83,7 +84,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: max_extraction_datetime
   verbose_name: null
   is_dttm: false
@@ -95,7 +96,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: min_extraction_datetime
   verbose_name: null
   is_dttm: false
@@ -107,7 +108,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: nb_in_use_bikes
   verbose_name: null
   is_dttm: false
@@ -119,7 +120,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: nb_available_ebikes
   verbose_name: null
   is_dttm: false
@@ -131,7 +132,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: nb_available_bikes
   verbose_name: null
   is_dttm: false
@@ -143,7 +144,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: nb_broken_docks
   verbose_name: null
   is_dttm: false
@@ -155,6 +156,6 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 version: 1.0.0
 database_uuid: bcf8c25c-38f5-4432-a09d-d9fcb989abdf

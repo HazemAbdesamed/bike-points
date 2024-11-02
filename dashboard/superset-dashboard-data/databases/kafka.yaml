@@ -1,5 +1,5 @@
-database_name: cassandra
-sqlalchemy_uri: trino://trino@trino:8080/cassandra
+database_name: kafka
+sqlalchemy_uri: trino://trino@trino:$TRINO_INTERNAL_PORT/kafka
 cache_timeout: null
 expose_in_sqllab: true
 allow_run_async: false
@@ -9,5 +9,5 @@ allow_dml: false
 allow_file_upload: false
 extra:
   allows_virtual_table_explore: true
-uuid: 743556e9-4f83-4811-861f-e70c2db30460
+uuid: bcf8c25c-38f5-4432-a09d-d9fcb989abdf
 version: 1.0.0
