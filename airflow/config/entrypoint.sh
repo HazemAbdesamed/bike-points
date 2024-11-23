@@ -329,7 +329,7 @@ sudo rm ~/.ssh/id_rsa && sudo rm ~/.ssh/id_rsa.pub
 sudo chown airflow ~/.ssh
 
 ssh-keygen -t rsa -b 4096 -N "" -f /home/airflow/.ssh/id_rsa
-echo $SPARK_SYSTEM_PASSWORD
+
 sshpass -p $SPARK_SYSTEM_PASSWORD ssh-copy-id -o StrictHostKeyChecking=no spark@spark
 
 airflow scheduler &

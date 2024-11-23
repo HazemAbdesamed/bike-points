@@ -1,6 +1,6 @@
 import utils
 from pyspark.sql.types import StructType,StructField,IntegerType,StringType, DecimalType, TimestampType
-from pyspark.sql.functions import from_json,col, to_date, date_format, weekofyear, dayofmonth, expr, floor, hour
+from pyspark.sql.functions import from_json,col, to_date, date_format, weekofyear, dayofweek, expr, floor, hour
 
 
 def process(df):
@@ -38,8 +38,11 @@ def process(df):
         (col("bp.NbDocks") - (col("bp.NbBikes") + col("bp.NbEmptyDocks")) ).alias("nbbrokendocks"),
         col("bp.extractiondatetime"),
         (to_date(col("ExtractionDatetime"))).alias("extractiondate"),
+        (date_format(col("bp.ExtractionDatetime"), "MMMM")).alias("monthname"),
+        (date_format(col("bp.ExtractionDatetime"), "M")).alias("monthnumber"),
         (date_format(col("ExtractionDatetime"), "dd")).alias("dayofmonth"), 
         (date_format(col("ExtractionDatetime"), "EEEE")).alias("dayofweek"),
+        (dayofweek(col("ExtractionDatetime"))).alias("dayofweeknumber"),
         (weekofyear(col("ExtractionDatetime"))).alias("weekofyear"),
         (date_format(col("ExtractionDatetime"), "H")).alias("hour")
     )
@@ -50,5 +53,4 @@ def process(df):
            .withColumn("hourinterval",
                        expr("concat('[', floor(hour(ExtractionDatetime) / 2) * 2, ', ', (floor(hour(ExtractionDatetime) / 2) * 2 + 2) % 24, '[')"))
     
-  
     return df 

@@ -5,9 +5,12 @@ default_endpoint: null
 offset: 0
 cache_timeout: null
 schema: transportation
-sql: 'SELECT dayofweek, nbemptydocks
+sql: 'SELECT concat(cast(dayofweeknumber as VARCHAR), '': '', dayofweek) AS num_dayofweek,
+  dayofweek, nbemptydocks
 
-  FROM bike_points'
+  FROM bike_points
+
+  '
 params: null
 template_params: null
 filter_select_enabled: true
@@ -17,6 +20,26 @@ normalize_columns: false
 always_filter_main_dttm: false
 uuid: 42712130-b660-4a1d-bf13-8506d2feebe4
 metrics:
+- metric_name: sum
+  verbose_name: Number In Use Bikes
+  metric_type: count
+  expression: SUM(NbEmptyDocks)
+  description: null
+  d3format: null
+  currency: null
+  extra:
+    warning_markdown: ''
+  warning_text: null
+- metric_name: sort
+  verbose_name: Sort Days
+  metric_type: null
+  expression: dayofweeknumber
+  description: null
+  d3format: null
+  currency: null
+  extra:
+    warning_markdown: ''
+  warning_text: null
 - metric_name: count
   verbose_name: COUNT(*)
   metric_type: count
@@ -27,6 +50,18 @@ metrics:
   extra: null
   warning_text: null
 columns:
+- column_name: num_dayofweek
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: VARCHAR
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
 - column_name: dayofweek
   verbose_name: null
   is_dttm: false
