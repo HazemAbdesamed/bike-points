@@ -3,7 +3,7 @@ main_dttm_col: null
 description: null
 default_endpoint: null
 offset: 0
-cache_timeout: null
+cache_timeout: 65
 schema: null
 sql: "SELECT \r\n  json_extract_scalar(_message, '$.min_extraction_datetime') min_extraction_datetime,\r\
   \n  json_extract_scalar(_message, '$.max_extraction_datetime') max_extraction_datetime,\r\
@@ -16,7 +16,7 @@ sql: "SELECT \r\n  json_extract_scalar(_message, '$.min_extraction_datetime') mi
   \ '$.percentage_in_use_bikes') AS DECIMAL(4,2)) percentage_in_use_bikes,\r\n  CAST(json_extract_scalar(_message,\
   \ '$.nb_broken_docks') AS INT) nb_broken_docks,\r\n  CAST(json_extract_scalar(_message,\
   \ '$.percentage_broken_docks') AS DECIMAL(4,2)) percentage_broken_docks\r\nFROM\
-  \ kafka.default.{{ env.TOPIC_METRICS }}\r\nWHERE _message <> '{}'\r\nORDER BY max_extraction_datetime\
+  \ kafka.default.metrics\r\nWHERE _message <> '{}'\r\nORDER BY max_extraction_datetime\
   \ DESC\r\nLIMIT 1\r\n"
 params: null
 template_params: null

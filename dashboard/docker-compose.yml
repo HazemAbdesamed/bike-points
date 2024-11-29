@@ -15,7 +15,6 @@ services:
     volumes:
       - ./config/cassandra.properties:/etc/trino/catalog/cassandra.properties
       - ./config/kafka.properties:/etc/trino/catalog/kafka.properties
-      # - ./config/run-trino:/usr/lib/trino/bin/run-trino
       
     networks:
         - dashboard-network

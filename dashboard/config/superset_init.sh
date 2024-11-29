@@ -10,9 +10,8 @@ superset db upgrade
 superset superset init 
 
 # Import the dashboard
-echo "Importing the dashboard..." &
-cd /app/superset & 
-superset import-dashboards --username $SUPERSET_ADMIN_USERNAME -p /app/superset-dashboard-data.zip     
+echo "Importing the dashboard..." & 
+superset import-dashboards --username $SUPERSET_ADMIN_USERNAME -p /app/superset-dashboard-data.zip
 
 # Starting server
 /bin/sh -c /usr/bin/run-server.sh

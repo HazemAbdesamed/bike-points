@@ -5,7 +5,7 @@ default_endpoint: null
 offset: 0
 cache_timeout: null
 schema: transportation
-sql: 'SELECT extractiondate, NbBrokenDocks
+sql: 'SELECT extractiondate, dayofweek, NbBrokenDocks
 
   FROM bike_points
 
@@ -41,8 +41,7 @@ columns:
   expression: ''
   description: null
   python_date_format: null
-  extra:
-    warning_markdown: null
+  extra: {}
 - column_name: NbBrokenDocks
   verbose_name: null
   is_dttm: false
@@ -54,7 +53,18 @@ columns:
   expression: ''
   description: null
   python_date_format: null
-  extra:
-    warning_markdown: null
+  extra: {}
+- column_name: dayofweek
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: VARCHAR
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: {}
 version: 1.0.0
 database_uuid: 743556e9-4f83-4811-861f-e70c2db30460

@@ -69,7 +69,7 @@ position:
     meta:
       chartId: 10
       height: 36
-      sliceName: Broken Docks Last Week
+      sliceName: Broken Docks
       uuid: 6af70ebf-2b04-41ff-a544-24e7d965d66e
       width: 6
     parents:
@@ -103,7 +103,7 @@ position:
     parents:
     - ROOT_ID
     - GRID_ID
-    - ROW-ZRoCutQCO
+    - ROW-G272AIFQgD
     type: CHART
   CHART-h5J8LvUiEz:
     children: []
@@ -248,6 +248,22 @@ position:
     type: ROW
 metadata:
   chart_configuration:
+    '10':
+      id: 10
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 11
+        - 12
     '11':
       id: 11
       crossFilters:
@@ -264,22 +280,6 @@ metadata:
         - 9
         - 10
         - 12
-    '12':
-      id: 12
-      crossFilters:
-        scope: global
-        chartsInScope:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-        - 6
-        - 7
-        - 8
-        - 9
-        - 10
-        - 11
   global_chart_configuration:
     scope:
       rootPath:
@@ -299,14 +299,20 @@ metadata:
     - 11
     - 12
   color_scheme: ''
-  refresh_frequency: 0
-  shared_label_colors:
-    SUM(nbemptydocks): '#1FA8C9'
-    SUM(NbBrokenDocks): '#454E7C'
-  color_scheme_domain: []
+  refresh_frequency: 210
   expanded_slices: {}
   label_colors: {}
-  timed_refresh_immune_slices: []
-  cross_filters_enabled: true
+  timed_refresh_immune_slices:
+  - 7
+  - 10
+  - 11
+  - 12
+  cross_filters_enabled: false
   native_filter_configuration: []
+  default_filters: '{}'
+  stagger_refresh: true
+  shared_label_colors:
+    sum: '#1FA8C9'
+    SUM(NbBrokenDocks): '#c23531'
+  color_scheme_domain: []
 version: 1.0.0
