@@ -1,5 +1,5 @@
 database_name: cassandra
-sqlalchemy_uri: 'trino://trino@trino:8080/cassandra'
+sqlalchemy_uri: trino://trino@trino:$TRINO_INTERNAL_PORT/cassandra
 cache_timeout: null
 expose_in_sqllab: true
 allow_run_async: false

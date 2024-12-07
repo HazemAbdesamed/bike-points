@@ -1,0 +1,70 @@
+table_name: Broken Docks History
+main_dttm_col: extractiondate
+description: null
+default_endpoint: null
+offset: 0
+cache_timeout: null
+schema: transportation
+sql: 'SELECT extractiondate, dayofweek, NbBrokenDocks
+
+  FROM bike_points
+
+  ORDER BY extractiondate DESC'
+params: null
+template_params: null
+filter_select_enabled: true
+fetch_values_predicate: null
+extra: null
+normalize_columns: false
+always_filter_main_dttm: false
+uuid: da049508-86c1-42eb-aa77-a7cc7070e2cb
+metrics:
+- metric_name: NbBrokenDocks
+  verbose_name: NbBrokenDocks
+  metric_type: count
+  expression: SUM(NbBrokenDocks)
+  description: null
+  d3format: null
+  currency: null
+  extra:
+    warning_markdown: ''
+  warning_text: null
+columns:
+- column_name: extractiondate
+  verbose_name: null
+  is_dttm: true
+  is_active: true
+  type: DATE
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: {}
+- column_name: NbBrokenDocks
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: INTEGER
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: {}
+- column_name: dayofweek
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: VARCHAR
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: {}
+version: 1.0.0
+database_uuid: 743556e9-4f83-4811-861f-e70c2db30460

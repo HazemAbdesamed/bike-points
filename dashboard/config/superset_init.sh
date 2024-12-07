@@ -15,4 +15,3 @@ superset import-dashboards --username $SUPERSET_ADMIN_USERNAME -p /app/superset-
 
 # Starting server
 /bin/sh -c /usr/bin/run-server.sh
-

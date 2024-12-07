@@ -16,6 +16,7 @@ set -o pipefail
 # Load Cassandra environment variables
 . /opt/bitnami/scripts/cassandra-env.sh
 
+
 print_welcome_page
 
 if is_positive_int "$CASSANDRA_DELAY_START_TIME" && [[ "$CASSANDRA_DELAY_START_TIME" -gt 0 ]]; then
@@ -26,6 +27,9 @@ fi
 if [[ "$*" = *"/opt/bitnami/scripts/cassandra/run.sh"* || "$*" = *"/run.sh"* ]]; then
     info "** Starting Cassandra setup **"
     /opt/bitnami/scripts/cassandra/setup.sh
+    # Execute create schema
+    echo "cassandra user : " ${CASSANDRA_USER}
+    cqlsh -u ${CASSANDRA_USER} -p ${CASSANDRA_PASSWORD}  -f /scripts/init.cql
     info "** Cassandra setup finished! **"
 fi
 

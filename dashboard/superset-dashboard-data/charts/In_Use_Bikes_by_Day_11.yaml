@@ -4,7 +4,7 @@ certified_by: null
 certification_details: null
 viz_type: echarts_timeseries_bar
 params:
-  datasource: 1__table
+  datasource: 2__table
   viz_type: echarts_timeseries_bar
   slice_id: 11
   x_axis: num_dayofweek
@@ -53,7 +53,7 @@ params:
   extra_form_data: {}
   dashboards:
   - 1
-query_context: '{"datasource":{"id":1,"type":"table"},"force":false,"queries":[{"filters":[],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[{"columnType":"BASE_AXIS","sqlExpression":"num_dayofweek","label":"num_dayofweek","expressionType":"SQL"}],"metrics":["sum"],"orderby":[["sum",false]],"annotation_layers":[],"row_limit":10000,"series_columns":[],"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"time_offsets":[],"post_processing":[{"operation":"pivot","options":{"index":["num_dayofweek"],"columns":[],"aggregates":{"sum":{"operator":"mean"}},"drop_missing_columns":false}},{"operation":"sort","options":{"is_sort_index":true,"ascending":true}},{"operation":"flatten"}]}],"form_data":{"datasource":"1__table","viz_type":"echarts_timeseries_bar","slice_id":11,"x_axis":"num_dayofweek","xAxisForceCategorical":true,"x_axis_sort":"num_dayofweek","x_axis_sort_asc":true,"x_axis_sort_series":"name","x_axis_sort_series_ascending":true,"metrics":["sum"],"groupby":[],"adhoc_filters":[],"order_desc":true,"row_limit":10000,"truncate_metric":true,"show_empty_columns":true,"comparison_type":"values","annotation_layers":[],"forecastPeriods":10,"forecastInterval":0.8,"orientation":"vertical","x_axis_title_margin":15,"y_axis_title":"","y_axis_title_margin":15,"y_axis_title_position":"Left","sort_series_type":"name","sort_series_ascending":false,"color_scheme":"supersetColors","show_value":true,"only_total":true,"show_legend":false,"legendType":"scroll","legendOrientation":"top","x_axis_time_format":"smart_date","xAxisLabelRotation":45,"y_axis_format":"SMART_NUMBER","logAxis":false,"minorSplitLine":false,"truncateXAxis":false,"truncateYAxis":false,"y_axis_bounds":[null,null],"rich_tooltip":true,"tooltipTimeFormat":"smart_date","extra_form_data":{},"dashboards":[1],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+query_context: null
 cache_timeout: null
 uuid: e076db48-365e-448b-9fdd-77e110eb9e08
 version: 1.0.0

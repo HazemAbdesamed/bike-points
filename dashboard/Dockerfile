@@ -8,10 +8,11 @@ ENV ADMIN_USERNAME admin
 ENV ADMIN_EMAIL admin@email.com
 ENV ADMIN_PASSWORD admin
 
-COPY ./config/superset_init.sh /superset_init.sh
+COPY ./config/superset_init.sh /app/superset_init.sh
+
 
 COPY ./config/superset_config.py /app/
 ENV SUPERSET_CONFIG_PATH /app/superset_config.py
 
 USER superset
-ENTRYPOINT [ "/superset_init.sh" ]
+ENTRYPOINT [ "/app/superset_init.sh" ]

@@ -39,7 +39,7 @@ position:
     children: []
     id: CHART-_6bsaBfu2m
     meta:
-      chartId: 10
+      chartId: 9
       height: 11
       sliceName: '% Broken Docks'
       uuid: 17ce5361-d58b-4314-917e-b8e693fab55a
@@ -67,7 +67,7 @@ position:
     children: []
     id: CHART-explore-11-1
     meta:
-      chartId: 8
+      chartId: 10
       height: 36
       sliceName: Broken Docks
       uuid: 6af70ebf-2b04-41ff-a544-24e7d965d66e
@@ -137,7 +137,7 @@ position:
     children: []
     id: CHART-isVnkahE9z
     meta:
-      chartId: 9
+      chartId: 8
       height: 11
       sliceName: Broken Docks
       uuid: 3f4c6c76-26a8-42ca-843c-7a427fe62f94
@@ -304,11 +304,12 @@ metadata:
   label_colors: {}
   timed_refresh_immune_slices:
   - 7
-  - 8
+  - 10
   - 11
   - 12
   cross_filters_enabled: false
   native_filter_configuration: []
+  default_filters: '{}'
   stagger_refresh: true
   shared_label_colors:
     sum: '#1FA8C9'

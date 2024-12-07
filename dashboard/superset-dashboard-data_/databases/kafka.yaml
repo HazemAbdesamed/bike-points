@@ -1,5 +1,5 @@
 database_name: kafka
-sqlalchemy_uri: trino://trino@trino:$TRINO_INTERNAL_PORT/kafka
+sqlalchemy_uri: trino://trino@trino:8080/kafka
 cache_timeout: null
 expose_in_sqllab: true
 allow_run_async: false
