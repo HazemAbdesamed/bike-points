@@ -28,10 +28,13 @@ if [[ "$*" = *"/opt/bitnami/scripts/cassandra/run.sh"* || "$*" = *"/run.sh"* ]];
     info "** Starting Cassandra setup **"
     /opt/bitnami/scripts/cassandra/setup.sh
     # Execute create schema
-    echo "cassandra user : " ${CASSANDRA_USER}
-    cqlsh -u ${CASSANDRA_USER} -p ${CASSANDRA_PASSWORD}  -f /scripts/init.cql
     info "** Cassandra setup finished! **"
 fi
 
 echo ""
-exec "$@"
+exec "$@" &
+
+echo "Creating keyspace and table..."
+cqlsh -u ${CASSANDRA_USER} -p ${CASSANDRA_PASSWORD}  -f /scripts/init.cql &
+
+tail -f /dev/null

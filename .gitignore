@@ -2,6 +2,8 @@
 ./airflow/.env
 ./kafka/.env
 ./spark/.env
+./cassandra/.env
+./dashboard.env
 # Python
 venv
 __pycache__

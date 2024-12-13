@@ -12,6 +12,7 @@ def consume(spark_session):
                 .format("kafka")\
                 .option("kafka.bootstrap.servers", f"{BROKER1}:{PORT1}")\
                 .option("subscribe", TOPIC_DATA)\
+                .option("startingOffsets", "latest")\
                 .load()
         logger.info("Data consumed from kafka successfully")
         return df
