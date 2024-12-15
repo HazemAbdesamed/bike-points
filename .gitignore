@@ -7,3 +7,5 @@
 # Python
 venv
 __pycache__
+# Draw.io
+*.drawio*
