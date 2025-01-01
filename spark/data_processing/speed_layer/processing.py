@@ -44,7 +44,6 @@ def calculate_metrics_sql(df):
     """
     
     metrics_df = df.sparkSession.sql(sql_query)
-    print(metrics_df.head(2))
 
     return metrics_df
 

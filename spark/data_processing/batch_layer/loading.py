@@ -1,8 +1,6 @@
 import utils
-import os
 
 logger = utils.logger
-SPARK_VOLUME_PATH = os.getenv("SPARK_VOLUME_PATH")
 
 def load(df):
     """Streams data using Spark Structured Streaming."""

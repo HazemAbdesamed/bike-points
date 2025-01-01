@@ -324,13 +324,14 @@ else
 fi
 
 # create and send ssh key to spark
+
 sudo rm ~/.ssh/id_rsa && sudo rm ~/.ssh/id_rsa.pub
 # change ownership of airflow .ssh to airflow user 
 sudo chown airflow ~/.ssh
-
+# create the key
 ssh-keygen -t rsa -b 4096 -N "" -f /home/airflow/.ssh/id_rsa
-
-sshpass -p $SPARK_SYSTEM_PASSWORD ssh-copy-id -o StrictHostKeyChecking=no spark@spark
+# send the public key to the ssh server in spark
+sshpass -p $SPARK_SYSTEM_PASSWORD ssh-copy-id -o StrictHostKeyChecking=no spark@$SPARK_USER
 
 airflow scheduler &
 airflow webserver

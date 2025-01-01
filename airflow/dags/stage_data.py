@@ -14,7 +14,7 @@ def process_and_produce_to_kafka():
     import produce_to_kafka.main
     return produce_to_kafka.main
 
-# DAG definition
+
 dag = DAG(
     dag_id="stage",
     default_args=default_args,
@@ -22,7 +22,7 @@ dag = DAG(
     schedule_interval=timedelta(minutes=3),  # Run every 3 minutes
 ) 
 
-    # Python task to execute main.py functionality
+
 stage_task = BashOperator(
     dag=dag,
     task_id="stage_task",
