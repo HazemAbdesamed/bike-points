@@ -169,16 +169,16 @@ These charts are automatically refreshed each 4 minutes.
 
 ### Historical Insights
 - **Bikes in Use by Day of the Week:**  
-  A bar chart showing the number of bikes in use for each day of the week, helping identify usage patterns.
+  A bar chart showing the average number of in use bikes for the days of the week, helping identify usage patterns.
 
-- **Bike Points Non-Availability Heatmap:**  
-  A heatmap displaying bike points' non-availability by day of the week. The x-axis represents days, while the y-axis represents the bike points with highest instances of non-availability.  
+- **Bike Points Non-Availability:**  
+  A heatmap displaying bike points' non-availability by day of the week. The x-axis represents days, while the y-axis represents the bike points with highest instances of non-availability. The metric represents the number of occurrences for when a bike point had no available bike by day.
 
-- **Peak Hours Heatmap:**  
-  A heatmap showcasing the busiest hours for bike points, broken down by day of the week and time intervals.  
+- **Peak Hours:**  
+  A heatmap showcasing the busiest hours for bike points, broken down by day of the week and time intervals. The metric represents the average number of empty docks by day and time interval. 
 
 - **Broken Docks by Day of the Month:**  
-  Line charts illustrating the trend of broken docks over the days. 
+  A Line chart illustrating the maximum number of broken docks over the previous days. 
 
 ![near-real-time metrics](/near-real-time%20metrics.jpg)
 ![historical charts](/Historical%20charts.jpg)
