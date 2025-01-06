@@ -54,7 +54,7 @@ When querying the endpoint [https://api.tfl.gov.uk/BikePoint/](https://api.tfl.g
         "sourceSystemKey": "BikePoints",
         "value": "19",
         "modified": "2024-12-25T18:44:07.747Z"
-      },...
+      },..
     ]
   }
 ]
