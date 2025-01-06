@@ -212,5 +212,5 @@ While the current setup is functional and meets the project’s objectives, ther
 * Adding more containers (nodes) for Kafka, Spark, and Cassandra to have a distributed architecture which will increase the system's scalability and resilience.
 
 #
-In conclusion, this project has provided valuable hands-on experience in data engineering, allowing me to explore and practice various tools and techniques. It serves as a solid foundation for future enhancements and scalability.
-I appreciate your interest in following this journey !
+In conclusion, this project has provided valuable hands-on experience in data engineering, allowing me to explore and practice various tools and techniques. It serves as a solid foundation for future enhancements and scalability.<br>
+**I appreciate your interest in following this journey !**
