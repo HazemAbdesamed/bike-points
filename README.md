@@ -11,6 +11,8 @@ The system integrates:
 
 The entire setup is containerized using **Docker**.
 
+![Architecture](/Architecture.gif)
+
 # The Data Source
 
 This projects uses the **Transport for London (TfL) BikePoint API** to fetch data about bike points across Kindon. The API provides information such as bike availability, empty docks, total docks, and the geographic location of each bike point.
@@ -85,7 +87,7 @@ To ensure the required Kafka topics are available, they are created during conta
 ## Batch Layer
 The Batch Layer is responsible for processing and storing historical data in an Apache Cassandra table. The schema for that table is found in this [file](/cassandra/scripts/init.cql).
 
-The Primary Key which ensures the uniqueness of the record is as follows :
+The Primary Key should be carefully selected in Cassandra, it ensures the uniqueness of the record. It also determines the distribution of the data across nodes in the cluster and the order in which data is stored within each partition. The primar key is composed of the partition key, which is responsible for the distribution of data across nodes, and the clustering columns, which defines the order of data within each partition :
 ```
  PRIMARY KEY (
         (dayofweeknumber), monthnumber, dayofmonth, extractiondatetime, bikepointid
@@ -193,3 +195,22 @@ The Superset container has been customized to automate the initialization proces
 * Create the admin user with credentials defined in environment variables.
 * Automatically import a preconfigured and customized dashboard from a [.zip](/dashboard/superset-dashboard-data.zip) file during container startup.
 
+# Final Thoughts and Conclusion
+
+This project demonstrates the integration of various technologies to design and implement a data pipeline capable of handling both batch and near-real-time processing by combining tools like Airflow, Kafka, Spark, Cassandra, Trino, and Superset.
+
+## Key Takeaways:
+- **Modular Design**: Each container was configured to handle specific tasks, ensuring seamless communication and functionality across the entire ecosystem.
+- **Automation**: Tools like Airflow streamlined the orchestration of workflows, while customized container setups automated initialization processes and configurations.
+- **Environment Variables for Flexibility**: Environment variables were extensively used across the setup to manage credentials and coniguration details. This approach simplifies updates, and ensures portability of the setup. 
+
+## Furthur Enhancements:
+While the current setup is functional and meets the project’s objectives, there are several areas for improvement to ensure greater reliability, security, and maintainability:
+* Expand Airflow's monitoring capabilities to track the health and performance of all components in the setup, ensuring early detection and resolution of issues.
+* Implementing data quality checks at each stage.
+* Address potential security vulnerabilities.
+* Adding more containers (nodes) for Kafka, Spark, and Cassandra to have a distributed architecture which will increase the system's scalability and resilience.
+
+#
+In conclusion, this project has provided valuable hands-on experience in data engineering, allowing me to explore and practice various tools and techniques. It serves as a solid foundation for future enhancements and scalability.
+I appreciate your interest in following this journey !
