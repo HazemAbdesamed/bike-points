@@ -1,6 +1,5 @@
 from utils import create_spark_session
 from speed_layer.consuming import consume
-from speed_layer.processing import process
 from speed_layer.loading import streaming
 
 def main():

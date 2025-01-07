@@ -92,11 +92,11 @@ def process(df, batch_id):
 
     # Serialize the df to write into kafka topic
     metrics_df = metrics_df.selectExpr("to_json(struct(*)) AS value")
-    
-    metrics_df.show(truncate=False)
 
     metrics_df.write \
         .format("kafka") \
         .option("kafka.bootstrap.servers", f"{BROKER1}:{PORT1}") \
         .option("topic", TOPIC_METRICS) \
         .save()
+    
+    logger.info("A record has been inserted into the near-real-time metrics topic.")
