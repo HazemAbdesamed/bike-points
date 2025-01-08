@@ -11,7 +11,7 @@ The system integrates:
 
 The entire setup is containerized using **Docker**.
 
-![Architecture](/Architecture.gif)
+![Architecture](/pictures/architecture.gif)
 
 # The Data Source
 
@@ -177,8 +177,8 @@ These charts are automatically refreshed each 4 minutes in the dashboard.
 
 - **Broken Docks by Day of the Month:** A Line chart illustrating the maximum number of broken docks over the previous days. 
 
-![near-real-time metrics](/near-real-time%20metrics.jpg)
-![historical charts](/Historical%20charts.jpg)
+![near-real-time metrics](/pictures/near-real-time%20metrics.jpg)
+![historical charts](/pictures/historical%20charts.jpg)
 
 ## Superset Container Setup
 The superset container has been customized to automate the initialization process and enable seamless integration with Trino DB.
@@ -189,6 +189,17 @@ The superset container has been customized to automate the initialization proces
 #### **superset_init.sh**
 * Create the admin user with credentials defined in environment variables.
 * Automatically import a preconfigured and customized dashboard from a [zip](/dashboard/superset-dashboard-data.zip) file during container startup.
+
+# Requirements
+- **Docker**
+- **Docker Compose**
+
+# Usage :
+- Download the project.
+- Navigate to the project folder on your machine.
+- Execute <code> docker-compose up --build -d </code>. The execution will take some time for the first execution as it will download the images and the dependencies.
+- You can enable the dags to run by the default schedule (the **stage** will be executed evey **3 minutes**, and the **load_batch** dag will be executed evey day at midnight) by enabling the toggle on switch. However if you want to trigger the dag manually, click on the play button.
+![airflow usage](/pictures/airlfow%20usage.jpg)
 
 # Final Thoughts and Conclusion
 
