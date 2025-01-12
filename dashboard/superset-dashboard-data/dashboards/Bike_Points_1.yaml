@@ -1,0 +1,317 @@
+dashboard_title: Bike Points
+description: null
+css: ''
+slug: null
+certified_by: ''
+certification_details: ''
+published: false
+uuid: fbdc8de6-05ae-4c58-bf47-fed5aeea50e1
+position:
+  CHART-H3bUvis5TF:
+    children: []
+    id: CHART-H3bUvis5TF
+    meta:
+      chartId: 1
+      height: 11
+      sliceName: '% Available Bikes'
+      uuid: fd11f75d-9db6-4fd9-892f-4439ded99fd8
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-qVSlVUDxC
+    type: CHART
+  CHART-QXaFW6k84S:
+    children: []
+    id: CHART-QXaFW6k84S
+    meta:
+      chartId: 6
+      height: 11
+      sliceName: '% Bikes in Use'
+      uuid: a36df2bf-4549-4914-bec7-292e9fae5987
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-qVSlVUDxC
+    type: CHART
+  CHART-_6bsaBfu2m:
+    children: []
+    id: CHART-_6bsaBfu2m
+    meta:
+      chartId: 8
+      height: 11
+      sliceName: '% Broken Docks'
+      uuid: 17ce5361-d58b-4314-917e-b8e693fab55a
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-qVSlVUDxC
+    type: CHART
+  CHART-explore-10-1:
+    children: []
+    id: CHART-explore-10-1
+    meta:
+      chartId: 7
+      height: 36
+      sliceName: Bike Points Non Availability by Day
+      uuid: cb9fadf4-2b08-4343-9a5e-515ff98f1dcf
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-ZRoCutQCO
+    type: CHART
+  CHART-explore-11-1:
+    children: []
+    id: CHART-explore-11-1
+    meta:
+      chartId: 9
+      height: 34
+      sliceName: Broken Docks
+      uuid: 6af70ebf-2b04-41ff-a544-24e7d965d66e
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-G272AIFQgD
+    type: CHART
+  CHART-explore-12-1:
+    children: []
+    id: CHART-explore-12-1
+    meta:
+      chartId: 11
+      height: 36
+      sliceName: In Use Bikes by Day
+      uuid: e076db48-365e-448b-9fdd-77e110eb9e08
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-ZRoCutQCO
+    type: CHART
+  CHART-explore-9-1:
+    children: []
+    id: CHART-explore-9-1
+    meta:
+      chartId: 12
+      height: 34
+      sliceName: Peak Hours by Day
+      uuid: 60f43e4f-00e0-4e18-bf51-b94cbb385fe1
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-G272AIFQgD
+    type: CHART
+  CHART-h5J8LvUiEz:
+    children: []
+    id: CHART-h5J8LvUiEz
+    meta:
+      chartId: 2
+      height: 11
+      sliceName: Available Bikes
+      uuid: 4d2fc0c9-2edf-412f-ab33-ba6732cc3281
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-GUkJ0Z30EU
+    type: CHART
+  CHART-illNt85Yas:
+    children: []
+    id: CHART-illNt85Yas
+    meta:
+      chartId: 5
+      height: 11
+      sliceName: Bikes in Use
+      uuid: 87c74cc9-48c6-426f-81c9-6f32ae3ac223
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-GUkJ0Z30EU
+    type: CHART
+  CHART-isVnkahE9z:
+    children: []
+    id: CHART-isVnkahE9z
+    meta:
+      chartId: 10
+      height: 11
+      sliceName: Broken Docks
+      uuid: 3f4c6c76-26a8-42ca-843c-7a427fe62f94
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-GUkJ0Z30EU
+    type: CHART
+  CHART-qzY74qzuJx:
+    children: []
+    id: CHART-qzY74qzuJx
+    meta:
+      chartId: 4
+      height: 11
+      sliceName: Available EBikes
+      uuid: 4e33acbc-9000-4508-85b5-b628857e4fdd
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-GUkJ0Z30EU
+    type: CHART
+  CHART-tDwhnEVOnP:
+    children: []
+    id: CHART-tDwhnEVOnP
+    meta:
+      chartId: 3
+      height: 11
+      sliceName: '%Available EBikes'
+      uuid: 4e2c56dd-3a7c-487e-99bc-c0421a58f4a7
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-qVSlVUDxC
+    type: CHART
+  DASHBOARD_VERSION_KEY: v2
+  GRID_ID:
+    children:
+    - ROW-GUkJ0Z30EU
+    - ROW-qVSlVUDxC
+    - ROW-ZRoCutQCO
+    - ROW-G272AIFQgD
+    id: GRID_ID
+    parents:
+    - ROOT_ID
+    type: GRID
+  HEADER_ID:
+    id: HEADER_ID
+    meta:
+      text: Bike Points
+    type: HEADER
+  ROOT_ID:
+    children:
+    - GRID_ID
+    id: ROOT_ID
+    type: ROOT
+  ROW-G272AIFQgD:
+    children:
+    - CHART-explore-9-1
+    - CHART-explore-11-1
+    id: ROW-G272AIFQgD
+    meta:
+      '0': ROOT_ID
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-GUkJ0Z30EU:
+    children:
+    - CHART-h5J8LvUiEz
+    - CHART-illNt85Yas
+    - CHART-isVnkahE9z
+    - CHART-qzY74qzuJx
+    id: ROW-GUkJ0Z30EU
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-ZRoCutQCO:
+    children:
+    - CHART-explore-12-1
+    - CHART-explore-10-1
+    id: ROW-ZRoCutQCO
+    meta:
+      '0': ROOT_ID
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-qVSlVUDxC:
+    children:
+    - CHART-H3bUvis5TF
+    - CHART-QXaFW6k84S
+    - CHART-_6bsaBfu2m
+    - CHART-tDwhnEVOnP
+    id: ROW-qVSlVUDxC
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+metadata:
+  chart_configuration:
+    '8':
+      id: 8
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 9
+        - 10
+        - 11
+        - 12
+    '11':
+      id: 11
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 12
+  global_chart_configuration:
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    chartsInScope:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+  color_scheme: ''
+  refresh_frequency: 210
+  expanded_slices: {}
+  label_colors: {}
+  timed_refresh_immune_slices:
+  - 7
+  - 9
+  - 11
+  - 12
+  cross_filters_enabled: false
+  native_filter_configuration: []
+  stagger_refresh: true
+  shared_label_colors:
+    sum: '#1FA8C9'
+    SUM(NbBrokenDocks): '#c23531'
+  color_scheme_domain: []
+version: 1.0.0

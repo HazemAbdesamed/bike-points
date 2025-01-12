@@ -1,0 +1,66 @@
+slice_name: 'Peak Hours by Day - AVG # empty docks'
+description: null
+certified_by: null
+certification_details: null
+viz_type: heatmap
+params:
+  datasource: 5__table
+  viz_type: heatmap
+  slice_id: 12
+  all_columns_x: num_dayofweek
+  all_columns_y: HourInterval
+  metric:
+    aggregate: AVG
+    column:
+      advanced_data_type: null
+      changed_on: '2025-01-05T23:34:50.690019'
+      column_name: AvgNbEmptyDocks
+      created_on: '2025-01-05T23:34:50.690007'
+      description: null
+      expression: null
+      extra: '{}'
+      filterable: true
+      groupby: true
+      id: 24
+      is_active: true
+      is_dttm: false
+      python_date_format: null
+      type: DECIMAL(4, 2)
+      type_generic: 0
+      uuid: f0c37ed9-5591-4002-86e1-b50b47e0b920
+      verbose_name: null
+    datasourceWarning: false
+    expressionType: SIMPLE
+    hasCustomLabel: false
+    label: AVG(AvgNbEmptyDocks)
+    optionName: metric_fobi0zqhvbh_60xcgyzce29
+    sqlExpression: null
+  adhoc_filters: []
+  row_limit: 10000
+  linear_color_scheme: schemeYlOrRd
+  xscale_interval: 1
+  yscale_interval: 1
+  canvas_image_rendering: pixelated
+  normalize_across: heatmap
+  left_margin: auto
+  bottom_margin: 50
+  y_axis_bounds:
+  - null
+  - null
+  y_axis_format: SMART_NUMBER
+  time_format: '%d/%m/%Y'
+  sort_x_axis: alpha_asc
+  sort_y_axis: value_desc
+  show_legend: false
+  show_perc: false
+  show_values: true
+  normalized: false
+  extra_form_data: {}
+  dashboards:
+  - 1
+  annotation_layers: []
+query_context: null
+cache_timeout: null
+uuid: 60f43e4f-00e0-4e18-bf51-b94cbb385fe1
+version: 1.0.0
+dataset_uuid: d287c6a4-f4a4-4914-96d4-959ad020a395

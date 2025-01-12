@@ -1,0 +1,35 @@
+slice_name: Available Bikes
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 1__table
+  viz_type: big_number_total
+  slice_id: 2
+  cache_timeout: 20
+  metric:
+    aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: false
+    label: (nb_available_bikes)
+    optionName: metric_8icsyfhe2ho_7suak9b9az8
+    sqlExpression: (nb_available_bikes)
+  adhoc_filters: []
+  subheader: Available Bikes
+  header_font_size: 0.6
+  subheader_font_size: 0.4
+  y_axis_format: ~g
+  time_format: smart_date
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards:
+  - 1
+  annotation_layers: []
+query_context: null
+cache_timeout: null
+uuid: 4d2fc0c9-2edf-412f-ab33-ba6732cc3281
+version: 1.0.0
+dataset_uuid: 911dffe8-a12a-4209-8d1f-a6f1d8eaf15e

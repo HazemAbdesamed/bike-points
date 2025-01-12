@@ -19,6 +19,15 @@ services:
     networks:
         - dashboard-network
         - spark_data-network
+    deploy:
+      resources:
+       limits:
+        memory: 1G
+        cpus: "1.5"
+       reservations:
+        memory: 1G
+        cpus: "1.0"
+
 
   superset:
       container_name: superset
@@ -39,4 +48,10 @@ services:
       networks:
         - dashboard-network
         - spark_data-network
+      deploy:
+       resources:
+        limits:
+         memory: 500M
+        reservations:
+         memory: 500M  
              

@@ -1,0 +1,34 @@
+slice_name: '%Available EBikes'
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  datasource: 1__table
+  viz_type: big_number_total
+  slice_id: 3
+  metric:
+    aggregate: null
+    column: null
+    datasourceWarning: false
+    expressionType: SQL
+    hasCustomLabel: false
+    label: (percentage_available_ebikes)
+    optionName: metric_5cz8wpk30oy_v7l57nxiugd
+    sqlExpression: (percentage_available_ebikes)
+  adhoc_filters: []
+  subheader: '%Available Ebikes'
+  header_font_size: 0.6
+  subheader_font_size: 0.4
+  y_axis_format: ~g
+  time_format: smart_date
+  conditional_formatting: []
+  extra_form_data: {}
+  dashboards:
+  - 1
+  annotation_layers: []
+query_context: null
+cache_timeout: null
+uuid: 4e2c56dd-3a7c-487e-99bc-c0421a58f4a7
+version: 1.0.0
+dataset_uuid: 911dffe8-a12a-4209-8d1f-a6f1d8eaf15e

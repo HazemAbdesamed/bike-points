@@ -1,0 +1,45 @@
+slice_name: In Use Bikes by Day
+description: null
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_bar
+params:
+  datasource: 4__table
+  viz_type: echarts_timeseries_bar
+  slice_id: 11
+  x_axis: num_dayofweek
+  x_axis_sort: num_dayofweek
+  x_axis_sort_asc: true
+  metrics:
+  - AVG
+  groupby: []
+  adhoc_filters: []
+  row_limit: 10000
+  truncate_metric: true
+  show_empty_columns: true
+  annotation_layers: []
+  orientation: vertical
+  y_axis_title: ''
+  y_axis_title_margin: 15
+  y_axis_title_position: Left
+  sort_series_type: name
+  sort_series_ascending: false
+  color_scheme: supersetColors
+  show_value: true
+  show_legend: false
+  xAxisLabelRotation: 45
+  y_axis_format: SMART_NUMBER
+  logAxis: false
+  minorSplitLine: false
+  truncateXAxis: false
+  truncateYAxis: false
+  rich_tooltip: true
+  tooltipTimeFormat: smart_date
+  extra_form_data: {}
+  dashboards:
+  - 1
+query_context: '{"datasource":{"id":4,"type":"table"},"force":false,"queries":[{"filters":[],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[{"columnType":"BASE_AXIS","sqlExpression":"num_dayofweek","label":"num_dayofweek","expressionType":"SQL"}],"metrics":["AVG"],"orderby":[["AVG",false]],"annotation_layers":[],"row_limit":10000,"series_columns":[],"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"time_offsets":[],"post_processing":[{"operation":"pivot","options":{"index":["num_dayofweek"],"columns":[],"aggregates":{"AVG":{"operator":"mean"}},"drop_missing_columns":false}},{"operation":"sort","options":{"is_sort_index":true,"ascending":true}},{"operation":"flatten"}]}],"form_data":{"datasource":"4__table","viz_type":"echarts_timeseries_bar","slice_id":11,"x_axis":"num_dayofweek","x_axis_sort":"num_dayofweek","x_axis_sort_asc":true,"metrics":["AVG"],"groupby":[],"adhoc_filters":[],"row_limit":10000,"truncate_metric":true,"show_empty_columns":true,"annotation_layers":[],"orientation":"vertical","y_axis_title":"","y_axis_title_margin":15,"y_axis_title_position":"Left","sort_series_type":"name","sort_series_ascending":false,"color_scheme":"supersetColors","show_value":true,"show_legend":false,"xAxisLabelRotation":45,"y_axis_format":"SMART_NUMBER","logAxis":false,"minorSplitLine":false,"truncateXAxis":false,"truncateYAxis":false,"rich_tooltip":true,"tooltipTimeFormat":"smart_date","extra_form_data":{},"dashboards":[1],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: e076db48-365e-448b-9fdd-77e110eb9e08
+version: 1.0.0
+dataset_uuid: 42712130-b660-4a1d-bf13-8506d2feebe4

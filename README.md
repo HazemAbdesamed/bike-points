@@ -192,12 +192,12 @@ The superset container has been customized to automate the initialization proces
 
 # Requirements
 - **Docker**
-- **Docker Compose**
+- **The setup might need around 6GB of memory.**
 
 # Usage :
 - Download the project.
 - Navigate to the project folder on your machine.
-- Execute <code> docker-compose up --build -d </code>. The execution will take some time for the first execution as it will download the images and the dependencies.
+- In a terminal, execute <code> docker-compose up --build -d </code>. The execution will take some time for the first execution as it will download the images and the dependencies.
 - You can enable the dags to run by the default schedule (the **stage** will be executed evey **3 minutes**, and the **load_batch** dag will be executed evey day at midnight) by enabling the toggle on switch. However if you want to trigger the dag manually, click on the play button.
 ![airflow usage](/pictures/airlfow%20usage.jpg)
 
