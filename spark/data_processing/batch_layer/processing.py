@@ -25,26 +25,26 @@ def process(df):
     df = df.selectExpr("CAST(value AS STRING)")\
         .select( from_json( col("value"), schema ).alias("bp") )\
         .select(
-        col("bp.Id").alias("bikepointid"),
-        col("bp.commonname"),
-        col("bp.lat"),
-        col("bp.lon"),
-        col("bp.installed"),
-        col("bp.locked"),
-        col("bp.NbBikes").alias("nbbikes"),
-        col("bp.NbEmptyDocks").alias("nbemptydocks"),
-        col("bp.NbDocks").alias("nbdocks"),
-        col("bp.NbEBikes").alias("nbebikes"),
-        (col("bp.NbDocks") - (col("bp.NbBikes") + col("bp.NbEmptyDocks")) ).alias("nbbrokendocks"),
-        col("bp.extractiondatetime"),
-        (to_date(col("ExtractionDatetime"))).alias("extractiondate"),
-        (date_format(col("bp.ExtractionDatetime"), "MMMM")).alias("monthname"),
-        (date_format(col("bp.ExtractionDatetime"), "M")).alias("monthnumber"),
-        (date_format(col("ExtractionDatetime"), "dd")).alias("dayofmonth"), 
-        (date_format(col("ExtractionDatetime"), "EEEE")).alias("dayofweek"),
-        (dayofweek(col("ExtractionDatetime"))).alias("dayofweeknumber"),
-        (weekofyear(col("ExtractionDatetime"))).alias("weekofyear"),
-        (date_format(col("ExtractionDatetime"), "H")).alias("hour")
+          col("bp.Id").alias("bikepointid"),
+          col("bp.commonname"),
+          col("bp.lat"),
+          col("bp.lon"),
+          col("bp.installed"),
+          col("bp.locked"),
+          col("bp.NbBikes").alias("nbbikes"),
+          col("bp.NbEmptyDocks").alias("nbemptydocks"),
+          col("bp.NbDocks").alias("nbdocks"),
+          col("bp.NbEBikes").alias("nbebikes"),
+          (col("bp.NbDocks") - (col("bp.NbBikes") + col("bp.NbEmptyDocks")) ).alias("nbbrokendocks"),
+          col("bp.extractiondatetime"),
+          (to_date(col("ExtractionDatetime"))).alias("extractiondate"),
+          (date_format(col("bp.ExtractionDatetime"), "MMMM")).alias("monthname"),
+          (date_format(col("bp.ExtractionDatetime"), "M")).alias("monthnumber"),
+          (date_format(col("ExtractionDatetime"), "dd")).alias("dayofmonth"), 
+          (date_format(col("ExtractionDatetime"), "EEEE")).alias("dayofweek"),
+          (dayofweek(col("ExtractionDatetime"))).alias("dayofweeknumber"),
+          (weekofyear(col("ExtractionDatetime"))).alias("weekofyear"),
+          (date_format(col("ExtractionDatetime"), "H")).alias("hour")
     )
 
     # Convert Installed and Locked columns to Boolean

@@ -12,7 +12,7 @@ def load(df):
         .mode("append") \
         .save()
         
-        logger.info("Batch has been successfully written to Cassandra.")
+        logger.info("Batch has been successfully written to the historical table.")
         
     except Exception as e:
-        logger.error(f"Error in writing the batch to Cassandra: {e}")
+        logger.error(f"Error in writing the batch to the historical table: {e}")

@@ -4,11 +4,13 @@ version: '3.8'
 include:
   - ./kafka/docker-compose.yml
   - ./cassandra/docker-compose.yml
+  - ./postgres/docker-compose.yml
   - ./airflow/docker-compose.yml
   - ./spark/docker-compose.yml
   - ./dashboard/docker-compose.yml
 
 volumes:
+  postgres-data:
   kafka-data:
   spark-data:
   cassandra-data:

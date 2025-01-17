@@ -82,7 +82,7 @@ function wait_for_connection {
 
     if [[ -z "${detected_port=}" ]]; then
         if [[ ${BACKEND} == "postgres"* ]]; then
-            detected_port=5432
+            detected_port=${POSTGRES_PORT}
         elif [[ ${BACKEND} == "mysql"* ]]; then
             detected_port=3306
         elif [[ ${BACKEND} == "mssql"* ]]; then
@@ -249,6 +249,7 @@ readonly CONNECTION_CHECK_SLEEP_TIME
 create_system_user_if_missing
 set_pythonpath_for_root_user
 
+  airflow db init
 # Initialize the db if it hasn't already been initialized
 if [ ! -f "/opt/airflow/airflow.db" ]; then
   airflow db init
@@ -272,8 +273,8 @@ elif [[ -z "${_AIRFLOW_WWW_USER_CREATE=}" ]] ; then
       echo "User 'admin' does not exist. Creating it.."
       airflow users create \
       --username "${_AIRFLOW_WWW_USER_USERNAME="admin"}" \
-      --firstname "${_AIRFLOW_WWW_USER_FIRSTNAME="Hazem"}" \
-      --lastname "${_AIRFLOW_WWW_USER_LASTNAME="Damdoum"}" \
+      --firstname "${_AIRFLOW_WWW_USER_FIRSTNAME="FirstName"}" \
+      --lastname "${_AIRFLOW_WWW_USER_LASTNAME="LastName"}" \
       --email "${_AIRFLOW_WWW_USER_EMAIL="airflowadmin@example.com"}" \
       --role "${_AIRFLOW_WWW_USER_ROLE="Admin"}" \
       --password "${_AIRFLOW_WWW_USER_PASSWORD="admin"}" || true   

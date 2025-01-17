@@ -1,24 +1,9 @@
 version: '3.8'
 services:
-  postgres:
-    image: postgres:9.6
-    container_name: postgres
-    hostname: postgres
-    ports:
-          - $POSTGRES_HOST_PORT:$POSTGRES_PORT
-    environment:
-        - POSTGRES_DB=$POSTGRES_DB
-        - POSTGRES_USER=$POSTGRES_USER
-        - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-    networks:
-      - airflow_data-network
-
   airflow:
     build:
         context: .
         dockerfile: Dockerfile
-        args:
-          - SPARK_SYSTEM_PASSWORD=$SPARK_SYSTEM_PASSWORD
     container_name: airflow
     hostname: airflow
     depends_on:
@@ -27,6 +12,7 @@ services:
       - $AIRFLOW_HOST_PORT:$AIRFLOW_PORT
     env_file:
       -  ./.env
+      - ../postgres/.env
       - ../kafka/.env
       - ../spark/.env
     volumes:

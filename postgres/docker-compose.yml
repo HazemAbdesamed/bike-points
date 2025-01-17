@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:9.6
+    container_name: postgres
+    hostname: postgres
+    ports:
+        - $POSTGRES_HOST_PORT:$POSTGRES_PORT
+    env_file:
+        - ./.env      
+    environment:
+        - POSTGRES_USER=$POSTGRES_USER
+        - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+    volumes:
+        - ./scripts/create_airflow_user_and_dbs.sql:/docker-entrypoint-initdb.d/create_airflow_user_and_dbs.sql
+        - ./scripts/create_bikepoints_table_and_indexes.sql:/docker-entrypoint-initdb.d/create_bikepoints_table_and_indexes.sql
+        - postgres-data:/var/lib/postgresql/data
+        - ./config/entrypoint.sh:/entrypoint.sh
+    entrypoint:
+       /entrypoint.sh    
+    networks:
+      - airflow_data-network
+      - spark_data-network
+      - dashboard-network
