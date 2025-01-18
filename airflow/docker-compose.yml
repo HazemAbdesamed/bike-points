@@ -18,6 +18,7 @@ services:
     volumes:
       - ./dags:/opt/airflow/dags
       - ./produce_to_kafka:/opt/airflow/produce_to_kafka
+      - ./helpers:/opt/airflow/helpers
       - ./config/airflow.cfg:/opt/airflow/airflow.cfg
       - ./config/entrypoint.sh:/entrypoint
     networks:

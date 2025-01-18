@@ -4,7 +4,7 @@ from speed_layer.loading import streaming
 
 def main():
     # Create a spark session
-    spark_session = create_spark_session()
+    spark_session = create_spark_session("speed")
 
     # Consume data from kafka
     bikepoints = consume(spark_session)

@@ -11,10 +11,10 @@ def select_fields(bikepoints_data):
     bikepoints = []
     for bikepointInfo in bikepoints_data :
         processed_bikepoint = {
-            "Id": bikepointInfo["id"],
-            "CommonName": bikepointInfo["commonName"],
-            "Lat": str(bikepointInfo["lat"]),
-            "Lon": str(bikepointInfo["lon"])
+            "id": bikepointInfo["id"],
+            "common_name": bikepointInfo["commonName"],
+            "lat": str(bikepointInfo["lat"]),
+            "lon": str(bikepointInfo["lon"])
         }
 
         
@@ -30,7 +30,7 @@ def select_fields(bikepoints_data):
             
         # Get the most recent modified datetime of the objects
         recent_datetime = max(parser.isoparse(detail['modified']) for detail in bikepointInfo['additionalProperties'])
-        processed_bikepoint['ExtractionDatetime'] = str(recent_datetime.astimezone(system_timezone).strftime("%Y-%m-%d %H:%M:%S"))
+        processed_bikepoint['extraction_datetime'] = str(recent_datetime.astimezone(system_timezone).strftime("%Y-%m-%d %H:%M:%S"))
 
         bikepoints.append(processed_bikepoint)
     

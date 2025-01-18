@@ -313,6 +313,22 @@ fi
 
 
 # create the ssh connection to spark if it does not exists
+if airflow connections get 'postgres_historical_data_conn' > /dev/null 2>&1; then
+  echo "Connection 'postgres_historical_data_conn' already exists."
+else
+  echo "Connection 'postgres_historical_data_conn' does not exist. Creating it.."
+  airflow connections add 'postgres_historical_data_conn' \
+    --conn-type postgres \
+    --conn-host "$POSTGRES_HOST" \
+    --conn-port "$POSTGRES_PORT" \
+    --conn-login "$POSTGRES_USER" \
+    --conn-password "$POSTGRES_PASSWORD" \
+    --conn-schema "$POSTGRES_HISTORICAL_DATA_DB"
+fi
+
+
+
+# create the ssh connection to spark if it does not exists
 if airflow connections get 'ssh_spark_conn' > /dev/null 2>&1; then
   echo "Connection 'ssh_spark_conn' already exists."
 else

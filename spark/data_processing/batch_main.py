@@ -5,7 +5,7 @@ from batch_layer.loading import load
 
 def main():
     # Create a spark session
-    spark_session = utils.create_spark_session()
+    spark_session = utils.create_spark_session("batch")
 
     # Consume data from kafka
     bikepoints = consume(spark_session)

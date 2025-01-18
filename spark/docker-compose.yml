@@ -17,6 +17,7 @@ services:
         - ./.env
         - ../kafka/.env
         - ../cassandra/.env
+        - ../postgres/.env
       volumes:
         - ./data_processing:/opt/bitnami/spark/data_processing
         - ./config/entrypoint.sh:/opt/bitnami/scripts/spark/entrypoint.sh

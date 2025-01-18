@@ -13,11 +13,11 @@ services:
         - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
     volumes:
         - ./scripts/create_airflow_user_and_dbs.sql:/docker-entrypoint-initdb.d/create_airflow_user_and_dbs.sql
-        - ./scripts/create_bikepoints_table_and_indexes.sql:/docker-entrypoint-initdb.d/create_bikepoints_table_and_indexes.sql
+        - ./scripts/create_tables_and_indexes.sql:/docker-entrypoint-initdb.d/create_tables_and_indexes.sql
         - postgres-data:/var/lib/postgresql/data
         - ./config/entrypoint.sh:/entrypoint.sh
     entrypoint:
-       /entrypoint.sh    
+       /entrypoint.sh
     networks:
       - airflow_data-network
       - spark_data-network
