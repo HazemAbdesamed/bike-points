@@ -1,11 +1,6 @@
-import os
 from utils import logger
 from pyspark.sql.types import StructType,StructField,IntegerType,StringType, TimestampType
 from pyspark.sql.functions import from_json, col
-
-BROKER1 = os.environ.get("BROKER1")
-PORT1 = os.environ.get("PORT1")
-TOPIC_METRICS = os.environ.get("TOPIC_METRICS")
 
 def calculate_metrics_sql(df):
     """
@@ -19,27 +14,27 @@ def calculate_metrics_sql(df):
     sql_query = """
         WITH latest_bikepoints AS ( 
             SELECT 
-                ID,
-                MAX_BY(NbBikes, ExtractionDatetime) AS latest_NbBikes,
-                MAX_BY(NbEBikes, ExtractionDatetime) AS latest_NbEBikes,
-                MAX_BY(NbDocks, ExtractionDatetime) AS latest_NbDocks,
-                MAX_BY(NbEmptyDocks, ExtractionDatetime) AS latest_NbEmptyDocks,
-                MAX_BY(NbBrokenDocks, ExtractionDatetime) AS latest_NbBrokenDocks,
-                MAX(ExtractionDatetime) AS ExtractionDatetime
+                id,
+                MAX_BY(NbBikes, extraction_datetime) AS latest_NbBikes,
+                MAX_BY(NbEBikes, extraction_datetime) AS latest_NbEBikes,
+                MAX_BY(NbDocks, extraction_datetime) AS latest_NbDocks,
+                MAX_BY(NbEmptyDocks, extraction_datetime) AS latest_NbEmptyDocks,
+                MAX_BY(NbBrokenDocks, extraction_datetime) AS latest_NbBrokenDocks,
+                MAX(extraction_datetime) AS extraction_datetime
             FROM bike_points
-            GROUP BY ID
+            GROUP BY id
         )
         SELECT 
-            MIN(ExtractionDatetime) AS min_extraction_datetime,
-            MAX(ExtractionDatetime) AS max_extraction_datetime,
+            COALESCE(MIN(extraction_datetime), to_date('2000-01-01')) AS min_extraction_datetime,
+            COALESCE(MAX(extraction_datetime), to_date('2000-01-01')) AS max_extraction_datetime,
             SUM(latest_NbBikes) AS nb_available_bikes,
-            CAST(ROUND(100 * SUM(latest_NbBikes) / SUM(latest_NbDocks), 2) AS STRING) AS percentage_available_bikes,
-            SUM(latest_NbEBikes) AS nb_available_Ebikes,
-            CAST(ROUND(100 * SUM(latest_NbEBikes) / SUM(latest_NbDocks), 2) AS STRING) AS percentage_available_Ebikes,
+            ROUND(100 * SUM(latest_NbBikes) / SUM(latest_NbDocks), 2) AS percentage_available_bikes,
+            SUM(latest_NbEBikes) AS nb_available_ebikes,
+            ROUND(100 * SUM(latest_NbEBikes) / SUM(latest_NbDocks), 2) AS percentage_available_ebikes,
             SUM(latest_NbEmptyDocks) AS nb_in_use_bikes,
-            CAST(ROUND(100 * SUM(latest_NbEmptyDocks) / SUM(latest_NbDocks), 2) AS STRING) AS percentage_in_use_bikes,
+            ROUND(100 * SUM(latest_NbEmptyDocks) / SUM(latest_NbDocks), 2) AS percentage_in_use_bikes,
             SUM(latest_NbBrokenDocks) AS nb_broken_docks,
-            CAST(ROUND(100 * SUM(latest_NbBrokenDocks) / SUM(latest_NbDocks), 2) AS STRING) AS percentage_broken_docks
+            ROUND(100 * SUM(latest_NbBrokenDocks) / SUM(latest_NbDocks), 2) AS percentage_broken_docks
         FROM latest_bikepoints
     """
     
@@ -53,10 +48,10 @@ def process(df, batch_id):
 
     # create the schema
     schema = StructType([
-                StructField("Id", StringType()),
-                StructField("CommonName", StringType()),
-                StructField("Lat", StringType()),
-                StructField("Lon", StringType()),
+                StructField("id", StringType()),
+                StructField("common_name", StringType()),
+                StructField("lat", StringType()),
+                StructField("lon", StringType()),
                 StructField("Installed", StringType()),
                 StructField("Locked", StringType()),
                 StructField("NbBikes", IntegerType()),
@@ -64,39 +59,37 @@ def process(df, batch_id):
                 StructField("NbDocks", IntegerType()),
                 StructField("NbBrokenDocks", IntegerType()),
                 StructField("NbEBikes", IntegerType()),
-                StructField("ExtractionDatetime", TimestampType())
+                StructField("extraction_datetime", TimestampType())
     ])
 
     # select the columns received from kafka
     df = df.selectExpr("CAST(value AS STRING)")\
         .select( from_json( col("value"), schema ).alias("bp") )\
         .select(
-        col("bp.Id"),
-        col("bp.CommonName"),
-        col("bp.Lat"),
-        col("bp.Lon"),
-        col("bp.Installed"),
-        col("bp.Locked"),
-        col("bp.NbBikes").alias("NbBikes"),
-        col("bp.NbEmptyDocks").alias("NbEmptyDocks"),
-        col("bp.NbDocks").alias("NbDocks"),
-        col("bp.NbEBikes").alias("NbEBikes"),
-        (col("bp.NbDocks") - (col("bp.NbBikes") + col("bp.NbEmptyDocks")) ).alias("NbBrokenDocks"),
-        col("bp.ExtractionDatetime")
+          col("bp.id"),
+          col("bp.NbBikes").alias("NbBikes"),
+          col("bp.NbEmptyDocks").alias("NbEmptyDocks"),
+          col("bp.NbDocks").alias("NbDocks"),
+          col("bp.NbEBikes").alias("NbEBikes"),
+          (col("bp.NbDocks") - (col("bp.NbBikes") + col("bp.NbEmptyDocks")) ).alias("NbBrokenDocks"),
+          col("bp.extraction_datetime")
     )
 
-    df = df.withWatermark('ExtractionDatetime', '4 minutes')
+    df = df.withWatermark('extraction_datetime', '4 minutes')
 
     # Calculate metrics using SQL
     metrics_df = calculate_metrics_sql(df)
 
-    # Serialize the df to write into kafka topic
-    metrics_df = metrics_df.selectExpr("to_json(struct(*)) AS value")
-
+    # # Serialize the df to write into kafka topic
+    # metrics_df = metrics_df.selectExpr("to_json(struct(*)) AS value")
     metrics_df.write \
-        .format("kafka") \
-        .option("kafka.bootstrap.servers", f"{BROKER1}:{PORT1}") \
-        .option("topic", TOPIC_METRICS) \
+        .format("org.apache.spark.sql.cassandra") \
+        .options(
+            keyspace="transportation",
+            table="metrics",
+            ttl="86400"  # Setting the TTL to 24 hours
+        ) \
+        .mode("append") \
         .save()
     
-    logger.info("A record has been inserted into the near-real-time metrics topic.")
+    logger.info("A record has been inserted into the near-real-time metrics table.")

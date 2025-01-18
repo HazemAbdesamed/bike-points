@@ -1,7 +1,7 @@
 from airflow import DAG
 from airflow.providers.ssh.operators.ssh import SSHOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import os
 
