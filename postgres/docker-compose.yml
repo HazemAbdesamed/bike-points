@@ -12,8 +12,7 @@ services:
         - POSTGRES_USER=$POSTGRES_USER
         - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
     volumes:
-        - ./scripts/create_airflow_user_and_dbs.sql:/docker-entrypoint-initdb.d/create_airflow_user_and_dbs.sql
-        - ./scripts/create_tables_and_indexes.sql:/docker-entrypoint-initdb.d/create_tables_and_indexes.sql
+        - ./scripts:/docker-entrypoint-initdb.d/
         - postgres-data:/var/lib/postgresql/data
         - ./config/entrypoint.sh:/entrypoint.sh
     entrypoint:
