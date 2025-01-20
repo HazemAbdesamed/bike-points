@@ -10,11 +10,11 @@ services:
       - $TRINO_HOST_PORT:$TRINO_INTERNAL_PORT
     env_file:
         - ./.env
-        - ../kafka/.env
+        - ../postgres/.env
         - ../cassandra/.env
     volumes:
       - ./config/cassandra.properties:/etc/trino/catalog/cassandra.properties
-      - ./config/kafka.properties:/etc/trino/catalog/kafka.properties
+      - ./config/postgres.properties:/etc/trino/catalog/postgres.properties
       
     networks:
         - dashboard-network
@@ -39,8 +39,6 @@ services:
         - trino
       env_file:
         - ./.env
-        - ../kafka/.env
-        - ../cassandra/.env  
       ports:
         - $SUPERSET_HOST_PORT:$SUPERSET_INTERNAL_PORT
       volumes:
