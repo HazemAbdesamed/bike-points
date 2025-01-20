@@ -1,6 +1,6 @@
 \c `echo "$POSTGRES_HISTORICAL_DATA_DB"`
 
--- Create the BikePoints table
+-- Create the bike_points table
 CREATE TABLE IF NOT EXISTS bike_points (
     bike_point_id TEXT,
     common_name TEXT,
@@ -28,12 +28,11 @@ CREATE TABLE IF NOT EXISTS bike_points (
     PRIMARY KEY (extraction_datetime, bike_point_id)
 );
 
--- Create an index on DayOfWeekNumber
+-- Create an index on day_of_week_number
 CREATE INDEX IF NOT EXISTS idx_day_of_week_number ON bike_points (day_of_week_number);
 
--- Create an index on DayOfMonth
+-- Create an index on day_of_month
 CREATE INDEX IF NOT EXISTS idx_day_of_month ON bike_points (day_of_month);
 
 -- Create stg_BikePoints table
-
 CREATE TABLE IF NOT EXISTS stg_bike_points AS SELECT * FROM bike_points WHERE 1 <> 1
