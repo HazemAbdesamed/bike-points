@@ -1,0 +1,4 @@
+REFRESH MATERIALIZED VIEW mvw_in_use_bikes_by_day;
+REFRESH MATERIALIZED VIEW mvw_broken_docks_history;
+REFRESH MATERIALIZED VIEW mvw_peak_hours_by_day;
+REFRESH MATERIALIZED VIEW mvw_non_availability_by_day;

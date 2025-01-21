@@ -4,9 +4,9 @@ A data engineering pipeline designed to **process**, **store**, and **analyze** 
 
 The system integrates:
 
-- **Apache Kafka** and **Apache Spark** for processing and streaming.
-- **Apache Cassandra** for storing historical data.
-- **Trino DB** and **Superset** for visualizing insights.
+- **Apache Kafka** and **Apache Spark** for processing.
+- **Apache postgres** for storing near-real-time data.
+- **Trino** and **Apache Superset** for querying and visualizing insights.
 - **Apache Airflow** for orchestrating the system.
 
 The entire setup is containerized using **Docker**.
@@ -64,35 +64,39 @@ When querying the endpoint [https://api.tfl.gov.uk/BikePoint/](https://api.tfl.g
 
 The fields that have been extracted for this project are :
 * **Id :** A unique identifier for each bike point.
-* **commonName :** the name of the bike point.
+* **commonName :** The name of the bike point.
 * **lat** and **lon :** Latitude and longitude values for the geographic location of the bike point.
-* **Installed :** A boolean indicationg whether the bike point is installed.
-* **Locked :** A boolean indicationg whether the bike point is locked.
-* **NbDocks :** the total number of docks at the bike point.
-* **NbBikes :** the number of bikes at the bike point.
-* **NbEBikes :** the number of electric bikes at the bike point.
-* **NbEmptyDocks :** the number of empty docks (a dock without a bike) at the bike point.
-* **ExtractionDatetime :** a custom field added to indicate the time of the extraction.
+* **Installed :** A boolean indicating whether the bike point is installed.
+* **Locked :** A boolean indicating whether the bike point is locked.
+* **NbDocks :** The total number of docks at the bike point.
+* **NbBikes :** The number of bikes at the bike point.
+* **NbEBikes :** The number of electric bikes at the bike point.
+* **NbEmptyDocks :** The number of empty docks (a docks without bikes or broken docks) at the bike point.
+* **ExtractionDatetime :** A custom field added to indicate the time of the extraction.
 
 Preprocessed data is then loaded into a kafka topic **bike-points**. This logic is implemented in this [folder](airflow/produce_to_kafka/), and is automated using an Airflow DAG **stage** that executes the preprocessing scripts every 3 minutes.
 
-## Topics creation
+## Topic creation
 
-To ensure the required Kafka topics are available, they are created during container's startup phase. This is achieved by the  [entrypoint.sh] file (/kafka/config/entrypoint.sh), which executes the topic creation [script](/kafka/scripts/create-topics.sh) if the topics do not already exist.
+To ensure the required Kafka topic is available, it is created during container's startup phase. This is achieved by the  [entrypoint.sh](/kafka/config/entrypoint.sh) file, which executes the topic creation [script](/kafka/scripts/create-topic.sh) if the topic does not already exist.
 
 
 # Processing
 
 ## Batch Layer
-The Batch Layer is responsible for processing and storing historical data in an Apache Cassandra table. The schema for that table is found in this [file](/cassandra/scripts/init.cql).
+The Batch Layer is responsible for processing and storing historical data in a postgres table. The schema for that table is found in this [file](/postgres/scripts/create_tables_and_indexes.cql).
 
-The Primary Key should be carefully selected in Cassandra, it ensures the uniqueness of the record. It also determines the distribution of the data across nodes in the cluster and the order in which data is stored within each partition. The primary key is composed of the partition key, which is responsible for the distribution of data across nodes, and the clustering columns, which defines the order of data within each partition :
+The Primary Key is used for the uniqueness of each record and indexing.
+The primary key for the **bike_points** table is defined as a combination of ***extraction_datetime*** and ***bike_point_id***
+``` sql
+  PRIMARY KEY (extraction_datetime, bike_point_id)
 ```
- PRIMARY KEY (
-        (dayofweeknumber), monthnumber, dayofmonth, extractiondatetime, bikepointid
-    )
+
+Indexes are implemented to optimize query performance, especially for filtering and aggregating data. In order to cater to the queries that commonly use filters and aggregations on ***day_of_week_number*** or ***day_of_month***, indexes have been created for these columns.
+``` sql
+  CREATE INDEX IF NOT EXISTS idx_day_of_week_number ON bike_points (day_of_week_number);
+  CREATE INDEX IF NOT EXISTS idx_day_of_month ON bike_points (day_of_month);
 ```
-***DayOfWeekNumber*** is selected as a partition key as most of the historical queries are based onthe day of the week. The clustering keys ***MonthNumber***, ***DayOfmonth***, ***ExtractionDatetime***, and ***BikePointId*** enable sorting data inside the partition.
 
 The data in this layer originates from the preprocessed data stored in Kafka topic. The pipeline applies additional transformations to the data in spark, including :
 
@@ -143,17 +147,17 @@ The spark container has been customized to enable communication through ssh and 
 #### **entrypoint.sh**
 * Configure the script to start the SSH server during container startup.
 
-### Cassandra Container Setup
-The Cassandra container has been customized to automate table creation during startup. The [entrypoint.sh](/cassandra/config/entrypoint.sh) file checks for the existence of the bike_points table and creates if it does not already exist. 
+### postgres Container Setup
+The postgres container has been customized to automate table creation during startup. The [entrypoint.sh](/postgres/config/entrypoint.sh) file checks for the existence of the bike_points table and creates if it does not already exist. 
 
 # Unified Layer
-Trino DB serves as the query engine that unifies access to both the near-real-time and historical data layers. This is ensured by a table for each layer.
+Trino serves as the query engine that unifies access to both the near-real-time and historical data layers. This is ensured by a table for each layer.
 
 ## Trino Container Setup
-The trino container has been configured to connect to both the Cassandra historical data table and the Kafka metrics topic by preparing and including the necessary properties files. The two files **[cassandra.properties](/dashboard/config/cassandra.properties)** and **[kafka.properties](//dashboard/config/kafka.properties)** contain information about the connection properties such as credentials, host names and ports, and table and topic names. These files are placed inisde the */etc/trino/catalog* directory inside the container.
+The trino container has been configured to connect to both the postgres historical data table and the Kafka metrics topic by preparing and including the necessary properties files. The two files **[postgres.properties](/dashboard/config/postgres.properties)** and **[kafka.properties](//dashboard/config/kafka.properties)** contain information about the connection properties such as credentials, host names and ports, and table and topic names. These files are placed inisde the */etc/trino/catalog* directory inside the container.
 
 # Dashboard
-Trino DB tables are connected to the Superset dashboard, which provides a visual interface for data exploration. The dashboard is designed to showcase insights from both the near-real-time metrics and historical data.
+Trino tables are connected to the Superset dashboard, which provides a visual interface for data exploration. The dashboard is designed to showcase insights from both the near-real-time metrics and historical data.
 <br>
 
 The **bike points** dashboard showcases the insights through various charts :
@@ -181,7 +185,7 @@ These charts are automatically refreshed each 4 minutes in the dashboard.
 ![historical charts](/pictures/historical%20charts.jpg)
 
 ## Superset Container Setup
-The superset container has been customized to automate the initialization process and enable seamless integration with Trino DB.
+The superset container has been customized to automate the initialization process and enable seamless integration with Trino.
 
 #### **Dockerfile**
 * Install the trino python library.
@@ -203,7 +207,7 @@ The superset container has been customized to automate the initialization proces
 
 # Final Thoughts and Conclusion
 
-This project demonstrates the integration of various technologies to design and implement a data pipeline capable of handling both batch and near-real-time processing by combining tools like Airflow, Kafka, Spark, Cassandra, Trino DB, and Superset.
+This project demonstrates the integration of various technologies to design and implement a data pipeline capable of handling both batch and near-real-time processing by combining tools like Airflow, Kafka, Spark, postgres, Trino, and Superset.
 
 ## Some Key Takeaways:
 - **Modular Design**: Each container was configured to handle specific tasks, ensuring seamless communication and functionality across the entire ecosystem.
@@ -215,7 +219,7 @@ While the current setup is functional and meets the project’s objectives, ther
 * Expand Airflow's monitoring capabilities to track the health and performance of all components in the setup, ensuring early detection and resolution of issues.
 * Implementing data quality checks at each stage.
 * Address potential security vulnerabilities.
-* Adding more containers (nodes) for Kafka, Spark, and Cassandra to have a distributed architecture which will increase the system's scalability and resilience.
+* Adding more containers (nodes) for Kafka, Spark, and postgres to have a distributed architecture which will increase the system's scalability and resilience.
 
 # Conclusion
 In conclusion, this project has provided valuable hands-on experience in data engineering, allowing me to explore and practice various tools and techniques. It serves as a solid foundation for future enhancements and scalability.<br>

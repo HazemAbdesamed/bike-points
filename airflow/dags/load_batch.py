@@ -52,5 +52,12 @@ postgres_conn_id='postgres_historical_data_conn',
 sql='load_to_historical_data_table.sql'
 )
 
+refresh_materialized_views_task = PostgresOperator(
+dag=dag,
+task_id='refresh_materialized_views_task',
+postgres_conn_id='postgres_historical_data_conn',
+sql='mvw_refresh.sql'
+)
 
-truncate_staging_table_task >> load_to_staging_table_task >> load_historical_table_task
+
+truncate_staging_table_task >> load_to_staging_table_task >> load_historical_table_task >> refresh_materialized_views_task
