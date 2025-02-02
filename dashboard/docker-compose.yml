@@ -15,6 +15,7 @@ services:
     volumes:
       - ./config/cassandra.properties:/etc/trino/catalog/cassandra.properties
       - ./config/postgres.properties:/etc/trino/catalog/postgres.properties
+      - ./config/config.properties:/etc/trino/config.properties
       
     networks:
         - dashboard-network
@@ -22,11 +23,11 @@ services:
     deploy:
       resources:
        limits:
-        memory: 1G
-        cpus: "1.5"
+        memory: 1.5G
+        cpus: "2"
        reservations:
-        memory: 1G
-        cpus: "1.0"
+        memory: 0.5G
+        cpus: "0.5"
 
 
   superset:
@@ -49,7 +50,5 @@ services:
       deploy:
        resources:
         limits:
-         memory: 500M
-        reservations:
-         memory: 500M  
+         memory: 1G
              

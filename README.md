@@ -5,7 +5,8 @@ A data engineering pipeline designed to **process**, **store**, and **analyze** 
 The system integrates:
 
 - **Apache Kafka** and **Apache Spark** for processing.
-- **Apache postgres** for storing near-real-time data.
+- **Postgres** for storing historical data.
+- **Apache Cassandra** for storing near-real-time data.
 - **Trino** and **Apache Superset** for querying and visualizing insights.
 - **Apache Airflow** for orchestrating the system.
 
@@ -21,7 +22,7 @@ You can find more details about the API in this [link](https://api-portal.tfl.go
 
 ## Sample API Response
 
-When querying the endpoint [https://api.tfl.gov.uk/BikePoint/](https://api.tfl.gov.uk/BikePoint/), the API returns a JSON array containing objects for each bike point. Below is an sample of the structure:
+When querying the endpoint [https://api.tfl.gov.uk/BikePoint/](https://api.tfl.gov.uk/BikePoint/), the API returns a JSON array containing objects for each bike point. Below is an example of the structure:
 
 ```json
 [
@@ -97,8 +98,18 @@ Indexes are implemented to optimize query performance, especially for filtering 
   CREATE INDEX IF NOT EXISTS idx_day_of_week_number ON bike_points (day_of_week_number);
   CREATE INDEX IF NOT EXISTS idx_day_of_month ON bike_points (day_of_month);
 ```
+In addtion, a staging table  is created
 
-The data in this layer originates from the preprocessed data stored in Kafka topic. The pipeline applies additional transformations to the data in spark, including :
+The data in this layer originates from the preprocessed data stored in Kafka topic. The pipeline applies additional transformations to the data in spark, including **stg_bike_points** is created to work as an intermediate that will contain staged data which may contain duplicates or contains records that are already present in **bike_points**. This data is then loaded into **bike_points** using the postgres functionality ** ON CONFLICT DO NOTHING **.
+
+This script is found in this [file](/airflow/helpers/load_to_historical_data_table.sql)
+```sql
+INSERT INTO bike_points
+SELECT *
+FROM stg_bike_points
+
+ON CONFLICT DO NOTHING;
+```
 
 * Generating new fields such as ***MonthName***, ***MonthNumber***, ***DayOfWeek***, and ***HourInterval***.
 * Formatting and enriching data for efficient querying.
