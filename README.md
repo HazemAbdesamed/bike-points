@@ -81,14 +81,12 @@ Preprocessed data is then loaded into a kafka topic **bike-points**. This logic 
 
 To ensure the required Kafka topic is available, it is created during container's startup phase. This is achieved by the  [entrypoint.sh](/kafka/config/entrypoint.sh) file, which executes the topic creation [script](/kafka/scripts/create-topic.sh) if the topic does not already exist.
 
-
 # Processing
 
 ## Batch Layer
-The Batch Layer is responsible for processing and storing historical data in a postgres table. The schema for that table is found in this [file](/postgres/scripts/create_tables_and_indexes.cql).
+The Batch Layer is responsible for processing and storing historical data in a Postgres table. The schema for that table is found in this [file](/postgres/scripts/create_tables_and_indexes.cql).
 
-The Primary Key is used for the uniqueness of each record and indexing.
-The primary key for the **bike_points** table is defined as a combination of ***extraction_datetime*** and ***bike_point_id***
+The Primary Key is used for the uniqueness of each record and indexing, it is defined as a combination of ***extraction_datetime*** and ***bike_point_id***
 ``` sql
   PRIMARY KEY (extraction_datetime, bike_point_id)
 ```
@@ -98,14 +96,14 @@ Indexes are implemented to optimize query performance, especially for filtering 
   CREATE INDEX IF NOT EXISTS idx_day_of_week_number ON bike_points (day_of_week_number);
   CREATE INDEX IF NOT EXISTS idx_day_of_month ON bike_points (day_of_month);
 ```
-In addtion, a staging table **stg_bike_points** is created in order to temporarily hold incoming data before it is loaded into the main table **bike_points**. This staging table helps identiy new data eficiently. 
+In addtion, a staging table **stg_bike_points** is created in order to temporarily hold incoming data before it is loaded into the main table **bike_points**. This staging table helps identiy new data efficiently. 
 
-The data in this layer originates from the preprocessed data stored in Kafka topic. The pipeline applies additional transformations to the data in spark including : 
+The data in this layer originates from the preprocessed data stored in Kafka topic. The pipeline applies additional transformations to the data in Spark including : 
 * Generating new fields such as ***MonthName***, ***MonthNumber***, ***DayOfWeek***, and ***HourInterval***.
 * Formatting and enriching data for efficient querying.
 * Loading into **stg_bike_points** which serves as an intermediate that will contain staged data which may contain duplicates or contains records that are already present in **bike_points**.
 
-This data is then loaded into **bike_points** using the postgres functionality **ON CONFLICT DO NOTHING**.
+This data is then loaded into **bike_points** using the Postgres functionality **ON CONFLICT DO NOTHING**.
 
 This script is found in this [file](/airflow/helpers/load_to_historical_data_table.sql)
 ```sql
@@ -116,22 +114,22 @@ FROM stg_bike_points
 ON CONFLICT DO NOTHING;
 ```
 
-To optimize query performance, materialized views are created based on the specific queries executed by the dashboard. The scripts for creating these materialized views can be found in the following files:
-* **mvw_in_use_bikes_by_day** in [file](/postgres/scripts/mvw_in_use_bikes_by_day.sql).
-* **mvw_non_availability_by_day** in [file](/postgres/scripts/mvw_non_availability_by_day.sql).
-* **mvw_peak_hours_by_day** [file](/postgres/scripts/mvw_peak_hours_by_day.sql).
-* **mvw_broken_docks_history** in [file](/postgres/scripts/mvw_broken_docks_history.sql).
+To optimize query performance, materialized views that consume from the main table are created based on the specific queries executed by the dashboard. The scripts for creating these materialized views can be found in the following files:
+* **mvw_in_use_bikes_by_day** : [/postgres/scripts/mvw_in_use_bikes_by_day.sql](/postgres/scripts/mvw_in_use_bikes_by_day.sql).
+* **mvw_non_availability_by_day** : [/postgres/scripts/mvw_non_availability_by_day.sql](/postgres/scripts/mvw_non_availability_by_day.sql).
+* **mvw_peak_hours_by_day** : [/postgres/scripts/mvw_peak_hours_by_day.sql](/postgres/scripts/mvw_peak_hours_by_day.sql).
+* **mvw_broken_docks_history** : [/postgres/scripts/mvw_broken_docks_history.sql](/postgres/scripts/mvw_broken_docks_history.sql).
 
 These materialized views are refreshed after loading the historical table **bike_points**.
 
-The processing logic is automated using an airflow DAG **load_batch**, which runs once daily at midnight.
+The processing logic is automated using an Airflow DAG **load_batch**, which runs once daily at midnight.
 
 ![load_batch DAG](/pictures/load_batch%20DAG.jpg)
 
 
 ## Speed Layer
 
-The Speed Layer is designed to process near-real-time data and provide updated metrics quickly. Data is consumed from the preprocessing stage and processed using pyspark streaming.
+The Speed Layer is designed to process near-real-time data and provide updated metrics quickly. Data is consumed from the preprocessing stage and processed using PySpark streaming.
 
 The processing involves calculating values for the metrics :
 
@@ -140,9 +138,9 @@ The processing involves calculating values for the metrics :
 * The number and rate of bikes that are in use.
 * The number and rate of broken docks.
 
-These aggregated metrics are then in a Cassandra table **metrics**, which serves as the source for near-real-time analytics.
+These aggregated metrics are loaded then in a Cassandra table **metrics**, which serves as the source for near-real-time analytics.
 
-This processing is handled by a spark job and orchestrated through an airflow DAG with the name **stream**.
+This processing is handled by a Spark job and orchestrated through an Airflow DAG with the name **stream**.
 
 ### Airflow Container Setup
 The airflow container has been customized to enable communication with the Spark container and to manage job orchestration. Below are the key modifications :
@@ -155,8 +153,6 @@ The airflow container has been customized to enable communication with the Spark
 #### **entrypoint.sh**
 * Automatically creates an Airflow SSH connection if it does not already exist.
 * Generate and send an SSH key to the SSH server.
-
-### Kafka Container Setup
 
 #### **entrypoint.sh**
 * Create the topic that contains preprocessed data.
@@ -177,13 +173,13 @@ The spark container has been customized to enable communication through ssh and 
 The postgres container has been customized to automate table creation during startup. The [entrypoint.sh](/postgres/config/entrypoint.sh) file executes scripts inside */docker-entrypoint-initdb.d/* that create users, databases, tables, indexes, and materialized views if they don't exist. 
 
 ### Cassandra Container Setup
-[/cassansra/scripts/init.cql](/cassandra/scripts/init.cql) is mounted on [/docker-entrypoint-initdb.d/](/docker-entrypoint-initdb.d/) in order to create the keyspace and table if they don't exist.
+[/cassandra/scripts/init.cql](/cassandra/scripts/init.cql) is mounted on [/docker-entrypoint-initdb.d/](/docker-entrypoint-initdb.d/) in order to create the keyspace and table if they don't exist.
 
 # Unified Layer
 Trino serves as the query engine that unifies access to both the near-real-time and historical data layers.
 
 ## Trino Container Setup
-The trino container has been configured to connect to both the postgres historical data table and the Cassandra metrics table by preparing the necessary properties files. The two files **[postgres.properties](/dashboard/config/postgres.properties)** and **[postgres.properties](/dashboard/config/cassandra.properties)** contain information about the connection properties such as credentials, host names and ports, and table names. These files are placed inisde the */etc/trino/catalog* directory inside the container.
+The trino container has been configured to connect to both the postgres historical data table and the Cassandra metrics table by preparing the necessary properties files. The two files **[postgres.properties](/dashboard/config/postgres.properties)** and **[postgres.properties](/dashboard/config/cassandra.properties)** contain information about the connection properties such as credentials, host names and ports, and table names. These files are placed inisde the */etc/trino/catalog* directory inside the container. Also, a configuration is set to set the maximum number of concurrent queries that Trino can run to 4 in the [config.properties](/dashboard/config/config.properties) file. 
 
 # Dashboard
 Trino tables are connected to the Superset dashboard, which provides a visual interface for data exploration. The dashboard is designed to showcase insights from both the near-real-time metrics and historical data.
@@ -199,7 +195,7 @@ Charts displaying the current values for each of the real-time metrics, includin
 * Number and rate of empty docks.
 * Number and rate of broken docks.
 
-These charts are automatically refreshed each 4 minutes in the Superest dashboard using this coniguration that can be found inside the dashboard yaml file in [superset-dashboard-data.zip](/dashboard/superset-dashboard-data.zip) : 
+These charts are automatically refreshed each 210 seconds in the Superest dashboard using a configuration that can be found inside the dashboard yaml file in [superset-dashboard-data.zip](/dashboard/superset-dashboard-data.zip) : 
 ``` yaml
 refresh_frequency: 210
 timed_refresh_immune_slices:
@@ -231,6 +227,8 @@ The superset container has been customized to automate the initialization proces
 #### **superset_init.sh**
 * Create the admin user with credentials defined in environment variables.
 * Automatically import a preconfigured and customized dashboard from a [zip](/dashboard/superset-dashboard-data.zip) file during container startup.
+#### **superset_config.py**
+* Set the variable **SUPERSET_WEBSERVER_TIMEOUT** to 120 to prevent timeout errors, especially during the initial dashboard load.
 
 # Requirements
 - **Docker**
@@ -245,11 +243,11 @@ The superset container has been customized to automate the initialization proces
 
 # Final Thoughts and Conclusion
 
-This project demonstrates the integration of various technologies to design and implement a data pipeline capable of handling both batch and near-real-time processing by combining tools like Airflow, Kafka, Spark, Postgres, Trino, and Superset.
+This project demonstrates the integration of various technologies to design and implement a data pipeline capable of handling both batch and near-real-time processing by combining tools like Docker, Airflow, Kafka, Spark, Postgres, Trino, and Superset.
 
 ## Some Key Takeaways:
 - **Modular Design**: Each container was configured to handle specific tasks, ensuring seamless communication and functionality across the entire ecosystem.
-- **Automation**: Tools like Airflow streamlined the orchestration of workflows, while customized container setups automated initialization processes and configurations.
+- **Automation**: Tools like Airflow streamlines the orchestration of workflows, while customized container setups automated initialization processes and configurations.
 - **Environment Variables for Flexibility**: Environment variables were extensively used across the setup to manage credentials and configuration details. This approach simplifies updates, and ensures portability of the setup. 
 
 ## Further Enhancements:
