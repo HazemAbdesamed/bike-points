@@ -72,7 +72,7 @@ The fields that have been extracted for this project are :
 * **NbDocks :** The total number of docks at the bike point.
 * **NbBikes :** The number of bikes at the bike point.
 * **NbEBikes :** The number of electric bikes at the bike point.
-* **NbEmptyDocks :** The number of empty docks (a docks without bikes or broken docks) at the bike point.
+* **NbEmptyDocks :** The number of empty docks (docks without bikes or broken docks) at the bike point.
 * **ExtractionDatetime :** A custom field added to indicate the time of the extraction.
 
 Preprocessed data is then loaded into a kafka topic **bike-points**. This logic is implemented in this [folder](airflow/produce_to_kafka/), and is automated using an Airflow DAG **stage** that executes the preprocessing scripts every 3 minutes.
@@ -98,9 +98,14 @@ Indexes are implemented to optimize query performance, especially for filtering 
   CREATE INDEX IF NOT EXISTS idx_day_of_week_number ON bike_points (day_of_week_number);
   CREATE INDEX IF NOT EXISTS idx_day_of_month ON bike_points (day_of_month);
 ```
-In addtion, a staging table  is created
+In addtion, a staging table **stg_bike_points** is created in order to temporarily hold incoming data before it is loaded into the main table **bike_points**. This staging table helps identiy new data eficiently. 
 
-The data in this layer originates from the preprocessed data stored in Kafka topic. The pipeline applies additional transformations to the data in spark, including **stg_bike_points** is created to work as an intermediate that will contain staged data which may contain duplicates or contains records that are already present in **bike_points**. This data is then loaded into **bike_points** using the postgres functionality ** ON CONFLICT DO NOTHING **.
+The data in this layer originates from the preprocessed data stored in Kafka topic. The pipeline applies additional transformations to the data in spark including : 
+* Generating new fields such as ***MonthName***, ***MonthNumber***, ***DayOfWeek***, and ***HourInterval***.
+* Formatting and enriching data for efficient querying.
+* Loading into **stg_bike_points** which serves as an intermediate that will contain staged data which may contain duplicates or contains records that are already present in **bike_points**.
+
+This data is then loaded into **bike_points** using the postgres functionality **ON CONFLICT DO NOTHING**.
 
 This script is found in this [file](/airflow/helpers/load_to_historical_data_table.sql)
 ```sql
@@ -111,27 +116,31 @@ FROM stg_bike_points
 ON CONFLICT DO NOTHING;
 ```
 
-* Generating new fields such as ***MonthName***, ***MonthNumber***, ***DayOfWeek***, and ***HourInterval***.
-* Formatting and enriching data for efficient querying.
+To optimize query performance, materialized views are created based on the specific queries executed by the dashboard. The scripts for creating these materialized views can be found in the following files:
+* **mvw_in_use_bikes_by_day** in [file](/postgres/scripts/mvw_in_use_bikes_by_day.sql).
+* **mvw_non_availability_by_day** in [file](/postgres/scripts/mvw_non_availability_by_day.sql).
+* **mvw_peak_hours_by_day** [file](/postgres/scripts/mvw_peak_hours_by_day.sql).
+* **mvw_broken_docks_history** in [file](/postgres/scripts/mvw_broken_docks_history.sql).
+
+These materialized views are refreshed after loading the historical table **bike_points**.
 
 The processing logic is automated using an airflow DAG **load_batch**, which runs once daily at midnight.
+
+![load_batch DAG](/pictures/load_batch%20DAG.jpg)
+
 
 ## Speed Layer
 
 The Speed Layer is designed to process near-real-time data and provide updated metrics quickly. Data is consumed from the preprocessing stage and processed using pyspark streaming.
 
-The processing involves calculateing values for the metrics :
+The processing involves calculating values for the metrics :
 
-* The number of available bikes.
-* The rate of available bikes.
-* The number of available electric bikes.
-* The rate of electric bikes.
-* The number of bikes that are in use.
-* The rate of in use bikes.
-* The number of broken docks.
-* The rate of broken docks.
+* The number and rate of available bikes.
+* The number and rate of available electric bikes.
+* The number and rate of bikes that are in use.
+* The number and rate of broken docks.
 
-These aggregated metrics are then published to a dedicated sink which is a kafka topic, this topic serves as the source for near-real-time analytics.
+These aggregated metrics are then in a Cassandra table **metrics**, which serves as the source for near-real-time analytics.
 
 This processing is handled by a spark job and orchestrated through an airflow DAG with the name **stream**.
 
@@ -147,6 +156,12 @@ The airflow container has been customized to enable communication with the Spark
 * Automatically creates an Airflow SSH connection if it does not already exist.
 * Generate and send an SSH key to the SSH server.
 
+### Kafka Container Setup
+
+#### **entrypoint.sh**
+* Create the topic that contains preprocessed data.
+* Set the messages retention time for this topic to 48 hours.
+
 ### Spark Container Setup
 The spark container has been customized to enable communication through ssh and execute the Spark jobs seamlessly.
 
@@ -158,14 +173,17 @@ The spark container has been customized to enable communication through ssh and 
 #### **entrypoint.sh**
 * Configure the script to start the SSH server during container startup.
 
-### postgres Container Setup
-The postgres container has been customized to automate table creation during startup. The [entrypoint.sh](/postgres/config/entrypoint.sh) file checks for the existence of the bike_points table and creates if it does not already exist. 
+### Postgres Container Setup
+The postgres container has been customized to automate table creation during startup. The [entrypoint.sh](/postgres/config/entrypoint.sh) file executes scripts inside */docker-entrypoint-initdb.d/* that create users, databases, tables, indexes, and materialized views if they don't exist. 
+
+### Cassandra Container Setup
+[/cassansra/scripts/init.cql](/cassandra/scripts/init.cql) is mounted on [/docker-entrypoint-initdb.d/](/docker-entrypoint-initdb.d/) in order to create the keyspace and table if they don't exist.
 
 # Unified Layer
-Trino serves as the query engine that unifies access to both the near-real-time and historical data layers. This is ensured by a table for each layer.
+Trino serves as the query engine that unifies access to both the near-real-time and historical data layers.
 
 ## Trino Container Setup
-The trino container has been configured to connect to both the postgres historical data table and the Kafka metrics topic by preparing and including the necessary properties files. The two files **[postgres.properties](/dashboard/config/postgres.properties)** and **[kafka.properties](//dashboard/config/kafka.properties)** contain information about the connection properties such as credentials, host names and ports, and table and topic names. These files are placed inisde the */etc/trino/catalog* directory inside the container.
+The trino container has been configured to connect to both the postgres historical data table and the Cassandra metrics table by preparing the necessary properties files. The two files **[postgres.properties](/dashboard/config/postgres.properties)** and **[postgres.properties](/dashboard/config/cassandra.properties)** contain information about the connection properties such as credentials, host names and ports, and table names. These files are placed inisde the */etc/trino/catalog* directory inside the container.
 
 # Dashboard
 Trino tables are connected to the Superset dashboard, which provides a visual interface for data exploration. The dashboard is designed to showcase insights from both the near-real-time metrics and historical data.
@@ -181,7 +199,15 @@ Charts displaying the current values for each of the real-time metrics, includin
 * Number and rate of empty docks.
 * Number and rate of broken docks.
 
-These charts are automatically refreshed each 4 minutes in the dashboard.
+These charts are automatically refreshed each 4 minutes in the Superest dashboard using this coniguration that can be found inside the dashboard yaml file in [superset-dashboard-data.zip](/dashboard/superset-dashboard-data.zip) : 
+``` yaml
+refresh_frequency: 210
+timed_refresh_immune_slices:
+  - 7
+  - 9
+  - 11
+  - 12
+```
 
 ### Historical Insights
 - **Bikes in Use by Day of the Week:** A bar chart showing the average number of in use bikes for the days of the week, helping identify usage patterns.
@@ -200,6 +226,7 @@ The superset container has been customized to automate the initialization proces
 
 #### **Dockerfile**
 * Install the trino python library.
+* Install unzip and zip packages.
 * Configure the container to use the [superset_init.sh](/dashboard/config/superset_init.sh) file as its entrypoint.
 #### **superset_init.sh**
 * Create the admin user with credentials defined in environment variables.
@@ -212,13 +239,13 @@ The superset container has been customized to automate the initialization proces
 # Usage :
 - Download the project.
 - Navigate to the project folder on your machine.
-- In a terminal, execute <code> docker-compose up --build -d </code>. The execution will take some time for the first execution as it will download the images and the dependencies.
+- In a terminal, execute <code> docker-compose up --build -d </code>. The first exection will take some time as it will download the images and dependencies. The initial display of the dashboard will take some time for te reason that Trino will be planning the queries.
 - You can enable the dags to run by the default schedule (the **stage** will be executed evey **3 minutes**, and the **load_batch** dag will be executed evey day at midnight) by enabling the toggle on switch. However if you want to trigger the dag manually, click on the play button.
 ![airflow usage](/pictures/airlfow%20usage.jpg)
 
 # Final Thoughts and Conclusion
 
-This project demonstrates the integration of various technologies to design and implement a data pipeline capable of handling both batch and near-real-time processing by combining tools like Airflow, Kafka, Spark, postgres, Trino, and Superset.
+This project demonstrates the integration of various technologies to design and implement a data pipeline capable of handling both batch and near-real-time processing by combining tools like Airflow, Kafka, Spark, Postgres, Trino, and Superset.
 
 ## Some Key Takeaways:
 - **Modular Design**: Each container was configured to handle specific tasks, ensuring seamless communication and functionality across the entire ecosystem.

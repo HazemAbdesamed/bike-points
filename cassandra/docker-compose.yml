@@ -12,7 +12,6 @@ services:
         - CASSANDRA_USER=$CASSANDRA_USER
         - CASSANDRA_PASSWORD=$CASSANDRA_PASSWORD
       volumes:
-        - ./config/entrypoint.sh:/opt/bitnami/scripts/cassandra/entrypoint.sh
         - ./scripts/init.cql:/docker-entrypoint-initdb.d/init.cql
         - cassandra-data:$CASSANDRA_VOLUME_PATH
       networks:
