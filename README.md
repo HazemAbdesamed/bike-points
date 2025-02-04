@@ -96,16 +96,16 @@ Indexes are implemented to optimize query performance, especially for filtering 
   CREATE INDEX IF NOT EXISTS idx_day_of_week_number ON bike_points (day_of_week_number);
   CREATE INDEX IF NOT EXISTS idx_day_of_month ON bike_points (day_of_month);
 ```
-In addtion, a staging table **stg_bike_points** is created in order to temporarily hold incoming data before it is loaded into the main table **bike_points**. This staging table helps identiy new data efficiently. 
+In addition, a staging table **stg_bike_points** is created in order to temporarily hold incoming data before it is loaded into the main table **bike_points**. This staging table helps identify new data efficiently. 
 
-The data in this layer originates from the preprocessed data stored in Kafka topic. The pipeline applies additional transformations to the data in Spark including : 
+The data in this layer originates from the preprocessed data stored in the Kafka topic. The pipeline applies additional transformations to the data in Spark including : 
 * Generating new fields such as ***MonthName***, ***MonthNumber***, ***DayOfWeek***, and ***HourInterval***.
 * Formatting and enriching data for efficient querying.
 * Loading into **stg_bike_points** which serves as an intermediate that will contain staged data which may contain duplicates or contains records that are already present in **bike_points**.
 
 This data is then loaded into **bike_points** using the Postgres functionality **ON CONFLICT DO NOTHING**.
 
-This script is found in this [file](/airflow/helpers/load_to_historical_data_table.sql)
+This script is found [here](/airflow/helpers/load_to_historical_data_table.sql)
 ```sql
 INSERT INTO bike_points
 SELECT *
@@ -179,7 +179,7 @@ The postgres container has been customized to automate table creation during sta
 Trino serves as the query engine that unifies access to both the near-real-time and historical data layers.
 
 ## Trino Container Setup
-The trino container has been configured to connect to both the postgres historical data table and the Cassandra metrics table by preparing the necessary properties files. The two files **[postgres.properties](/dashboard/config/postgres.properties)** and **[postgres.properties](/dashboard/config/cassandra.properties)** contain information about the connection properties such as credentials, host names and ports, and table names. These files are placed inisde the */etc/trino/catalog* directory inside the container. Also, a configuration is set to set the maximum number of concurrent queries that Trino can run to 4 in the [config.properties](/dashboard/config/config.properties) file. 
+The trino container has been configured to connect to both the postgres historical data table and the Cassandra metrics table by preparing the necessary properties files. The two files **[postgres.properties](/dashboard/config/postgres.properties)** and **[cassandra.properties](/dashboard/config/cassandra.properties)** contain information about the connection properties such as credentials, host names and ports, and table names. These files are placed inisde the */etc/trino/catalog* directory inside the container. Also, a configuration is set to set the maximum number of concurrent queries that Trino can run to 4 in the [config.properties](/dashboard/config/config.properties) file. 
 
 # Dashboard
 Trino tables are connected to the Superset dashboard, which provides a visual interface for data exploration. The dashboard is designed to showcase insights from both the near-real-time metrics and historical data.
@@ -255,7 +255,7 @@ While the current setup is functional and meets the project’s objectives, ther
 * Expand Airflow's monitoring capabilities to track the health and performance of all components in the setup, ensuring early detection and resolution of issues.
 * Implementing data quality checks at each stage.
 * Address potential security vulnerabilities.
-* Adding more containers (nodes) for Kafka, Spark, and postgres to have a distributed architecture which will increase the system's scalability and resilience.
+* Adding more containers (nodes) for Kafka, Spark, and Trino to have a distributed architecture which will increase the system's scalability and resilience.
 
 # Conclusion
 In conclusion, this project has provided valuable hands-on experience in data engineering, allowing me to explore and practice various tools and techniques. It serves as a solid foundation for future enhancements and scalability.<br>
