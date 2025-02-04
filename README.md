@@ -16,7 +16,7 @@ The entire setup is containerized using **Docker**.
 
 # The Data Source
 
-This projects uses the **Transport for London (TfL) BikePoint API** to fetch data about bike points across London. The API provides information such as the total number of docks, bike availability, empty docks, and the geographic location of each bike point.
+This project uses the **Transport for London (TfL) BikePoint API** to fetch data about bike points across London. The API provides information such as the total number of docks, bike availability, empty docks, and the geographic location of each bike point.
 
 You can find more details about the API in this [link](https://api-portal.tfl.gov.uk/api-details#api=BikePoint&operation=BikePoint_GetAll).
 
@@ -75,11 +75,11 @@ The fields that have been extracted for this project are :
 * **NbEmptyDocks :** The number of empty docks (docks without bikes or broken docks) at the bike point.
 * **ExtractionDatetime :** A custom field added to indicate the time of the extraction.
 
-Preprocessed data is then loaded into a kafka topic **bike-points**. This logic is implemented in this [folder](airflow/produce_to_kafka/), and is automated using an Airflow DAG **stage** that executes the preprocessing scripts every 3 minutes.
+Preprocessed data is then loaded into a Kafka topic **bike-points**. This logic is implemented in this [folder](airflow/produce_to_kafka/), and is automated using an Airflow DAG **stage** that executes the preprocessing scripts every 3 minutes.
 
 ## Topic creation
 
-To ensure the required Kafka topic is available, it is created during container's startup phase. This is achieved by the  [entrypoint.sh](/kafka/config/entrypoint.sh) file, which executes the topic creation [script](/kafka/scripts/create-topic.sh) if the topic does not already exist.
+To ensure the required Kafka topic is available, it is created during container's startup phase. This is achieved by the [entrypoint.sh](/kafka/config/entrypoint.sh) file, which executes the topic creation [script](/kafka/scripts/create-topic.sh) if the topic does not already exist.
 
 # Processing
 
@@ -105,7 +105,7 @@ The data in this layer originates from the preprocessed data stored in the Kafka
 
 This data is then loaded into **bike_points** using the Postgres functionality **ON CONFLICT DO NOTHING**.
 
-This script is found [here](/airflow/helpers/load_to_historical_data_table.sql)
+The script below is found [here](/airflow/helpers/load_to_historical_data_table.sql)
 ```sql
 INSERT INTO bike_points
 SELECT *
@@ -138,12 +138,12 @@ The processing involves calculating values for the metrics :
 * The number and rate of bikes that are in use.
 * The number and rate of broken docks.
 
-These aggregated metrics are loaded then in a Cassandra table **metrics**, which serves as the source for near-real-time analytics.
+These aggregated metrics are then loaded to a Cassandra table **metrics**, which serves as the source for near-real-time analytics.
 
 This processing is handled by a Spark job and orchestrated through an Airflow DAG with the name **stream**.
 
 ### Airflow Container Setup
-The airflow container has been customized to enable communication with the Spark container and to manage job orchestration. Below are the key modifications :
+The airflow container has been customized to enable communication with the spark container and to manage job orchestration. Below are the key modifications :
 
 #### **Dockerfile**
 * Install the **sshpass** utility to facilitate SSH key distribution.
@@ -151,7 +151,7 @@ The airflow container has been customized to enable communication with the Spark
 * Include a [requirements.txt](/airflow/requirements.txt) file to install custom python dependencies.
 
 #### **entrypoint.sh**
-* Automatically creates an Airflow SSH connection if it does not already exist.
+* Automatically create an Airflow SSH connection if it does not already exist.
 * Generate and send an SSH key to the SSH server.
 
 #### **entrypoint.sh**
@@ -179,7 +179,7 @@ The postgres container has been customized to automate table creation during sta
 Trino serves as the query engine that unifies access to both the near-real-time and historical data layers.
 
 ## Trino Container Setup
-The trino container has been configured to connect to both the postgres historical data table and the Cassandra metrics table by preparing the necessary properties files. The two files **[postgres.properties](/dashboard/config/postgres.properties)** and **[cassandra.properties](/dashboard/config/cassandra.properties)** contain information about the connection properties such as credentials, host names and ports, and table names. These files are placed inisde the */etc/trino/catalog* directory inside the container. Also, a configuration is set to set the maximum number of concurrent queries that Trino can run to 4 in the [config.properties](/dashboard/config/config.properties) file. 
+The trino container has been configured to connect to both the Postgres historical data table and the Cassandra metrics table by preparing the necessary properties files. The two files **[postgres.properties](/dashboard/config/postgres.properties)** and **[cassandra.properties](/dashboard/config/cassandra.properties)** contain information about the connection properties such as credentials, host names and ports, and table names. These files are mounted in the */etc/trino/catalog* directory inside the container. Additionally, the [config.properties](/dashboard/config/config.properties) file is configured to limit the maximum number of concurrent queries Trino can execute to 4. 
 
 # Dashboard
 Trino tables are connected to the Superset dashboard, which provides a visual interface for data exploration. The dashboard is designed to showcase insights from both the near-real-time metrics and historical data.
@@ -195,7 +195,7 @@ Charts displaying the current values for each of the real-time metrics, includin
 * Number and rate of empty docks.
 * Number and rate of broken docks.
 
-These charts are automatically refreshed each 210 seconds in the Superest dashboard using a configuration that can be found inside the dashboard yaml file in [superset-dashboard-data.zip](/dashboard/superset-dashboard-data.zip) : 
+These charts are automatically refreshed each 210 seconds in the Superest dashboard using a configuration that can be found in the dashboard yaml file inside [superset-dashboard-data.zip](/dashboard/superset-dashboard-data.zip) : 
 ``` yaml
 refresh_frequency: 210
 timed_refresh_immune_slices:
@@ -206,9 +206,9 @@ timed_refresh_immune_slices:
 ```
 
 ### Historical Insights
-- **Bikes in Use by Day of the Week:** A bar chart showing the average number of in use bikes for the days of the week, helping identify usage patterns.
+- **Bikes in Use by Day of the Week:** A bar chart showing the average number of in-use bikes for the days of the week, helping identify usage patterns.
 
-- **Bike Points Non-Availability:** A heatmap displaying bike points' non-availability by day of the week. The x-axis represents days, while the y-axis represents the bike points with highest instances of non-availability. The metric represents the number of occurrences for when a bike point had no available bike by day.
+- **Bike Points Non-Availability:** A heatmap displaying bike points' non-availability by day of the week. The x-axis represents days, while the y-axis represents the bike points with the highest instances of non-availability. The metric represents the number of occurrences for when a bike point had no available bike by day.
 
 - **Peak Hours:** A heatmap showcasing the busiest hours for bike points, broken down by day of the week and time intervals. The metric represents the average number of empty docks by day and time interval. 
 
@@ -237,8 +237,8 @@ The superset container has been customized to automate the initialization proces
 # Usage :
 - Download the project.
 - Navigate to the project folder on your machine.
-- In a terminal, execute <code> docker-compose up --build -d </code>. The first exection will take some time as it will download the images and dependencies. The initial display of the dashboard will take some time for te reason that Trino will be planning the queries.
-- You can enable the dags to run by the default schedule (the **stage** will be executed evey **3 minutes**, and the **load_batch** dag will be executed evey day at midnight) by enabling the toggle on switch. However if you want to trigger the dag manually, click on the play button.
+- In a terminal, execute <code> docker-compose up --build -d </code>. The first execution will take some time as it will download the images and dependencies. The initial display of the dashboard will take some time for te reason that Trino will be planning the queries.
+- You can enable the DAGs to run by the default schedule (the **stage** will be executed every **3 minutes**, and the **load_batch** DAG will be executed every day at midnight) by enabling the toggle on switch. However, if you want to trigger the DAG manually, click on the play button.
 ![airflow usage](/pictures/airlfow%20usage.jpg)
 
 # Final Thoughts and Conclusion
@@ -258,6 +258,6 @@ While the current setup is functional and meets the project’s objectives, ther
 * Adding more containers (nodes) for Kafka, Spark, and Trino to have a distributed architecture which will increase the system's scalability and resilience.
 
 # Conclusion
-In conclusion, this project has provided valuable hands-on experience in data engineering, allowing me to explore and practice various tools and techniques. It serves as a solid foundation for future enhancements and scalability.<br>
+In conclusion, this project has provided valuable hands-on experience in data engineering, allowing me to explore and practice various tools and techniques. <br>
 
 **I appreciate your interest in following this journey !**
