@@ -138,7 +138,19 @@ The processing involves calculating values for the metrics :
 * The number and rate of bikes that are in use.
 * The number and rate of broken docks.
 
-These aggregated metrics are then loaded to a Cassandra table **metrics**, which serves as the source for near-real-time analytics.
+These aggregated metrics are then loaded to a Cassandra table **metrics**, which serves as the source for near-real-time analytics. These metrics have a time to live of 24 hours.
+``` python
+# Write the metrics in a row to the cassandra table
+    metrics_df.write \
+        .format("org.apache.spark.sql.cassandra") \
+        .options(
+            keyspace="transportation",
+            table="metrics",
+            ttl="86400"  # Setting the TTL to 24 hours
+        ) \
+        .mode("append") \
+        .save()
+```
 
 This processing is handled by a Spark job and orchestrated through an Airflow DAG with the name **stream**.
 

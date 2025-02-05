@@ -80,8 +80,7 @@ def process(df, batch_id):
     # Calculate metrics using SQL
     metrics_df = calculate_metrics_sql(df)
 
-    # # Serialize the df to write into kafka topic
-    # metrics_df = metrics_df.selectExpr("to_json(struct(*)) AS value")
+    # Write the metrics in a row to the cassandra table
     metrics_df.write \
         .format("org.apache.spark.sql.cassandra") \
         .options(
