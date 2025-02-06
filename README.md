@@ -163,7 +163,8 @@ The airflow container has been customized to enable communication with the spark
 * Include a [requirements.txt](/airflow/requirements.txt) file to install custom python dependencies.
 
 #### **entrypoint.sh**
-* Automatically create an Airflow SSH connection if it does not already exist.
+* Automatically create an Airflow SSH connection if it does not exist.
+* Automatically create a Postgres connection if it does not exist.
 * Generate and send an SSH key to the SSH server.
 
 #### **entrypoint.sh**
