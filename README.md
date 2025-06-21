@@ -84,7 +84,7 @@ To ensure the required Kafka topic is available, it is created during container'
 # Processing
 
 ## Batch Layer
-The Batch Layer is responsible for processing and storing historical data in a Postgres table. The schema for that table is found in this [file](/postgres/scripts/create_tables_and_indexes.cql).
+The Batch Layer is responsible for processing and storing historical data in a Postgres table. The schema for that table is found in this [file](/postgres/scripts/create_tables_and_indexes.sql).
 
 The Primary Key is used for the uniqueness of each record and indexing, it is defined as a combination of ***extraction_datetime*** and ***bike_point_id***
 ``` sql
